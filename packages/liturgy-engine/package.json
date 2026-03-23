@@ -1,0 +1,16 @@
+{
+  "name": "@rosarium/liturgy-engine",
+  "version": "1.0.0",
+  "description": "Liturgy calculation and processing engine for the Rosarium project",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "liturgy",
+    "engine",
+    "catholic"
+  ],
+  "author": "",
+  "license": "ISC"
+}

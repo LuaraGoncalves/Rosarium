@@ -1,0 +1,43 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  validate-and-build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install Dependencies (Monorepo)
+      run: npm ci
+
+    - name: Lint Code
+      run: npm run lint
+      
+    - name: Generate Prisma Client (Backend)
+      run: cd backend && npx prisma generate
+
+    - name: Run Tests (Backend + Frontend)
+      run: npm test
+
+    - name: Build Frontend
+      run: cd frontend && npm run build
+
+    - name: Build Backend (Se aplicável)
+      run: cd backend && npm run build
