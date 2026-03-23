@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  novenaProgress NovenaProgress[]
+
+  @@map("users")
+}
+
+model NovenaProgress {
+  id          String   @id @default(uuid())
+  userId      String
+  novenaId    String
+  completedDays Int[]
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, novenaId])
+  @@map("novena_progress")
+}
+
+model Liturgia {
+  id        Int      @id @default(autoincrement())
+  data      DateTime   @unique // format YYYY-MM-DD
+  conteudo  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Santo {
+  id                Int      @id @default(autoincrement())
+  nome              String
+  historia          String
+  diaFesta          String?  // "03-19"
+
+  descricaoCurta    String?
+  imagemUrl         String?
+
+  padroeiroDe       String?
+  intercessao       String?
+  seculo            String?
+  origem            String?
+  categoria         String?
+  fraseMarcante     String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model SantoDoDia {
+  id                String   @id @default("santo-do-dia")
+  data              DateTime @unique
+  nome              String
+  historiaCompleta  String
+  historiaResumo    String
+  imagemUrl         String?
+  padroeiroDe       String?
+  intercessao       String?
+  fraseMarcante     String?
+  categoria         String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
