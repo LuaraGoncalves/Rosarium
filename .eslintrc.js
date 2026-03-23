@@ -14,6 +14,16 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    // Regras globais básicas de linting
+  
   },
+  overrides: [
+    {
+      files: ['backend/**/*.test.ts'],
+      env: {
+        jest: true,
+      },
+      plugins: ['jest'],
+      extends: ['plugin:jest/recommended'],
+    },
+  ],
 };
