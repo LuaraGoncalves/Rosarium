@@ -12,7 +12,7 @@
     "test:backend": "cd backend && jest",
     "test:frontend": "cd frontend && vitest run",
     "test": "npm run test:backend && npm run test:frontend",
-    "prepare": "husky",
+    "prepare": "husky install",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
   },
@@ -21,7 +21,7 @@
     "@commitlint/config-conventional": "^19.0.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "husky": "^9.0.11",
+    "husky": "^9.1.7",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "typescript": "^5.0.0"
