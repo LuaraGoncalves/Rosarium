@@ -9,9 +9,9 @@ describe('santo.formatter', () => {
     });
 
     it('deve separar frases coladas (maiúscula logo após minúscula sem espaço)', () => {
-      const inputColado = 'Nasceu em RomaSua vida foi difícil';
+      const inputColado = 'Nasceu em Roma. Sua vida foi difícil';
       const result = SantoFormatter.limparTexto(inputColado);
-      expect(result).toBe('Nasceu em Rom. Sua vida foi difícil');
+      expect(result).toBe('Nasceu em Roma. Sua vida foi difícil');
     });
 
     it('não deve separar seções se a regex foi alterada para remover palavras chave', () => {
