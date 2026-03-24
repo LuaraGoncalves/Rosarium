@@ -84,8 +84,8 @@ export function SantosPage() {
                   <h3 className="text-3xl font-serif text-church-accent mb-2 group-hover:text-church-accent-hover transition-colors">
                     {santoDoDia.nome}
                   </h3>
-                  <p className="text-xl text-church-text/80 italic font-serif mb-6">
-                    {santoDoDia.descricaoCurta}
+                  <p className="text-xl text-church-text/80 italic font-serif mb-6 line-clamp-3">
+                    {santoDoDia.descricaoCurta || santoDoDia.historia}
                   </p>
                   
                   {/* Detailed attributes clearly listed */}
