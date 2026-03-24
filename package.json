@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "description": "Rosarium - App Católico",
-  "workspaces": [
-    "frontend",
-    "backend",
-    "packages/*"
-  ],
   "scripts": {
     "test:backend": "cd backend && npx prisma generate && jest",
     "test:frontend": "cd frontend && vitest run",
