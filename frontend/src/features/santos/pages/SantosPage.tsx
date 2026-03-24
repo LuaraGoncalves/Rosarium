@@ -1,13 +1,13 @@
-import { useNavigate } from "react-router";
-import { ArrowLeft, Users, Star, Calendar, Book } from "lucide-react";
-import { useSantos } from '../hooks/useSantos'
+import { useNavigate } from 'react-router';
+import { ArrowLeft, Users, Star, Calendar, Book } from 'lucide-react';
+import { useSantos } from '../hooks/useSantos';
 
 export function SantosPage() {
   const navigate = useNavigate();
 
   const { santos, santoDoDia } = useSantos();
 
-  const outrosSantos = santos.filter(s => s.id !== santoDoDia?.id);
+  const outrosSantos = santos.filter((s) => s.id !== santoDoDia?.id);
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
@@ -15,7 +15,7 @@ export function SantosPage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-4">
             <button
-              onClick={() => navigate("/igreja")}
+              onClick={() => navigate('/igreja')}
               className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -40,14 +40,11 @@ export function SantosPage() {
               className="w-full h-full object-cover"
             />
           </div>
-          <h2 className="text-2xl font-serif text-church-accent-hover mb-4">
-            Testemunhas da Fé
-          </h2>
+          <h2 className="text-2xl font-serif text-church-accent-hover mb-4">Testemunhas da Fé</h2>
           <p className="text-church-text/80 leading-relaxed mb-4">
-            Os santos são homens e mulheres que viveram a fé cristã de maneira
-            heroica. Suas vidas nos inspiram e suas intercessões nos ajudam em
-            nosso caminho de santidade. Eles são exemplos vivos de como seguir
-            Cristo em todas as circunstâncias.
+            Os santos são homens e mulheres que viveram a fé cristã de maneira heroica. Suas vidas
+            nos inspiram e suas intercessões nos ajudam em nosso caminho de santidade. Eles são
+            exemplos vivos de como seguir Cristo em todas as circunstâncias.
           </p>
         </div>
 
@@ -56,7 +53,7 @@ export function SantosPage() {
             <h2 className="text-2xl font-serif text-church-accent-hover mb-6 flex items-center gap-2">
               <Star className="w-6 h-6" /> Santo do Dia
             </h2>
-            <div 
+            <div
               onClick={() => navigate(`/santos/${santoDoDia.id}`)}
               className="bg-church-bg-secondary rounded-2xl overflow-hidden border border-[#D4AF37]/30 transition-all hover:border-[#D4AF37]/70 cursor-pointer shadow-none group"
             >
@@ -87,7 +84,7 @@ export function SantosPage() {
                   <p className="text-xl text-church-text/80 italic font-serif mb-6 line-clamp-3">
                     {santoDoDia.descricaoCurta || santoDoDia.historia}
                   </p>
-                  
+
                   {/* Detailed attributes clearly listed */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-sm text-church-text/80">
                     {santoDoDia.padroeiroDe && (
@@ -135,9 +132,7 @@ export function SantosPage() {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
                   <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-xl font-serif text-white mb-1">
-                      {santo.nome}
-                    </h3>
+                    <h3 className="text-xl font-serif text-white mb-1">{santo.nome}</h3>
                     {santo.diaFesta && (
                       <div className="flex items-center gap-2 text-white/80 text-sm">
                         <Calendar className="w-4 h-4" />
@@ -152,10 +147,16 @@ export function SantosPage() {
                   </p>
                   <div className="space-y-2 mb-6 text-church-text/70">
                     {santo.padroeiroDe && (
-                      <p><strong className="text-church-accent">Padroeiro:</strong> <span className="line-clamp-1">{santo.padroeiroDe}</span></p>
+                      <p>
+                        <strong className="text-church-accent">Padroeiro:</strong>{' '}
+                        <span className="line-clamp-1">{santo.padroeiroDe}</span>
+                      </p>
                     )}
                     {santo.intercessao && (
-                      <p><strong className="text-church-accent">Intercede:</strong> <span className="line-clamp-1">{santo.intercessao}</span></p>
+                      <p>
+                        <strong className="text-church-accent">Intercede:</strong>{' '}
+                        <span className="line-clamp-1">{santo.intercessao}</span>
+                      </p>
                     )}
                   </div>
                   <button className="text-church-accent hover:text-church-accent-hover font-medium flex items-center gap-2 transition-colors mt-auto">
