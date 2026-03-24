@@ -5,7 +5,7 @@ import path from 'path';
 export function setupCronJobs() {
   console.log('⏳ Configurando Cron Jobs...');
   
-  cron.schedule('0 0 * * *', () => {
+  cron.schedule('5 0 * * *', () => {
     console.log('🔄 Executando tarefa diária: Atualização do Santo do Dia');
 
     const scriptPath = path.resolve(__dirname, '../../scripts/update-santo-do-dia.ts');

@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('Iniciando atualização diária do Santo do Dia...');
   
-  const today = new Date();
+  const today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
   today.setHours(0, 0, 0, 0);
   
   const fetchResult = await SantoScraper.fetch();

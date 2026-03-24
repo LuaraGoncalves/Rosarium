@@ -40,7 +40,7 @@ export class SantoService {
   }
 
   static getHojeString(): { diaHoje: string, hojeDateString: string } {
-    const now = new Date();
+    const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
     const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
     return {
       diaHoje: `${now.getDate().toString().padStart(2, '0')} de ${meses[now.getMonth()]}`,
