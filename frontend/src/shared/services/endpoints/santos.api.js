@@ -1,4 +1,6 @@
+import { api } from "../api";
+
 export async function getSantos() {
-    const response = await fetch("http://localhost:3001/api/santos");
-    return response.json();
+    const response = await api.get("/santos");
+    return response.data;
 }
