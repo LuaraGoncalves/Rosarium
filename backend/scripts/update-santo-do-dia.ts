@@ -7,10 +7,10 @@ const prisma = new PrismaClient();
 
 async function main() {
   console.log('Iniciando atualização diária do Santo do Dia...');
-  
+
   const today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
   today.setHours(0, 0, 0, 0);
-  
+
   const fetchResult = await SantoScraper.fetch();
   if (!fetchResult.success) {
     throw new Error(fetchResult.error);
@@ -47,7 +47,7 @@ async function main() {
       intercessao: data.intercessao,
       fraseMarcante: data.fraseMarcante,
       categoria: data.categoria,
-    }
+    },
   });
 
   console.log('Santo do Dia atualizado com sucesso no banco de dados!');
