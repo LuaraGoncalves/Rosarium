@@ -1,19 +1,29 @@
-import { useNavigate } from "react-router";
-import { ArrowLeft, Calendar as CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState, useMemo } from "react";
-import { generateLiturgicalCalendar } from "../utils/liturgia-calculator";
+import { useNavigate } from 'react-router';
+import { ArrowLeft, Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { generateLiturgicalCalendar } from '../utils/liturgia-calculator';
 
 export function CalendarioLiturgicoPage() {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date());
-  
+
   const diasLiturgicos = useMemo(() => {
     return generateLiturgicalCalendar(currentDate.getFullYear());
   }, [currentDate.getFullYear()]);
 
   const meses = [
-    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
-    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
   ];
 
   const handlePrevMonth = () => {
@@ -24,9 +34,7 @@ export function CalendarioLiturgicoPage() {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
 
-  const currentMonthData = diasLiturgicos.filter(
-    (d) => d.mes === currentDate.getMonth() + 1
-  );
+  const currentMonthData = diasLiturgicos.filter((d) => d.mes === currentDate.getMonth() + 1);
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans pb-24">
@@ -34,7 +42,7 @@ export function CalendarioLiturgicoPage() {
         <div className="max-w-4xl mx-auto px-4">
           <div className="mb-4">
             <button
-              onClick={() => navigate("/liturgia")}
+              onClick={() => navigate('/liturgia')}
               className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -43,15 +51,19 @@ export function CalendarioLiturgicoPage() {
           </div>
           <div className="flex flex-col items-center justify-center gap-3">
             <CalendarIcon className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-3xl text-center font-serif text-church-accent">Calendário Litúrgico</h1>
-            <p className="text-church-text/60 mt-1">Solenidades, Festas e Memórias do Ano Litúrgico</p>
+            <h1 className="text-3xl text-center font-serif text-church-accent">
+              Calendário Litúrgico
+            </h1>
+            <p className="text-church-text/60 mt-1">
+              Solenidades, Festas e Memórias do Ano Litúrgico
+            </p>
           </div>
         </div>
       </header>
 
       <div className="max-w-4xl mx-auto px-4 py-12">
         <div className="flex items-center justify-between mb-8 bg-church-bg-secondary p-4 rounded-xl border border-church-border-hover">
-          <button 
+          <button
             onClick={handlePrevMonth}
             className="p-2 text-church-accent hover:bg-church-bg rounded-full transition-colors"
           >
@@ -60,7 +72,7 @@ export function CalendarioLiturgicoPage() {
           <h2 className="text-2xl font-serif text-church-accent-hover">
             {meses[currentDate.getMonth()]} {currentDate.getFullYear()}
           </h2>
-          <button 
+          <button
             onClick={handleNextMonth}
             className="p-2 text-church-accent hover:bg-church-bg rounded-full transition-colors"
           >
@@ -78,13 +90,15 @@ export function CalendarioLiturgicoPage() {
         ) : (
           <div className="space-y-4">
             {currentMonthData.map((dia, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="bg-church-bg-secondary p-6 rounded-xl border border-church-border-hover flex flex-col md:flex-row items-start md:items-center gap-6 transition-colors hover:border-[#C89B3C]/50"
               >
                 <div className="flex-shrink-0 w-20 h-20 bg-church-bg border border-church-border-hover rounded-full flex flex-col items-center justify-center shadow-inner">
                   <span className="text-2xl font-serif text-church-accent">{dia.dia}</span>
-                  <span className="text-xs uppercase tracking-wider text-church-text/60">{meses[dia.mes-1].substring(0,3)}</span>
+                  <span className="text-xs uppercase tracking-wider text-church-text/60">
+                    {meses[dia.mes - 1].substring(0, 3)}
+                  </span>
                 </div>
                 <div className="flex-1">
                   <h3 className="text-xl font-serif text-church-accent mb-1">{dia.titulo}</h3>
