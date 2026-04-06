@@ -8,7 +8,7 @@ import { SantoDoDia } from '@prisma/client';
 export async function getSantoDoDia(): Promise<Result<SantoDoDia>> {
   try {
     let santoDoDia = await prisma.santoDoDia.findUnique({
-      where: { id: 'santo-do-dia' }
+      where: { id: 'santo-do-dia' },
     });
 
     const today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
@@ -21,7 +21,7 @@ export async function getSantoDoDia(): Promise<Result<SantoDoDia>> {
           const parseResult = parseSantoHtml(fetchResult.data);
           if (parseResult.success && parseResult.data) {
             const data = SantoFormatter.formatar(parseResult.data);
-            
+
             santoDoDia = await prisma.santoDoDia.upsert({
               where: { id: 'santo-do-dia' },
               update: {
