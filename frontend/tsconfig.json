@@ -6,9 +6,8 @@
     "types": ["vite/client"],
     "jsx": "react-jsx",
     "strict": true,
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"]

@@ -1,22 +1,15 @@
 import { useNavigate } from "react-router";
 import { ArrowLeft, Calendar as CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
+import { generateLiturgicalCalendar } from "../utils/liturgia-calculator";
 
 export function CalendarioLiturgicoPage() {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date());
   
-  const diasLiturgicos = [
-    { dia: 1, mes: 3, titulo: "Quarta-feira de Cinzas", cor: "Roxo", tipo: "Tempo da Quaresma" },
-    { dia: 19, mes: 3, titulo: "São José, Esposo de Maria", cor: "Branco", tipo: "Solenidade" },
-    { dia: 25, mes: 3, titulo: "Anunciação do Senhor", cor: "Branco", tipo: "Solenidade" },
-    { dia: 14, mes: 4, titulo: "Domingo de Ramos", cor: "Vermelho", tipo: "Semana Santa" },
-    { dia: 20, mes: 4, titulo: "Domingo da Páscoa", cor: "Branco", tipo: "Tempo Pascal" },
-    { dia: 15, mes: 8, titulo: "Assunção de Nossa Senhora", cor: "Branco", tipo: "Solenidade" },
-    { dia: 1, mes: 11, titulo: "Todos os Santos", cor: "Branco", tipo: "Solenidade" },
-    { dia: 2, mes: 11, titulo: "Comemoração de Todos os Fiéis Defuntos", cor: "Roxo", tipo: "Comemoração" },
-    { dia: 25, mes: 12, titulo: "Natal de Nosso Senhor Jesus Cristo", cor: "Branco", tipo: "Solenidade" },
-  ];
+  const diasLiturgicos = useMemo(() => {
+    return generateLiturgicalCalendar(currentDate.getFullYear());
+  }, [currentDate.getFullYear()]);
 
   const meses = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
