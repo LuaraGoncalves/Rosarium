@@ -87,10 +87,18 @@ export function ChurchHome() {
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="flex items-center justify-center p-2 text-church-accent hover:text-church-accent-hover transition-colors bg-church-bg-secondary rounded-md border-2 border-church-border shadow-md"
-              style={{ minWidth: '44px', minHeight: '44px', backgroundColor: 'rgba(200,155,60,0.1)' }}
+              style={{
+                minWidth: '44px',
+                minHeight: '44px',
+                backgroundColor: 'rgba(200,155,60,0.1)',
+              }}
               aria-label="Abrir menu mobile"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6 stroke-2 text-[#C89B3C]" /> : <Menu className="w-6 h-6 stroke-2 text-[#C89B3C]" />}
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6 stroke-2 text-[#C89B3C]" />
+              ) : (
+                <Menu className="w-6 h-6 stroke-2 text-[#C89B3C]" />
+              )}
             </button>
           </div>
 
