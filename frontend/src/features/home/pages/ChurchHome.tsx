@@ -81,15 +81,16 @@ export function ChurchHome() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex md:hidden items-center gap-4 visible">
+          <div className="flex md:hidden items-center gap-4">
             <ThemeToggle />
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="flex items-center justify-center p-2 text-church-accent hover:text-church-accent-hover transition-colors bg-church-bg-secondary rounded-md border border-church-border shadow-sm"
+              className="flex items-center justify-center px-4 py-2 gap-2 text-church-accent hover:text-church-accent-hover transition-colors bg-church-bg-secondary rounded-md border border-church-border shadow-sm"
               aria-label="Abrir menu mobile"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <span className="font-semibold text-sm">MENU</span>
             </button>
           </div>
 
