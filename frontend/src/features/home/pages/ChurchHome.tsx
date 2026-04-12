@@ -1,12 +1,13 @@
+import { useState } from "react";
 import { useNavigate } from "react-router";
-import { Book, Cross, Heart, Clock, Users, Church, ArrowLeft, UserCircle, LogOut } from "lucide-react";
+import { Book, Cross, Heart, Clock, Users, Church, UserCircle, LogOut, Menu, X } from "lucide-react";
 import { ThemeToggle } from "../../../shared/components/ThemeToggle";
 import { useAuth } from "../../auth/hooks/useAuth";
 
 export function ChurchHome() {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
-  const contemplativeMode = true;
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const firstName = user?.name?.split(' ')[0] || 'Usuário';
 
@@ -69,6 +70,18 @@ export function ChurchHome() {
               Rosarium
             </h1>
           </div>
+          
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center gap-4">
+            <ThemeToggle />
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-church-accent hover:text-church-accent-hover transition-colors"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-church-text-secondary">
             <button onClick={() => navigate("/rosario")} className="hover:text-church-accent transition-colors">Rosário</button>
             <button onClick={() => navigate("/novenas")} className="hover:text-church-accent transition-colors">Novenas</button>
@@ -99,6 +112,44 @@ export function ChurchHome() {
             )}
           </nav>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-church-bg-secondary border-t border-church-border absolute top-full left-0 w-full shadow-lg">
+            <nav className="flex flex-col px-6 py-4 gap-4 text-sm font-medium text-church-text-secondary">
+              <button onClick={() => { navigate("/rosario"); setIsMobileMenuOpen(false); }} className="text-left hover:text-church-accent transition-colors py-2 border-b border-church-border/50">Rosário</button>
+              <button onClick={() => { navigate("/novenas"); setIsMobileMenuOpen(false); }} className="text-left hover:text-church-accent transition-colors py-2 border-b border-church-border/50">Novenas</button>
+              <button onClick={() => { navigate("/oracoes"); setIsMobileMenuOpen(false); }} className="text-left hover:text-church-accent transition-colors py-2 border-b border-church-border/50">Orações</button>
+              
+              <div className="pt-2">
+                {isAuthenticated ? (
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium italic text-church-accent-hover">
+                      Paz e bem, {firstName}
+                    </span>
+                    <button 
+                      onClick={() => { logout(); setIsMobileMenuOpen(false); }}
+                      className="flex items-center gap-2 hover:text-red-500 transition-colors opacity-70 hover:opacity-100"
+                      title="Sair"
+                    >
+                      <span>Sair</span>
+                      <LogOut className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={() => { navigate("/auth/login"); setIsMobileMenuOpen(false); }} 
+                    className="flex items-center gap-2 hover:text-church-accent transition-colors w-full"
+                    title="Entrar"
+                  >
+                    <UserCircle className="w-5 h-5" />
+                    <span>Entrar na sua conta</span>
+                  </button>
+                )}
+              </div>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Hero Section Minimalista e Claro com Imagem de Fundo */}
@@ -191,7 +242,7 @@ export function ChurchHome() {
         <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
           <Cross className="w-6 h-6 mx-auto mb-8 opacity-60 text-church-accent" />
           <h2 className="text-2xl md:text-4xl font-serif mb-8 leading-snug text-church-accent-hover italic">
-            "A oração é a elevação da alma a Deus ou o pedido a Deus dos bens convenientes."
+            {"\"A oração é a elevação da alma a Deus ou o pedido a Deus dos bens convenientes.\""}
           </h2>
           <p className="font-medium tracking-wide uppercase text-sm text-church-text-muted">— Santa Teresinha do Menino Jesus</p>
         </div>
@@ -240,7 +291,7 @@ export function ChurchHome() {
             <Cross className="w-4 h-4 stroke-[1.5]" />
           </div>
           <p className="text-sm font-serif italic text-church-text-secondary">
-            "Orai sem cessar"
+            {"\"Orai sem cessar\""}
           </p>
           <p className="text-xs tracking-wide text-church-text-muted">
             © {new Date().getFullYear()} ROSARIUM
