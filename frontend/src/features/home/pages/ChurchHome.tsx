@@ -73,7 +73,7 @@ export function ChurchHome() {
   return (
     <div className="min-h-screen bg-church-bg linen-bg text-church-text font-sans">
       {/* Navbar Suave */}
-      <header className="bg-church-header border-b border-church-border backdrop-blur-md sticky top-0 z-50 transition-all">
+      <header className="bg-church-header border-b border-church-border backdrop-blur-md sticky top-0 z-50 transition-all relative">
         <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-2.5 text-church-accent hover:text-church-accent-hover transition-colors cursor-pointer">
             <Cross className="w-5 h-5 stroke-[1.5]" />
@@ -81,13 +81,15 @@ export function ChurchHome() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-4">
+          <div className="flex md:hidden items-center gap-4">
             <ThemeToggle />
             <button
+              type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-church-accent hover:text-church-accent-hover transition-colors"
+              className="p-2 text-church-accent hover:text-church-accent-hover transition-colors bg-church-bg-secondary rounded-md border border-church-border shadow-sm"
+              aria-label="Abrir menu mobile"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
 
@@ -139,8 +141,8 @@ export function ChurchHome() {
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-church-bg-secondary border-t border-church-border absolute top-full left-0 w-full shadow-lg">
-            <nav className="flex flex-col px-6 py-4 gap-4 text-sm font-medium text-church-text-secondary">
+          <div className="md:hidden bg-church-bg border-t border-church-border absolute top-[100%] left-0 w-full shadow-xl z-50 flex flex-col">
+            <nav className="flex flex-col px-6 py-6 gap-4 text-sm font-medium text-church-text-secondary">
               <button
                 onClick={() => {
                   navigate('/rosario');
