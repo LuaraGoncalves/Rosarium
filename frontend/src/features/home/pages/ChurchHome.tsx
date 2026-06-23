@@ -148,26 +148,6 @@ export function ChurchHome() {
           </nav>
 
           <div className="flex items-center gap-4 md:hidden">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => navigate('/rosario')}
-                className="rounded-sm border border-church-border bg-church-bg-secondary px-3 py-2 text-xs font-medium text-church-text"
-              >
-                Rosário
-              </button>
-              <button
-                onClick={() => navigate('/novenas')}
-                className="rounded-sm border border-church-border bg-church-bg-secondary px-3 py-2 text-xs font-medium text-church-text"
-              >
-                Novenas
-              </button>
-              <button
-                onClick={() => navigate('/oracoes')}
-                className="rounded-sm border border-church-border bg-church-bg-secondary px-3 py-2 text-xs font-medium text-church-text"
-              >
-                Orações
-              </button>
-            </div>
             <ThemeToggle />
             <button
               type="button"
