@@ -5,7 +5,7 @@ export const listSantos = async (req: Request, res: Response) => {
   try {
     const santos = await SantoService.listSantos();
     res.json(santos);
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: 'Erro ao buscar santos.' });
   }
 };
@@ -15,7 +15,7 @@ export const getSantosByDiaFesta = async (req: Request, res: Response) => {
     const diaFesta = req.params.diaFesta as string;
     const santos = await SantoService.getSantosByDiaFesta(diaFesta);
     res.json(santos);
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: 'Erro ao buscar santos.' });
   }
 };
@@ -40,7 +40,7 @@ export const getSantoById = async (req: Request, res: Response) => {
     } else {
       res.status(404).json({ error: 'Santo não encontrado no banco de dados.' });
     }
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: 'Erro ao buscar santo.' });
   }
 };
@@ -50,7 +50,7 @@ export const createSanto = async (req: Request, res: Response) => {
     const { nome, historia, diaFesta } = req.body;
     const santo = await SantoService.createSanto({ nome, historia, diaFesta });
     res.json(santo);
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: 'Erro ao criar santo.' });
   }
 };
@@ -61,7 +61,7 @@ export const updateSanto = async (req: Request, res: Response) => {
     const { nome, historia, diaFesta } = req.body;
     const santo = await SantoService.updateSanto(id, { nome, historia, diaFesta });
     res.json(santo);
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: 'Erro ao atualizar santo.' });
   }
 };

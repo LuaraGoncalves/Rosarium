@@ -40,7 +40,7 @@ export function LiturgiaPage() {
           </h2>
           <p className="text-church-text/80 leading-relaxed mb-4">
             A Liturgia das Horas é a oração pública e comum do Povo de Deus.
-            Nela, Cristo mesmo "continua a exercer sua função sacerdotal",
+            Nela, Cristo mesmo &quot;continua a exercer sua função sacerdotal&quot;,
             reunindo a Igreja em louvor a Deus e intercessão pelo mundo.
           </p>
         </div>

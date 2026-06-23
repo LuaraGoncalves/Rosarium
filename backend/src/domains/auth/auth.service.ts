@@ -1,6 +1,6 @@
 import { prisma } from '@/infra/database/prisma';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import { RegisterDTO, LoginDTO } from './auth.dto';
 import { AppError } from '../../shared/errors/AppError';
 
@@ -12,7 +12,7 @@ export class AuthService {
     const { name, email, password } = data;
 
     const userExists = await prisma.user.findUnique({
-      where: { email }
+      where: { email },
     });
 
     if (userExists) {
@@ -26,18 +26,18 @@ export class AuthService {
         name,
         email,
         password: hashedPassword,
-      }
+      },
     });
 
     const token = jwt.sign({ id: user.id }, JWT_SECRET, {
-      expiresIn: JWT_EXPIRES_IN as any
+      expiresIn: JWT_EXPIRES_IN as SignOptions['expiresIn'],
     });
 
-    const { password: _, ...userWithoutPassword } = user;
+    const { password: _password, ...userWithoutPassword } = user;
 
     return {
       user: userWithoutPassword,
-      token
+      token,
     };
   }
 
@@ -45,7 +45,7 @@ export class AuthService {
     const { email, password } = data;
 
     const user = await prisma.user.findUnique({
-      where: { email }
+      where: { email },
     });
 
     if (!user) {
@@ -59,14 +59,14 @@ export class AuthService {
     }
 
     const token = jwt.sign({ id: user.id }, JWT_SECRET, {
-      expiresIn: JWT_EXPIRES_IN as any
+      expiresIn: JWT_EXPIRES_IN as SignOptions['expiresIn'],
     });
 
-    const { password: _, ...userWithoutPassword } = user;
+    const { password: _password, ...userWithoutPassword } = user;
 
     return {
       user: userWithoutPassword,
-      token
+      token,
     };
   }
 }

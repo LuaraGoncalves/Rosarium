@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router";
-import { Book, Cross, Heart, Clock, Users, Church, ArrowLeft, UserCircle, LogOut } from "lucide-react";
+import { Book, Cross, Heart, Clock, Users, Church, UserCircle, LogOut } from "lucide-react";
 import { ThemeToggle } from "../../../shared/components/ThemeToggle";
 import { useAuth } from "../../auth/hooks/useAuth";
 
 export function ChurchHome() {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
-  const contemplativeMode = true;
 
   const firstName = user?.name?.split(' ')[0] || 'Usuário';
 

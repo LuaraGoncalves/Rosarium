@@ -65,13 +65,13 @@ export function parseSantoHtml(html: string): Result<SantoScrapedData> {
 
       const paragrafosUnicos = SantoFormatter.removerDuplicados(listaParagrafos);
 
-      let historiaCompleta = paragrafosUnicos.join('\n\n') || 'A vida deste santo nos ensina a amar a Deus com todo o coração e alma.';
+      const historiaCompleta = paragrafosUnicos.join('\n\n') || 'A vida deste santo nos ensina a amar a Deus com todo o coração e alma.';
 
-      let historiaResumo = paragrafosUnicos.slice(0, 3).join(' ').substring(0, 300).trim() || historiaCompleta;
+      const historiaResumo = paragrafosUnicos.slice(0, 3).join(' ').substring(0, 300).trim() || historiaCompleta;
 
-      let padroeiroDe = undefined;
-      let intercessao = 'Intercede por nós junto a Deus';
-      let fraseMarcante = undefined;
+      let padroeiroDe: string | undefined = undefined;
+      const intercessao = 'Intercede por nós junto a Deus';
+      let fraseMarcante: string | undefined = undefined;
 
       const matchPadroeiro = historiaCompleta.match(/(?:padroeiro|padroeira|protetor|protetora)(?:\s+d[eao]s?)?\s+([^.,;]+)/i);
       if (matchPadroeiro && matchPadroeiro[1]) {

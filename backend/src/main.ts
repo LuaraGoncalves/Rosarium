@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express'
+import express from 'express'
 import cors from 'cors'
 import routes from '@/infra/http/routes'
 import { errorHandler } from '@/shared/middlewares/errorHandler'
@@ -8,7 +8,9 @@ import { setupCronJobs } from './config/cron'
 
 const app = express()
 
-setupCronJobs()
+if (process.env.NODE_ENV !== 'test') {
+  setupCronJobs()
+}
 
 app.use(cors())
 app.use(express.json())

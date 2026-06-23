@@ -3,7 +3,7 @@ import { ArrowLeft, Heart, Calendar, CheckCircle } from "lucide-react";
 import { novenasData } from "../data/novenas";
 import { useNovenaProgress } from "../hooks/useNovenaProgress";
 
-function NovenaCard({ novena }: { novena: any }) {
+function NovenaCard({ novena }: { novena: (typeof novenasData)[number] }) {
   const navigate = useNavigate();
   const { completedDays, progressPercentage } = useNovenaProgress(novena.id);
   const percentage = progressPercentage(novena.duracao);

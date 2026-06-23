@@ -20,8 +20,8 @@ export function LoginPage() {
       localStorage.setItem('@Rosarium:token', token);
       localStorage.setItem('@Rosarium:user', JSON.stringify(user));
       navigate('/'); 
-    } catch (err: any) {
-      setError(err.message || 'Erro ao fazer login. Verifique suas credenciais.');
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'Erro ao fazer login. Verifique suas credenciais.');
     } finally {
       setLoading(false);
     }

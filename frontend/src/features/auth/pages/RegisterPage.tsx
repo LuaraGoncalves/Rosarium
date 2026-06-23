@@ -21,8 +21,8 @@ export function RegisterPage() {
       localStorage.setItem('@Rosarium:token', token);
       localStorage.setItem('@Rosarium:user', JSON.stringify(user));
       navigate('/');
-    } catch (err: any) {
-      setError(err.message || 'Erro ao realizar cadastro.');
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'Erro ao realizar cadastro.');
     } finally {
       setLoading(false);
     }

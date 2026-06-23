@@ -12,8 +12,7 @@ export const santosApi = {
     try {
       const response = await api.get<Santo>('/santos/hoje')
       return response.data
-    } catch (error) {
-
+    } catch {
       return null
     }
   },

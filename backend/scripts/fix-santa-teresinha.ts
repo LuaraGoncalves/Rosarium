@@ -6,9 +6,9 @@ async function main() {
   const santo = await prisma.santo.findUnique({ where: { id: 1 } });
   if (!santo) return;
 
-  const historiaFormatada = santo.historia.replace(/  /g, '\n\n');
+  const historiaFormatada = santo.historia.replace(/ {2}/g, '\n\n');
 
-  const updated = await prisma.santo.update({
+  await prisma.santo.update({
     where: { id: 1 },
     data: {
       seculo: 'Século XIX',

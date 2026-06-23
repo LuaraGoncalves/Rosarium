@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from "react-router";
-import { ArrowLeft, CheckCircle, Circle, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, CheckCircle, Circle } from "lucide-react";
 import { novenasData } from "../data/novenas";
 import { useNovenaProgress } from "../hooks/useNovenaProgress";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export function NovenaDia() {
   const { id, dia } = useParams();
@@ -107,7 +107,7 @@ export function NovenaDia() {
               Meditação do Dia
             </h3>
             <p className="text-lg md:text-xl mb-8 leading-relaxed font-serif text-church-text">
-              "{diaInfo.meditacao}"
+              {diaInfo.meditacao}
             </p>
 
             <h3 className="text-sm uppercase tracking-wider mb-4 font-bold text-church-accent/80">

@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router";
 import { ArrowLeft } from "lucide-react";
-import { useBreviario, BreviarioData } from "../hooks/useBreviario";
+import { useBreviario, BreviarioHoraSection } from "../hooks/useBreviario";
 
 export function BreviarioHoraPage() {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export function BreviarioHoraPage() {
     );
   }
 
-  let horaData: any = null;
+  let horaData: BreviarioHoraSection | null = null;
   if (hora === 'oficio') horaData = breviario.oficio;
   if (hora === 'laudes') horaData = breviario.laudes;
   if (hora === 'hora-media') horaData = breviario.hora_media;

@@ -1,9 +1,15 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import axios from "axios";
 import { api } from "../../../shared/services/api";
 
 export type SyncStatus = 'idle' | 'syncing' | 'saved' | 'error';
 
 export function useNovenaProgress(novenaId: string) {
+  type ConflictResponse = {
+    completedDays: number[];
+    updatedAt?: string;
+  };
+
   const getInitialProgress = () => {
     const saved = localStorage.getItem(`novena_progress_${novenaId}`);
     return saved ? JSON.parse(saved) : [];
@@ -40,9 +46,8 @@ export function useNovenaProgress(novenaId: string) {
             setSyncStatus('saved');
             setTimeout(() => setSyncStatus('idle'), 3000);
             return;
-          } catch (syncError: any) {
-
-            if (syncError.response && syncError.response.status === 409) {
+          } catch (syncError: unknown) {
+            if (axios.isAxiosError<ConflictResponse>(syncError) && syncError.response?.status === 409) {
               const serverData = syncError.response.data;
               localStorage.removeItem(`novena_sync_pending_${novenaId}`);
               
@@ -108,9 +113,8 @@ export function useNovenaProgress(novenaId: string) {
         setSyncStatus('saved');
         setTimeout(() => setSyncStatus('idle'), 3000);
 
-      } catch (error: any) {
-
-        if (error.response && error.response.status === 409) {
+      } catch (error: unknown) {
+        if (axios.isAxiosError<ConflictResponse>(error) && error.response?.status === 409) {
           const serverData = error.response.data;
           setCompletedDays(serverData.completedDays);
           serverDaysRef.current = serverData.completedDays;

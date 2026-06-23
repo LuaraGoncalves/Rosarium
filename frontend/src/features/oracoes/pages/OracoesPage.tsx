@@ -109,7 +109,7 @@ export function OracoesPage() {
           
           <div className="mb-8">
             <p className="text-church-text/80 text-lg leading-relaxed text-center font-serif italic">
-              "Orai sem cessar" - 1 Tessalonicenses 5:17
+              &quot;Orai sem cessar&quot; - 1 Tessalonicenses 5:17
             </p>
             <p className="text-church-text/60 mt-4 leading-relaxed text-center">
               A oração é a elevação da alma a Deus. É através dela que nos

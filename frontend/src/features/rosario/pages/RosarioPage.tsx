@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { useNavigate } from "react-router";
-import { ArrowLeft, Cross, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, Cross } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../../shared/components/ui/accordion";
 import { oracoesDoRosario } from "../data/oracoes";
 import { misteriosDoRosario } from "../data/misterios";

@@ -1,15 +1,29 @@
 import { useState, useEffect } from 'react';
 import { api } from '@/shared/services/api';
 
+export interface BreviarioHoraSection {
+  invitatorio?: string;
+  hino?: string;
+  salmodia?: string[];
+  leitura1?: string;
+  leitura2?: string;
+  leitura?: string;
+  benedictus?: string;
+  magnificat?: string;
+  nunc_dimittis?: string;
+  preces?: string[];
+  oracao?: string;
+}
+
 export interface BreviarioData {
   data: string;
   tempo: string;
   semana: string;
-  oficio: any;
-  laudes: any;
-  vesperas: any;
-  completas: any;
-  hora_media?: any;
+  oficio: BreviarioHoraSection;
+  laudes: BreviarioHoraSection;
+  vesperas: BreviarioHoraSection;
+  completas: BreviarioHoraSection;
+  hora_media?: BreviarioHoraSection;
 }
 
 export function useBreviario() {
@@ -25,9 +39,9 @@ export function useBreviario() {
         
         setData(response.data);
         setError(null);
-      } catch (err: any) {
-        setError(err.message || 'Erro ao carregar a Liturgia e Breviário do Backend');
-        console.error("Erro no fetch do breviario", err);
+      } catch (error: unknown) {
+        setError(error instanceof Error ? error.message : 'Erro ao carregar a Liturgia e Breviário do Backend');
+        console.error('Erro no fetch do breviario', error);
       } finally {
         setLoading(false);
       }

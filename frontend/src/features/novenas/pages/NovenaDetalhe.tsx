@@ -1,13 +1,11 @@
 import { useParams, useNavigate } from "react-router";
-import { ArrowLeft, CheckCircle, Circle, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, CheckCircle, Circle } from "lucide-react";
 import { novenasData } from "../data/novenas";
 import { useNovenaProgress } from "../hooks/useNovenaProgress";
-import { useState } from "react";
 
 export function NovenaDetalhe() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [contemplativeMode, setContemplativeMode] = useState(false);
   
   const novena = novenasData.find(n => n.id === id);
   const { completedDays, progressPercentage } = useNovenaProgress(id || "");

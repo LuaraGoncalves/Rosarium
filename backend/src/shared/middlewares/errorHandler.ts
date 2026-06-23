@@ -6,13 +6,15 @@ export const errorHandler = (
   err: Error,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   if (err instanceof AppError) {
+    const errors = typeof err.errors === 'object' && err.errors !== null ? err.errors : undefined;
+
     return res.status(err.statusCode).json({
       status: 'error',
       message: err.message,
-      ...(err.errors && { errors: err.errors })
+      ...(errors ? { errors } : {})
     });
   }
 
