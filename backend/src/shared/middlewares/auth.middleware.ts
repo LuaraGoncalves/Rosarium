@@ -27,9 +27,9 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as TokenPayload;
-    
+
     (req as AuthenticatedRequest).user = {
-      id: decoded.id
+      id: decoded.id,
     };
 
     return next();

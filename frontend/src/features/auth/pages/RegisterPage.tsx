@@ -93,7 +93,10 @@ export function RegisterPage() {
 
         <div className="mt-6 text-center text-sm">
           <span className="text-neutral-500 dark:text-neutral-400">Já tem uma conta? </span>
-          <Link to="/auth/login" className="font-medium text-[#8B4513] hover:underline dark:text-[#D4A373]">
+          <Link
+            to="/auth/login"
+            className="font-medium text-[#8B4513] hover:underline dark:text-[#D4A373]"
+          >
             Entrar
           </Link>
         </div>

@@ -34,7 +34,7 @@ export const getSantoById = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id as string);
     const santo = await SantoService.getSantoById(id);
-    
+
     if (santo) {
       res.json(santo);
     } else {

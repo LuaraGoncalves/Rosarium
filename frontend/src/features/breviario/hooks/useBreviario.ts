@@ -36,11 +36,15 @@ export function useBreviario() {
       try {
         setLoading(true);
         const response = await api.get('/liturgia/hoje');
-        
+
         setData(response.data);
         setError(null);
       } catch (error: unknown) {
-        setError(error instanceof Error ? error.message : 'Erro ao carregar a Liturgia e Breviário do Backend');
+        setError(
+          error instanceof Error
+            ? error.message
+            : 'Erro ao carregar a Liturgia e Breviário do Backend'
+        );
         console.error('Erro no fetch do breviario', error);
       } finally {
         setLoading(false);

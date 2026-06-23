@@ -16,12 +16,14 @@ export function LoginPage() {
 
     try {
       const { user, token } = await authApi.login(email, password);
-  
+
       localStorage.setItem('@Rosarium:token', token);
       localStorage.setItem('@Rosarium:user', JSON.stringify(user));
-      navigate('/'); 
+      navigate('/');
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : 'Erro ao fazer login. Verifique suas credenciais.');
+      setError(
+        error instanceof Error ? error.message : 'Erro ao fazer login. Verifique suas credenciais.'
+      );
     } finally {
       setLoading(false);
     }
@@ -79,7 +81,10 @@ export function LoginPage() {
 
         <div className="mt-6 text-center text-sm">
           <span className="text-neutral-500 dark:text-neutral-400">Não tem uma conta? </span>
-          <Link to="/auth/register" className="font-medium text-[#8B4513] hover:underline dark:text-[#D4A373]">
+          <Link
+            to="/auth/register"
+            className="font-medium text-[#8B4513] hover:underline dark:text-[#D4A373]"
+          >
             Cadastre-se
           </Link>
         </div>

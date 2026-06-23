@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { api } from "@/shared/services/api";
-import { Santo } from "../types/santo";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { api } from '@/shared/services/api';
+import { Santo } from '../types/santo';
 
 export function useSanto(id?: string) {
   const [santo, setSanto] = useState<Santo | null>(null);
@@ -17,14 +17,13 @@ export function useSanto(id?: string) {
 
         const res = await api.get(`/santos/${id}`);
         setSanto(res.data);
-
       } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
-          setError(error.message || "Erro ao buscar santo");
+          setError(error.message || 'Erro ao buscar santo');
         } else if (error instanceof Error) {
           setError(error.message);
         } else {
-          setError("Erro ao buscar santo");
+          setError('Erro ao buscar santo');
         }
         console.error(error);
       } finally {

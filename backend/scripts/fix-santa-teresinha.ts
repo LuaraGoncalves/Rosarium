@@ -13,10 +13,12 @@ async function main() {
     data: {
       seculo: 'Século XIX',
       historia: historiaFormatada,
-    }
+    },
   });
 
   console.log('Fixed Santa Teresinha in DB');
 }
 
-main().catch(console.error).finally(() => prisma.$disconnect());
+main()
+  .catch(console.error)
+  .finally(() => prisma.$disconnect());

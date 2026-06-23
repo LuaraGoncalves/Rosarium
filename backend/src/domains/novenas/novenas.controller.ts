@@ -57,7 +57,7 @@ export class NovenasController {
       if (!novenaId) {
         return res.status(400).json({ error: 'novenaId é obrigatório.' });
       }
-      
+
       const userId = (req as Request & { user?: { id: string } }).user?.id;
 
       if (!userId) {
@@ -73,9 +73,9 @@ export class NovenasController {
         },
       });
 
-      return res.json({ 
+      return res.json({
         completedDays: progress?.completedDays || [],
-        updatedAt: progress?.updatedAt ? progress.updatedAt.toISOString() : null
+        updatedAt: progress?.updatedAt ? progress.updatedAt.toISOString() : null,
       });
     } catch (error) {
       console.error('Error fetching novena progress:', error);
@@ -111,7 +111,7 @@ export class NovenasController {
       if (currentProgress && localUpdatedAt) {
         const clientDate = new Date(localUpdatedAt);
         const serverDate = new Date(currentProgress.updatedAt);
-        
+
         if (serverDate.getTime() > clientDate.getTime() + 1000) {
           return res.status(409).json({
             error: 'Conflict: Server has newer data',
@@ -138,9 +138,9 @@ export class NovenasController {
         },
       });
 
-      return res.json({ 
+      return res.json({
         completedDays: progress.completedDays,
-        updatedAt: progress.updatedAt.toISOString()
+        updatedAt: progress.updatedAt.toISOString(),
       });
     } catch (error: unknown) {
       console.error('Error saving novena progress:', error);
