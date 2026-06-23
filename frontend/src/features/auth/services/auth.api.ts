@@ -13,7 +13,11 @@ export const authApi = {
   },
 
   async register(name: string, email: string, password: string) {
-    const response = await api.post<{ user: AuthUser }>('/auth/register', { name, email, password });
+    const response = await api.post<{ user: AuthUser }>('/auth/register', {
+      name,
+      email,
+      password,
+    });
     return response.data;
   },
 
@@ -25,5 +29,5 @@ export const authApi = {
   async logout() {
     const response = await api.post('/auth/logout');
     return response.data;
-  }
+  },
 };

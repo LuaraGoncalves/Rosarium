@@ -149,7 +149,10 @@ export function useNovenaProgress(novenaId: string) {
           return;
         }
 
-        console.error('Failed to sync novena progress with backend. Offline fallback activated.', error);
+        console.error(
+          'Failed to sync novena progress with backend. Offline fallback activated.',
+          error
+        );
         setSyncStatus('error');
       }
     };
