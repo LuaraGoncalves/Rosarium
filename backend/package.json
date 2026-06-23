@@ -2,10 +2,14 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "engines": {
+    "node": "24.x"
+  },
+  "main": "src/infra/http/server.ts",
   "scripts": {
-    "start": "tsx src/index.ts",
-    "dev": "nodemon --exec tsx src/infra/http/server.ts"
+    "start": "tsx src/infra/http/server.ts",
+    "dev": "nodemon --exec tsx src/infra/http/server.ts",
+    "test": "prisma generate && jest --runInBand --detectOpenHandles"
   },
   "keywords": [],
   "author": "",

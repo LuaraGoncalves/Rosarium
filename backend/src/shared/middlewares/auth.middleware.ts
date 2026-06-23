@@ -10,6 +10,12 @@ interface TokenPayload {
   exp: number;
 }
 
+type AuthenticatedRequest = Request & {
+  user?: {
+    id: string;
+  };
+};
+
 export function authMiddleware(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
 
@@ -21,13 +27,13 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as TokenPayload;
-    
-    (req as any).user = {
-      id: decoded.id
+
+    (req as AuthenticatedRequest).user = {
+      id: decoded.id,
     };
 
     return next();
-  } catch (err) {
+  } catch {
     throw new AppError('Token JWT inválido.', 401);
   }
 }

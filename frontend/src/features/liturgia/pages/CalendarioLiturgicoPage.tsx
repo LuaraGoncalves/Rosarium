@@ -38,7 +38,7 @@ export function CalendarioLiturgicoPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans pb-24">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-6 transition-all">
+      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
         <div className="max-w-4xl mx-auto px-4">
           <div className="mb-4">
             <button
@@ -51,7 +51,7 @@ export function CalendarioLiturgicoPage() {
           </div>
           <div className="flex flex-col items-center justify-center gap-3">
             <CalendarIcon className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-3xl text-center font-serif text-church-accent">
+            <h1 className="text-2xl md:text-3xl text-center font-serif text-church-accent">
               Calendário Litúrgico
             </h1>
             <p className="text-church-text/60 mt-1">
@@ -61,15 +61,15 @@ export function CalendarioLiturgicoPage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <div className="flex items-center justify-between mb-8 bg-church-bg-secondary p-4 rounded-xl border border-church-border-hover">
+      <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
+        <div className="flex items-center justify-between gap-3 mb-8 bg-church-bg-secondary p-4 rounded-xl border border-church-border-hover">
           <button
             onClick={handlePrevMonth}
             className="p-2 text-church-accent hover:bg-church-bg rounded-full transition-colors"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
-          <h2 className="text-2xl font-serif text-church-accent-hover">
+          <h2 className="text-lg sm:text-2xl font-serif text-church-accent-hover text-center">
             {meses[currentDate.getMonth()]} {currentDate.getFullYear()}
           </h2>
           <button
@@ -92,7 +92,7 @@ export function CalendarioLiturgicoPage() {
             {currentMonthData.map((dia, index) => (
               <div
                 key={index}
-                className="bg-church-bg-secondary p-6 rounded-xl border border-church-border-hover flex flex-col md:flex-row items-start md:items-center gap-6 transition-colors hover:border-[#C89B3C]/50"
+                className="bg-church-bg-secondary p-5 md:p-6 rounded-xl border border-church-border-hover flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 transition-colors hover:border-[#C89B3C]/50"
               >
                 <div className="flex-shrink-0 w-20 h-20 bg-church-bg border border-church-border-hover rounded-full flex flex-col items-center justify-center shadow-inner">
                   <span className="text-2xl font-serif text-church-accent">{dia.dia}</span>

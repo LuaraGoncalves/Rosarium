@@ -11,7 +11,7 @@ export function SantosPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-6 transition-all">
+      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-4">
             <button
@@ -24,16 +24,16 @@ export function SantosPage() {
           </div>
           <div className="flex items-center justify-center gap-3">
             <Users className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-4xl text-center font-serif text-church-accent">
+            <h1 className="text-3xl md:text-4xl text-center font-serif text-church-accent">
               História dos Santos
             </h1>
           </div>
         </div>
       </header>
 
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="bg-church-bg-secondary rounded-2xl p-8 mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-64 mb-8 rounded-xl">
+      <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+        <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
+          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-xl">
             <img
               src="https://images.unsplash.com/photo-1637331664385-17bbf6be1d93?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXRob2xpYyUyMHNhaW50JTIwc3RhdHVlfGVufDF8fHx8MTc3MzQwOTg2Mnww&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Estátua de Santo"
@@ -58,7 +58,7 @@ export function SantosPage() {
               className="bg-church-bg-secondary rounded-2xl overflow-hidden border border-[#D4AF37]/30 transition-all hover:border-[#D4AF37]/70 cursor-pointer shadow-none group"
             >
               <div className="grid md:grid-cols-2">
-                <div className="h-64 md:h-auto overflow-hidden relative bg-church-bg-tertiary flex items-center justify-center">
+                <div className="h-56 md:h-auto overflow-hidden relative bg-church-bg-tertiary flex items-center justify-center">
                   {santoDoDia.imagemUrl ? (
                     <img
                       src={santoDoDia.imagemUrl}
@@ -71,7 +71,7 @@ export function SantosPage() {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/80 md:from-transparent to-transparent"></div>
                 </div>
-                <div className="p-8 md:p-12 flex flex-col justify-center">
+                <div className="p-6 md:p-12 flex flex-col justify-center">
                   {santoDoDia.diaFesta && (
                     <div className="flex items-center gap-2 text-church-text/60 mb-3">
                       <Calendar className="w-4 h-4" />
@@ -112,14 +112,14 @@ export function SantosPage() {
 
         <div className="mb-8">
           <h2 className="text-2xl font-serif text-church-accent mb-6">Conheça outros Santos</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {outrosSantos.map((santo) => (
               <div
                 key={santo.id}
                 onClick={() => navigate(`/santos/${santo.id}`)}
                 className="bg-church-bg-secondary rounded-xl overflow-hidden border border-church-border-hover transition-all hover:border-[#D4AF37]/50 group cursor-pointer shadow-none flex flex-col"
               >
-                <div className="h-48 overflow-hidden relative shrink-0 bg-church-bg-tertiary flex items-center justify-center">
+                <div className="h-44 md:h-48 overflow-hidden relative shrink-0 bg-church-bg-tertiary flex items-center justify-center">
                   {santo.imagemUrl ? (
                     <img
                       src={santo.imagemUrl}

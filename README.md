@@ -1,61 +1,89 @@
-# Rosarium - Plataforma de Orações e Liturgia
+# Rosarium
 
-Plataforma fullstack para gerenciamento de conteúdos religiosos, incluindo santos, novenas e liturgia diária. O sistema foi desenvolvido com o intuito de proporcionar uma ferramenta digital completa, robusta e escalável para auxiliar a jornada de fé diária dos fiéis.
+Monorepo da plataforma Rosarium, com frontend em React/Vite e backend em Node.js/Express com Prisma.
 
-## Tecnologias
+## Stack
 
-O projeto utiliza um conjunto de tecnologias modernas e eficientes, garantindo alta performance e facilidade de manutenção:
+- `frontend`: React, TypeScript, Vite, Tailwind CSS
+- `backend`: Node.js, Express, Prisma, PostgreSQL
+- `shared`: `packages/liturgy-engine`
+- testes: Jest, Supertest e Vitest
+- validação: Zod
 
-- **Frontend**: React (Vite), TypeScript, Tailwind CSS, Shadcn/ui.
-- **Backend**: Node.js, Express, Prisma ORM, PostgreSQL.
-- **Validações**: Zod.
-- **Testes**: Jest e Supertest.
+## Workspace
 
-## Arquitetura
+Este repositório usa `pnpm` como gerenciador padrão.
 
-O sistema adota padrões estruturais maduros, garantindo alta escalabilidade e manutenção profissional a longo prazo:
+- `pnpm-workspace.yaml` define os pacotes do monorepo
+- `packageManager` está travado para `pnpm@11.1.2`
+- há um único `pnpm-lock.yaml` na raiz
 
-- **Frontend**: Padrão Feature-Based. Cada módulo (como santos, liturgia, rosário) é autocontido, possuindo suas próprias rotas, componentes, serviços e hooks, evitando acoplamento excessivo.
-- **Backend**: Arquitetura modular inspirada nos princípios do Clean Architecture e Domain-Driven Design (DDD). As responsabilidades são estritamente separadas entre rotas, controladores (controllers), casos de uso (services), acesso a dados (repositories) e infraestrutura.
+## Requisitos
 
-## Funcionalidades
+- Node.js `20.x`
+- `pnpm`
+- PostgreSQL para o backend
 
-- **Liturgia Diária**: Acompanhamento completo do calendário litúrgico, leituras do dia, salmos e evangelho.
-- **Catálogo de Santos**: Base de dados detalhada contendo a biografia, padroeirados e orações específicas de santos católicos.
-- **Gestão de Novenas**: Sistema para criar, acompanhar e concluir novenas, com rastreamento de progresso diário e histórico.
-- **Santo Rosário**: Ferramenta interativa para auxiliar na contemplação dos mistérios do Rosário de acordo com o dia da semana.
-- **Breviário (Liturgia das Horas)**: Acesso às orações oficiais da Igreja para diferentes momentos do dia.
+## Como rodar
 
-## DIFERENCIAIS
+Instalação:
 
-O Rosarium foi projetado com foco na experiência do usuário e na precisão dos dados, destacando-se através dos seguintes diferenciais:
+```bash
+pnpm install
+```
 
-1. **Sincronização Offline-First para Orações e Novenas**: Arquitetura resiliente que permite o uso contínuo do aplicativo mesmo sem conexão com a internet. O progresso das novenas e as leituras da liturgia diária são cacheados localmente, sincronizando de forma transparente com o backend assim que a conexão é restabelecida.
-2. **Automação de Curadoria de Dados (Web Scraping)**: Sistema de integração robusto que extrai e processa dados atualizados de fontes católicas confiáveis, garantindo que as informações biográficas dos santos e as leituras litúrgicas estejam sempre em conformidade com o calendário oficial da Igreja, sem necessidade de intervenção manual diária.
+Frontend:
 
-### Inteligência do Sistema
+```bash
+pnpm --dir frontend dev
+```
 
-- **Motor de Recomendação Litúrgica e Espiritual Contextual**: O sistema possui uma camada analítica inteligente que cruza o comportamento do usuário com o calendário litúrgico global. Com base no tempo litúrgico atual (como Quaresma ou Advento), solenidades do dia e o histórico de devoções do usuário, o algoritmo sugere dinamicamente conteúdos personalizados. Por exemplo, sugerir a Novena de São José nos dias que antecedem sua festa, ou recomendar orações específicas baseadas em buscas textuais com processamento de linguagem natural focado em sentimentos (ex: sugerir orações de Santa Dinfna para buscas relacionadas à ansiedade).
+Backend:
 
-## Como rodar o projeto
+```bash
+pnpm --dir backend dev
+```
 
-### Pré-requisitos
-- Node.js (v18+)
-- NPM ou Yarn
-- Banco de dados PostgreSQL (ou SQLite para desenvolvimento local)
+## Testes
 
-### Configuração do Backend
-1. Acesse o diretório `backend` através do terminal.
-2. Instale as dependências executando `npm install`.
-3. Configure o arquivo `.env` baseado no `.env.example`.
-4. Gere o client do Prisma e execute as migrações: `npx prisma generate` e `npx prisma migrate dev`.
-5. Inicie o servidor de desenvolvimento: `npm run dev`.
+Rodar tudo:
 
-### Configuração do Frontend
-1. Acesse o diretório `frontend` através de um novo terminal.
-2. Instale as dependências executando `npm install`.
-3. Configure o arquivo `.env` baseado no `.env.example`.
-4. Inicie a aplicação de desenvolvimento: `npm run dev`.
+```bash
+pnpm test
+```
 
-## Documentação
-Para aprofundamento nas diretrizes de código e detalhes sobre a arquitetura implementada, consulte a documentação técnica disponível na pasta `docs/`.
+Backend:
+
+```bash
+pnpm run test:backend
+```
+
+Frontend:
+
+```bash
+pnpm run test:frontend
+```
+
+## Lint
+
+```bash
+pnpm run lint
+```
+
+## Build do frontend
+
+```bash
+pnpm --dir frontend build
+```
+
+## Estrutura
+
+- `frontend/`: aplicação web
+- `backend/`: API e regras de negócio
+- `packages/liturgy-engine/`: pacote compartilhado
+
+## Observações
+
+- O backend sobe a aplicação a partir de `backend/src/infra/http/server.ts`
+- `backend/src/main.ts` monta o app Express
+- arquivos de build como `dist/` e `*.tsbuildinfo` são artefatos gerados e não devem ser versionados

@@ -10,12 +10,11 @@ export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-
     const storedUser = localStorage.getItem('@Rosarium:user');
     if (storedUser) {
       try {
         setUser(JSON.parse(storedUser));
-      } catch (e) {
+      } catch {
         console.error('Falha ao parsear usuário salvo');
       }
     }
@@ -30,6 +29,6 @@ export function useAuth() {
   return {
     user,
     isAuthenticated: !!user,
-    logout
+    logout,
   };
 }
