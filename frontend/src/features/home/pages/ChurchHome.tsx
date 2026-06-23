@@ -223,22 +223,12 @@ export function ChurchHome() {
         {isMobileMenuOpen && (
           <div className="absolute left-0 top-[100%] z-50 flex w-full flex-col border-t border-church-border bg-church-bg shadow-xl md:hidden">
             <nav className="flex flex-col gap-4 px-6 py-6 text-sm font-medium text-church-text-secondary">
-
-        {/* Mobile Navigation Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-church-bg border-t border-church-border absolute top-[100%] left-0 w-full shadow-xl z-50 flex flex-col">
-            <nav className="flex flex-col px-6 py-6 gap-4 text-sm font-medium text-church-text-secondary">
-
               <button
                 onClick={() => {
                   navigate('/rosario');
                   setIsMobileMenuOpen(false);
                 }}
-
                 className="border-b border-church-border/50 py-2 text-left transition-colors hover:text-church-accent"
-
-                className="text-left hover:text-church-accent transition-colors py-2 border-b border-church-border/50"
-
               >
                 Rosário
               </button>
@@ -247,11 +237,7 @@ export function ChurchHome() {
                   navigate('/novenas');
                   setIsMobileMenuOpen(false);
                 }}
-
                 className="border-b border-church-border/50 py-2 text-left transition-colors hover:text-church-accent"
-
-                className="text-left hover:text-church-accent transition-colors py-2 border-b border-church-border/50"
-
               >
                 Novenas
               </button>
@@ -260,24 +246,15 @@ export function ChurchHome() {
                   navigate('/oracoes');
                   setIsMobileMenuOpen(false);
                 }}
-
                 className="border-b border-church-border/50 py-2 text-left transition-colors hover:text-church-accent"
-
-                className="text-left hover:text-church-accent transition-colors py-2 border-b border-church-border/50"
-
               >
                 Orações
               </button>
 
               <div className="pt-2">
                 {isAuthenticated ? (
-
                   <div className="flex items-center justify-between gap-4">
                     <span className="truncate text-sm font-medium italic text-church-accent-hover">
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium italic text-church-accent-hover">
-
                       Paz e bem, {firstName}
                     </span>
                     <button
@@ -285,11 +262,7 @@ export function ChurchHome() {
                         logout();
                         setIsMobileMenuOpen(false);
                       }}
-
                       className="flex items-center gap-2 opacity-70 transition-colors hover:text-red-500 hover:opacity-100"
-
-                      className="flex items-center gap-2 hover:text-red-500 transition-colors opacity-70 hover:opacity-100"
-
                       title="Sair"
                     >
                       <span>Sair</span>
@@ -303,7 +276,6 @@ export function ChurchHome() {
                       setIsMobileMenuOpen(false);
                     }}
                     className="flex w-full items-center gap-2 transition-colors hover:text-church-accent"
-
                     title="Entrar"
                   >
                     <UserCircle className="w-5 h-5" />
@@ -330,7 +302,6 @@ export function ChurchHome() {
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
-
           <span className="font-medium tracking-[0.2em] text-[11px] uppercase mb-5 sm:mb-6 px-4 py-1.5 rounded-sm border bg-church-bg-secondary/80 backdrop-blur-sm border-church-border text-church-accent-hover">
             Refúgio Espiritual
           </span>
@@ -338,13 +309,6 @@ export function ChurchHome() {
             Encontre paz e propósito através da oração diária
           </h2>
           <p className="text-sm sm:text-lg md:text-xl font-light max-w-2xl mb-8 sm:mb-10 md:mb-12 leading-relaxed text-church-text-secondary">
-          <span className="font-medium tracking-[0.2em] text-xs uppercase mb-6 px-4 py-1.5 rounded-sm border bg-church-bg-secondary/80 backdrop-blur-sm border-church-border text-church-accent-hover">
-            Refúgio Espiritual
-          </span>
-          <h2 className="text-4xl md:text-6xl font-serif mb-8 max-w-3xl leading-[1.15] text-church-accent-hover">
-            Encontre paz e propósito através da oração diária
-          </h2>
-          <p className="text-lg md:text-xl font-light max-w-2xl mb-12 leading-relaxed text-church-text-secondary">
             Uma coleção serena de devoções, novenas e liturgias para guiar sua jornada de fé, onde
             quer que você esteja.
           </p>
@@ -352,32 +316,22 @@ export function ChurchHome() {
             <button
               onClick={() => navigate('/rosario')}
               className="px-8 py-3.5 rounded-sm font-medium transition-all shadow-sm flex items-center justify-center gap-2 text-sm bg-church-bg-secondary border-b-2 border-r-2 border-church-bg-darker hover:bg-church-border text-church-text w-full sm:w-auto"
-
-              className="px-8 py-3.5 rounded-sm font-medium transition-all shadow-sm flex items-center justify-center gap-2 text-sm bg-church-bg-secondary border-b-2 border-r-2 border-church-bg-darker hover:bg-church-border text-church-text"
-
             >
               <Cross className="w-4 h-4 text-church-accent" /> Rezar o Rosário
             </button>
             <button
               onClick={() => navigate('/oracoes')}
-
               className="px-8 py-3.5 rounded-sm font-medium transition-all shadow-sm flex items-center justify-center gap-2 text-sm bg-church-bg border-b-2 border-r-2 border-church-bg-darker hover:bg-church-bg-secondary text-church-accent w-full sm:w-auto"
-
-              className="px-8 py-3.5 rounded-sm font-medium transition-all shadow-sm flex items-center justify-center gap-2 text-sm bg-church-bg border-b-2 border-r-2 border-church-bg-darker hover:bg-church-bg-secondary text-church-accent"
-
             >
               <Book className="w-4 h-4 text-church-accent-hover" /> Ver Orações
             </button>
           </div>
-        </div>
-      </div>
+        </div>      </div>
 
       {/* Main Devotions - Cards Minimalistas */}
       <div className="py-16 sm:py-20 md:py-24 border-y bg-church-bg-tertiary border-church-border relative">
         <div className="absolute inset-0 linen-bg pointer-events-none"></div>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-12 md:mb-16">
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
             <h3 className="text-2xl md:text-3xl font-serif mb-4 text-church-accent uppercase tracking-wider">
               Devoções Principais
@@ -437,13 +391,8 @@ export function ChurchHome() {
       {/* Secondary Resources - Ícones Sutis */}
       <div className="py-16 sm:py-20 md:py-24 bg-church-bg-tertiary relative">
         <div className="absolute inset-0 linen-bg pointer-events-none"></div>
-
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 md:mb-16">
-
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
-
             <h3 className="text-2xl md:text-3xl font-serif mb-4 text-church-accent uppercase tracking-wider">
               Recursos Diários
             </h3>
@@ -481,9 +430,6 @@ export function ChurchHome() {
           <div className="flex items-center gap-2 opacity-60 text-church-accent-hover">
             <Cross className="w-4 h-4 stroke-[1.5]" />
           </div>
-
-          <p className="text-sm font-serif italic text-church-text-secondary">"Orai sem cessar"</p>
-
           <p className="text-sm font-serif italic text-church-text-secondary">
             {'"Orai sem cessar"'}
           </p>
