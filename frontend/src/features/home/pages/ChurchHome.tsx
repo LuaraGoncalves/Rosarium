@@ -219,7 +219,6 @@ export function ChurchHome() {
           </div>
         </div>
 
-
         {isMobileMenuOpen && (
           <div className="absolute left-0 top-[100%] z-50 flex w-full flex-col border-t border-church-border bg-church-bg shadow-xl md:hidden">
             <nav className="flex flex-col gap-4 px-6 py-6 text-sm font-medium text-church-text-secondary">
@@ -300,7 +299,6 @@ export function ChurchHome() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-church-bg/80 via-church-bg/50 to-church-bg"></div>
         </div>
-
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
           <span className="font-medium tracking-[0.2em] text-[11px] uppercase mb-5 sm:mb-6 px-4 py-1.5 rounded-sm border bg-church-bg-secondary/80 backdrop-blur-sm border-church-border text-church-accent-hover">
             Refúgio Espiritual
@@ -326,7 +324,8 @@ export function ChurchHome() {
               <Book className="w-4 h-4 text-church-accent-hover" /> Ver Orações
             </button>
           </div>
-        </div>      </div>
+        </div>{' '}
+      </div>
 
       {/* Main Devotions - Cards Minimalistas */}
       <div className="py-16 sm:py-20 md:py-24 border-y bg-church-bg-tertiary border-church-border relative">
