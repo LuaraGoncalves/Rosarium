@@ -1,11 +1,24 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { Book, Cross, Heart, Clock, Users, Church, UserCircle, LogOut } from 'lucide-react';
+import {
+  Book,
+  Cross,
+  Heart,
+  Clock,
+  Users,
+  Church,
+  UserCircle,
+  LogOut,
+  Menu,
+  X,
+} from 'lucide-react';
 import { ThemeToggle } from '../../../shared/components/ThemeToggle';
 import { useAuth } from '../../auth/hooks/useAuth';
 
 export function ChurchHome() {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const firstName = user?.name?.split(' ')[0] || 'Usuário';
 
@@ -111,7 +124,7 @@ export function ChurchHome() {
             )}
           </nav>
 
-          <div className="flex items-center justify-between md:hidden">
+          <div className="flex items-center gap-4 md:hidden">
             <div className="flex items-center gap-2">
               <button
                 onClick={() => navigate('/rosario')}
@@ -133,6 +146,23 @@ export function ChurchHome() {
               </button>
             </div>
             <ThemeToggle />
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="flex items-center justify-center rounded-md border-2 border-church-border bg-church-bg-secondary p-2 text-church-accent shadow-md transition-colors hover:text-church-accent-hover"
+              style={{
+                minWidth: '44px',
+                minHeight: '44px',
+                backgroundColor: 'rgba(200,155,60,0.1)',
+              }}
+              aria-label="Abrir menu mobile"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6 stroke-2 text-[#C89B3C]" />
+              ) : (
+                <Menu className="w-6 h-6 stroke-2 text-[#C89B3C]" />
+              )}
+            </button>
           </div>
 
           <div className="md:hidden flex items-center justify-between rounded-lg border border-church-border bg-church-bg-secondary px-3 py-2">
@@ -165,6 +195,73 @@ export function ChurchHome() {
             )}
           </div>
         </div>
+
+        {isMobileMenuOpen && (
+          <div className="absolute left-0 top-[100%] z-50 flex w-full flex-col border-t border-church-border bg-church-bg shadow-xl md:hidden">
+            <nav className="flex flex-col gap-4 px-6 py-6 text-sm font-medium text-church-text-secondary">
+              <button
+                onClick={() => {
+                  navigate('/rosario');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="border-b border-church-border/50 py-2 text-left transition-colors hover:text-church-accent"
+              >
+                Rosário
+              </button>
+              <button
+                onClick={() => {
+                  navigate('/novenas');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="border-b border-church-border/50 py-2 text-left transition-colors hover:text-church-accent"
+              >
+                Novenas
+              </button>
+              <button
+                onClick={() => {
+                  navigate('/oracoes');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="border-b border-church-border/50 py-2 text-left transition-colors hover:text-church-accent"
+              >
+                Orações
+              </button>
+
+              <div className="pt-2">
+                {isAuthenticated ? (
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="truncate text-sm font-medium italic text-church-accent-hover">
+                      Paz e bem, {firstName}
+                    </span>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="flex items-center gap-2 opacity-70 transition-colors hover:text-red-500 hover:opacity-100"
+                      title="Sair"
+                    >
+                      <span>Sair</span>
+                      <LogOut className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => {
+                      navigate('/auth/login');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="flex w-full items-center gap-2 transition-colors hover:text-church-accent"
+                    title="Entrar"
+                  >
+                    <UserCircle className="w-5 h-5" />
+                    <span>Entrar na sua conta</span>
+                  </button>
+                )}
+              </div>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Hero Section Minimalista e Claro com Imagem de Fundo */}
