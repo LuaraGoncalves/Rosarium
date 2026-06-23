@@ -151,7 +151,9 @@ export function ChurchHome() {
               </>
             ) : (
               <>
-                <span className="text-xs text-church-text-secondary">Entre para salvar seu ritmo de oração</span>
+                <span className="text-xs text-church-text-secondary">
+                  Entre para salvar seu ritmo de oração
+                </span>
                 <button
                   onClick={() => navigate('/auth/login')}
                   className="rounded-sm border border-church-border px-3 py-1.5 text-xs font-medium text-church-text"

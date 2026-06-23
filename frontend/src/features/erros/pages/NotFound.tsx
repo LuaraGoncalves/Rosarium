@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router";
-import { Home } from "lucide-react";
+import { useNavigate } from 'react-router';
+import { Home } from 'lucide-react';
 
 export function NotFound() {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ export function NotFound() {
         <h1 className="text-7xl sm:text-9xl leading-none text-white mb-4">404</h1>
         <p className="text-xl sm:text-3xl text-slate-300 mb-8">Página não encontrada</p>
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate('/')}
           className="flex items-center gap-2 bg-white/20 hover:bg-white/30 
             text-white px-6 py-3 rounded-lg transition-colors mx-auto w-full sm:w-auto justify-center"
         >

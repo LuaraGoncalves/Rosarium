@@ -62,7 +62,9 @@ export function NovenaDia() {
               {diaInfo.dia} de {novena.duracao}
             </span>
           </div>
-          <h2 className="text-lg md:text-xl font-serif mt-2 text-church-text/70">{diaInfo.titulo}</h2>
+          <h2 className="text-lg md:text-xl font-serif mt-2 text-church-text/70">
+            {diaInfo.titulo}
+          </h2>
         </div>
       </header>
 

@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router";
-import { ArrowLeft, Clock, Sun, Sunset, Moon, Star } from "lucide-react";
-import { useBreviario } from "../hooks/useBreviario";
+import { useNavigate } from 'react-router';
+import { ArrowLeft, Clock, Sun, Sunset, Moon, Star } from 'lucide-react';
+import { useBreviario } from '../hooks/useBreviario';
 
 export function BreviarioPage() {
   const navigate = useNavigate();
@@ -8,39 +8,39 @@ export function BreviarioPage() {
 
   const horas = [
     {
-      id: "oficio",
-      nome: "Ofício das Leituras",
-      horario: "Durante a noite ou madrugada",
+      id: 'oficio',
+      nome: 'Ofício das Leituras',
+      horario: 'Durante a noite ou madrugada',
       icon: Star,
-      descricao: "Leituras bíblicas e patrísticas",
+      descricao: 'Leituras bíblicas e patrísticas',
     },
     {
-      id: "laudes",
-      nome: "Laudes",
-      horario: "Ao amanhecer",
+      id: 'laudes',
+      nome: 'Laudes',
+      horario: 'Ao amanhecer',
       icon: Sun,
-      descricao: "Oração matutina de louvor",
+      descricao: 'Oração matutina de louvor',
     },
     {
-      id: "hora-media",
-      nome: "Hora Média (Terça, Sexta, Nona)",
-      horario: "9h, 12h, 15h",
+      id: 'hora-media',
+      nome: 'Hora Média (Terça, Sexta, Nona)',
+      horario: '9h, 12h, 15h',
       icon: Clock,
-      descricao: "Orações ao longo do dia",
+      descricao: 'Orações ao longo do dia',
     },
     {
-      id: "vesperas",
-      nome: "Vésperas",
-      horario: "Ao entardecer",
+      id: 'vesperas',
+      nome: 'Vésperas',
+      horario: 'Ao entardecer',
       icon: Sunset,
-      descricao: "Oração vespertina de louvor",
+      descricao: 'Oração vespertina de louvor',
     },
     {
-      id: "completas",
-      nome: "Completas",
-      horario: "Antes de dormir",
+      id: 'completas',
+      nome: 'Completas',
+      horario: 'Antes de dormir',
       icon: Moon,
-      descricao: "Oração noturna de encerramento",
+      descricao: 'Oração noturna de encerramento',
     },
   ];
 
@@ -50,7 +50,7 @@ export function BreviarioPage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-4">
             <button
-              onClick={() => navigate("/igreja")}
+              onClick={() => navigate('/igreja')}
               className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -79,10 +79,9 @@ export function BreviarioPage() {
             A Liturgia das Horas
           </h2>
           <p className="text-church-text/80 leading-relaxed mb-4">
-            O Breviário, também conhecido como Liturgia das Horas, é a oração
-            oficial da Igreja que santifica as diferentes horas do dia. Composto
-            principalmente de salmos, hinos e leituras bíblicas, ele nos convida
-            a rezar com toda a Igreja ao longo do dia.
+            O Breviário, também conhecido como Liturgia das Horas, é a oração oficial da Igreja que
+            santifica as diferentes horas do dia. Composto principalmente de salmos, hinos e
+            leituras bíblicas, ele nos convida a rezar com toda a Igreja ao longo do dia.
           </p>
           <p className="text-church-text/80 leading-relaxed italic font-serif">
             "Sete vezes ao dia eu te louvo" - Salmo 119:164
@@ -91,7 +90,9 @@ export function BreviarioPage() {
 
         {loading && (
           <div className="text-center py-12">
-            <p className="text-church-text/60 italic font-serif">Carregando a Liturgia das Horas de hoje...</p>
+            <p className="text-church-text/60 italic font-serif">
+              Carregando a Liturgia das Horas de hoje...
+            </p>
           </div>
         )}
 
@@ -103,9 +104,7 @@ export function BreviarioPage() {
 
         {!loading && !error && breviario && (
           <div className="mb-12 bg-church-bg-secondary rounded-xl p-6 border border-church-border-hover text-center">
-            <h3 className="text-xl font-serif text-church-accent mb-2">
-              Hoje: {breviario.data}
-            </h3>
+            <h3 className="text-xl font-serif text-church-accent mb-2">Hoje: {breviario.data}</h3>
             <p className="text-church-text/80">
               {breviario.tempo} - {breviario.semana}
             </p>
@@ -133,7 +132,7 @@ export function BreviarioPage() {
                     <p className="text-church-text/60 mb-2">{hora.horario}</p>
                     <p className="text-church-text/80">{hora.descricao}</p>
                   </div>
-                  <button 
+                  <button
                     onClick={(e) => {
                       e.stopPropagation();
                       navigate(`/breviario/${hora.id}`);
@@ -149,20 +148,24 @@ export function BreviarioPage() {
         </div>
 
         <div className="mt-12 bg-church-bg-secondary rounded-2xl p-8 border border-church-border-hover">
-          <h3 className="text-xl font-serif text-church-accent mb-6">
-            Estrutura de cada Hora
-          </h3>
+          <h3 className="text-xl font-serif text-church-accent mb-6">Estrutura de cada Hora</h3>
           <ul className="space-y-4 text-church-text/80">
             <li className="pl-4 border-l-2 border-[#C89B3C]">
-              <div className="font-semibold text-church-accent-hover mb-1">Invocação inicial e Hino</div>
-              "Vinde, ó Deus, em meu auxílio. Socorrei-me sem demora." Seguido de um hino apropriado para o momento do dia.
+              <div className="font-semibold text-church-accent-hover mb-1">
+                Invocação inicial e Hino
+              </div>
+              "Vinde, ó Deus, em meu auxílio. Socorrei-me sem demora." Seguido de um hino apropriado
+              para o momento do dia.
             </li>
             <li className="pl-4 border-l-2 border-[#C89B3C]">
               <div className="font-semibold text-church-accent-hover mb-1">Salmodia</div>
-              Dois a três salmos com suas respectivas antífonas, muitas vezes concluídos com o "Glória ao Pai".
+              Dois a três salmos com suas respectivas antífonas, muitas vezes concluídos com o
+              "Glória ao Pai".
             </li>
             <li className="pl-4 border-l-2 border-[#C89B3C]">
-              <div className="font-semibold text-church-accent-hover mb-1">Leitura bíblica ou patrística</div>
+              <div className="font-semibold text-church-accent-hover mb-1">
+                Leitura bíblica ou patrística
+              </div>
               Uma passagem curta das Escrituras ou dos Padres da Igreja.
             </li>
             <li className="pl-4 border-l-2 border-[#C89B3C]">
@@ -171,15 +174,20 @@ export function BreviarioPage() {
             </li>
             <li className="pl-4 border-l-2 border-[#C89B3C]">
               <div className="font-semibold text-church-accent-hover mb-1">Cântico Evangélico</div>
-              Cântico de Zacarias (Benedictus) nas Laudes, Cântico de Maria (Magnificat) nas Vésperas, ou Cântico de Simeão nas Completas.
+              Cântico de Zacarias (Benedictus) nas Laudes, Cântico de Maria (Magnificat) nas
+              Vésperas, ou Cântico de Simeão nas Completas.
             </li>
             <li className="pl-4 border-l-2 border-[#C89B3C]">
               <div className="font-semibold text-church-accent-hover mb-1">Preces e Pai Nosso</div>
-              Preces de intercessão pela Igreja e pelo mundo, concluídas com a oração que Jesus nos ensinou.
+              Preces de intercessão pela Igreja e pelo mundo, concluídas com a oração que Jesus nos
+              ensinou.
             </li>
             <li className="pl-4 border-l-2 border-[#C89B3C]">
-              <div className="font-semibold text-church-accent-hover mb-1">Oração conclusiva e bênção</div>
-              Oração própria do dia ou da semana, finalizando com a bênção ("O Senhor nos abençoe, nos livre de todo o mal e nos conduza à vida eterna. Amém.")
+              <div className="font-semibold text-church-accent-hover mb-1">
+                Oração conclusiva e bênção
+              </div>
+              Oração própria do dia ou da semana, finalizando com a bênção ("O Senhor nos abençoe,
+              nos livre de todo o mal e nos conduza à vida eterna. Amém.")
             </li>
           </ul>
         </div>

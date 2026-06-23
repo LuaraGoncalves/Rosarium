@@ -92,8 +92,8 @@ export function CalendarioLiturgicoPage() {
             {currentMonthData.map((dia, index) => (
               <div
                 key={index}
-              className="bg-church-bg-secondary p-5 md:p-6 rounded-xl border border-church-border-hover flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 transition-colors hover:border-[#C89B3C]/50"
-            >
+                className="bg-church-bg-secondary p-5 md:p-6 rounded-xl border border-church-border-hover flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 transition-colors hover:border-[#C89B3C]/50"
+              >
                 <div className="flex-shrink-0 w-20 h-20 bg-church-bg border border-church-border-hover rounded-full flex flex-col items-center justify-center shadow-inner">
                   <span className="text-2xl font-serif text-church-accent">{dia.dia}</span>
                   <span className="text-xs uppercase tracking-wider text-church-text/60">

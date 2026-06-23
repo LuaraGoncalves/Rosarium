@@ -41,7 +41,9 @@ export function NovenaDetalhe() {
               Voltar
             </button>
           </div>
-          <h1 className="text-2xl md:text-3xl font-serif text-church-accent-hover">{novena.titulo}</h1>
+          <h1 className="text-2xl md:text-3xl font-serif text-church-accent-hover">
+            {novena.titulo}
+          </h1>
           <p className="mt-2 text-church-text/70">{novena.descricao}</p>
 
           <div className="mt-6 flex items-center justify-between text-sm">
