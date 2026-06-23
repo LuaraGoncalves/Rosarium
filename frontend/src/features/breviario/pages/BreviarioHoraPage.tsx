@@ -42,7 +42,7 @@ export function BreviarioHoraPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans pb-24">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-6 transition-all">
+      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
         <div className="max-w-3xl mx-auto px-4">
           <div className="mb-4">
             <button
@@ -54,7 +54,7 @@ export function BreviarioHoraPage() {
             </button>
           </div>
           <div className="text-center">
-            <h1 className="text-3xl font-serif text-church-accent">{tituloHora}</h1>
+            <h1 className="text-2xl md:text-3xl font-serif text-church-accent">{tituloHora}</h1>
             <p className="text-church-text/60 mt-2">
               {breviario.data} • {breviario.tempo}
             </p>
@@ -62,7 +62,7 @@ export function BreviarioHoraPage() {
         </div>
       </header>
 
-      <div className="max-w-3xl mx-auto px-4 py-8 space-y-8 text-lg leading-relaxed text-church-text/90">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-6 md:space-y-8 text-base md:text-lg leading-relaxed text-church-text/90">
         {!horaData ? (
           <div className="text-center py-12">
             <p className="text-church-text/60 italic font-serif">
@@ -73,7 +73,7 @@ export function BreviarioHoraPage() {
           <>
             {/* Invocação */}
             {horaData.invitatorio && (
-              <div className="bg-church-bg-secondary p-6 rounded-xl border border-church-border-hover">
+              <div className="bg-church-bg-secondary p-5 md:p-6 rounded-xl border border-church-border-hover">
                 <h3 className="text-[#C89B3C] font-serif mb-2 uppercase text-sm tracking-wider">
                   Invitatório
                 </h3>
@@ -102,7 +102,7 @@ export function BreviarioHoraPage() {
                 {horaData.salmodia.map((salmo: string, index: number) => (
                   <div
                     key={index}
-                    className="bg-church-bg-secondary p-6 rounded-xl border border-church-border-hover"
+                    className="bg-church-bg-secondary p-5 md:p-6 rounded-xl border border-church-border-hover"
                   >
                     <p>{salmo}</p>
                   </div>
@@ -116,7 +116,7 @@ export function BreviarioHoraPage() {
                 <h3 className="text-[#C89B3C] font-serif mb-4 uppercase text-sm tracking-wider text-center border-b border-church-border-hover pb-2">
                   Leitura
                 </h3>
-                <div className="bg-church-bg p-6 rounded-xl border border-church-border-hover">
+                <div className="bg-church-bg p-5 md:p-6 rounded-xl border border-church-border-hover">
                   <p>{horaData.leitura1 || horaData.leitura}</p>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export function BreviarioHoraPage() {
                 <h3 className="text-[#C89B3C] font-serif mb-4 uppercase text-sm tracking-wider text-center border-b border-church-border-hover pb-2">
                   Segunda Leitura
                 </h3>
-                <div className="bg-church-bg p-6 rounded-xl border border-church-border-hover">
+                <div className="bg-church-bg p-5 md:p-6 rounded-xl border border-church-border-hover">
                   <p>{horaData.leitura2}</p>
                 </div>
               </div>
@@ -179,7 +179,7 @@ export function BreviarioHoraPage() {
 
             {/* Oração Conclusiva */}
             {horaData.oracao && (
-              <div className="mt-12 text-center bg-church-bg-secondary p-8 rounded-xl border border-church-border-hover">
+              <div className="mt-12 text-center bg-church-bg-secondary p-6 md:p-8 rounded-xl border border-church-border-hover">
                 <h3 className="text-[#C89B3C] font-serif mb-4 uppercase text-sm tracking-wider">
                   Oração
                 </h3>

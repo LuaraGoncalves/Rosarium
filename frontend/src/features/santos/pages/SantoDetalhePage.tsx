@@ -52,9 +52,9 @@ export function SantoDetalhePage() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 py-10">
+      <main className="max-w-5xl mx-auto px-4 py-8 md:py-10">
         {/* Header Content with Image and Title */}
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-10 bg-church-bg-secondary p-8 md:p-10 rounded-2xl border border-church-border shadow-sm">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 mb-8 md:mb-10 bg-church-bg-secondary p-6 md:p-10 rounded-2xl border border-church-border shadow-sm">
           {/* Image - Smaller & Circular */}
           <div className="shrink-0">
             {santo.imagemUrl ? (
@@ -89,10 +89,10 @@ export function SantoDetalhePage() {
         </div>
 
         {/* Ficha de Detalhes and History Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
           {/* Sidebar - Ficha */}
           <div className="lg:col-span-4">
-            <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 border border-church-border shadow-sm lg:sticky lg:top-24">
+            <div className="bg-church-bg-secondary rounded-2xl p-5 md:p-8 border border-church-border shadow-sm lg:sticky lg:top-24">
               <h3 className="text-xs md:text-sm uppercase tracking-widest text-church-accent font-semibold mb-6 flex items-center gap-2 pb-4 border-b border-church-border/70">
                 Ficha do Santo
               </h3>
@@ -168,7 +168,7 @@ export function SantoDetalhePage() {
 
           {/* Main Content - History */}
           <div className="lg:col-span-8">
-            <div className="bg-church-bg-secondary rounded-2xl p-8 md:p-12 border border-church-border shadow-sm min-h-full">
+            <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-12 border border-church-border shadow-sm min-h-full">
               <h2 className="text-2xl md:text-3xl font-serif text-church-accent mb-8 flex items-center gap-4">
                 História
                 <div className="h-px bg-church-border/60 flex-1 mt-1"></div>

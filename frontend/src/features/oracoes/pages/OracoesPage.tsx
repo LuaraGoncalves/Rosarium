@@ -95,7 +95,7 @@ export function OracoesPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-6 transition-all">
+      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-4">
             <button
@@ -108,14 +108,16 @@ export function OracoesPage() {
           </div>
           <div className="flex items-center justify-center gap-3">
             <Book className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-4xl text-center font-serif text-church-accent">Orações</h1>
+            <h1 className="text-3xl md:text-4xl text-center font-serif text-church-accent">
+              Orações
+            </h1>
           </div>
         </div>
       </header>
 
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="bg-church-bg-secondary rounded-2xl p-8 mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-64 mb-8 rounded-xl">
+      <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+        <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
+          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-xl">
             <img
               src="https://images.unsplash.com/photo-1616428882609-7443facdbe81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiaWJsZSUyMG9wZW4lMjBib29rJTIwY2h1cmNofGVufDF8fHx8MTc3MzQwOTg2Mnww&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Bíblia Aberta"
@@ -134,13 +136,13 @@ export function OracoesPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {categorias.map((categoria, index) => {
             const Icon = categoria.icon;
             return (
               <div
                 key={index}
-                className="bg-church-bg-secondary rounded-2xl p-8 border border-church-border-hover shadow-none"
+                className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 border border-church-border-hover shadow-none"
               >
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-14 h-14 rounded-full flex items-center justify-center bg-church-bg border border-church-border-hover">
@@ -160,7 +162,7 @@ export function OracoesPage() {
                             'Texto desta oração ainda não foi adicionado ao acervo.',
                         })
                       }
-                      className="bg-church-bg hover:bg-church-bg-darker p-4 rounded-lg cursor-pointer transition-all border border-church-border-hover hover:border-[#D4AF37]/50 flex justify-between items-center group"
+                      className="bg-church-bg hover:bg-church-bg-darker p-4 rounded-lg cursor-pointer transition-all border border-church-border-hover hover:border-[#D4AF37]/50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 group"
                     >
                       <span className="text-church-text font-medium group-hover:text-church-accent-hover transition-colors">
                         {oracao}
@@ -183,8 +185,8 @@ export function OracoesPage() {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header do Modal */}
-            <div className="flex items-center justify-between p-6 border-b border-church-border-hover shrink-0">
-              <h3 className="text-2xl font-serif text-church-accent flex items-center gap-3">
+            <div className="flex items-center justify-between p-5 md:p-6 border-b border-church-border-hover shrink-0">
+              <h3 className="text-xl md:text-2xl font-serif text-church-accent flex items-center gap-3">
                 <Book className="w-5 h-5" />
                 {oracaoAberta.titulo}
               </h3>
@@ -197,13 +199,13 @@ export function OracoesPage() {
             </div>
 
             {/* Corpo do Modal (Rolável) */}
-            <div className="p-8 overflow-y-auto custom-scrollbar">
+            <div className="p-5 md:p-8 overflow-y-auto custom-scrollbar">
               <div className="space-y-6">
                 {oracaoAberta.texto.split('\n').map((paragrafo, index) =>
                   paragrafo.trim() !== '' ? (
                     <p
                       key={index}
-                      className="text-lg leading-relaxed text-church-text/90 font-serif"
+                      className="text-base md:text-lg leading-relaxed text-church-text/90 font-serif"
                     >
                       {paragrafo}
                     </p>

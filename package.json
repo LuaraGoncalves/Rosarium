@@ -4,7 +4,7 @@
   "private": true,
   "description": "Rosarium - App Católico",
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "scripts": {
     "test:backend": "pnpm --dir backend test",

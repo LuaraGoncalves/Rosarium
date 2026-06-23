@@ -6,7 +6,7 @@ export function LiturgiaPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-6 transition-all">
+      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-4">
             <button
@@ -19,16 +19,16 @@ export function LiturgiaPage() {
           </div>
           <div className="flex items-center justify-center gap-3">
             <Church className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-4xl text-center font-serif text-church-accent">
+            <h1 className="text-3xl md:text-4xl text-center font-serif text-church-accent">
               Liturgia das Horas
             </h1>
           </div>
         </div>
       </header>
 
-      <div className="max-w-5xl mx-auto px-4 py-12">
-        <div className="bg-church-bg-secondary rounded-2xl p-8 mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-64 mb-8 rounded-xl">
+      <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
+        <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
+          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-xl">
             <img
               src="https://images.unsplash.com/photo-1696261803446-e9847baf4a6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXRob2xpYyUyMGNodXJjaCUyMGFsdGFyJTIwc3RhdHVlfGVufDF8fHx8MTc3MzQwOTg2MHww&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Interior da Igreja"
@@ -45,8 +45,8 @@ export function LiturgiaPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          <div className="bg-church-bg-secondary rounded-xl p-8 border border-church-border-hover shadow-none">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-12">
+          <div className="bg-church-bg-secondary rounded-xl p-6 md:p-8 border border-church-border-hover shadow-none">
             <div className="w-14 h-14 bg-church-bg border border-church-border-hover rounded-full flex items-center justify-center mb-6">
               <BookOpen className="w-7 h-7 text-church-accent-hover" />
             </div>
@@ -63,7 +63,7 @@ export function LiturgiaPage() {
             </button>
           </div>
 
-          <div className="bg-church-bg-secondary rounded-xl p-8 border border-church-border-hover shadow-none">
+          <div className="bg-church-bg-secondary rounded-xl p-6 md:p-8 border border-church-border-hover shadow-none">
             <div className="w-14 h-14 bg-church-bg border border-church-border-hover rounded-full flex items-center justify-center mb-6">
               <Calendar className="w-7 h-7 text-church-accent-hover" />
             </div>
@@ -80,9 +80,9 @@ export function LiturgiaPage() {
           </div>
         </div>
 
-        <div className="bg-church-bg-secondary rounded-2xl p-8 border border-church-border-hover">
+        <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 border border-church-border-hover">
           <h3 className="text-2xl font-serif text-church-accent mb-8">Tempos Litúrgicos</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {[
               {
                 tempo: 'Advento',

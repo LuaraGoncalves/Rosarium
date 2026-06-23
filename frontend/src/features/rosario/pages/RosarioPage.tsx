@@ -14,7 +14,7 @@ export function RosarioPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-6 transition-all">
+      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-4">
             <button
@@ -27,14 +27,16 @@ export function RosarioPage() {
           </div>
           <div className="flex items-center justify-center gap-3">
             <Cross className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-4xl text-center font-serif text-church-accent">Santo Rosário</h1>
+            <h1 className="text-3xl md:text-4xl text-center font-serif text-church-accent">
+              Santo Rosário
+            </h1>
           </div>
         </div>
       </header>
 
-      <div className="max-w-5xl mx-auto px-4 py-12">
-        <div className="bg-church-bg-secondary rounded-2xl p-8 mb-8 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-64 mb-8 rounded-xl">
+      <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
+        <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 mb-8 border border-church-border-hover shadow-none">
+          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-xl">
             <img
               src="https://images.unsplash.com/photo-1624147210060-4c159a6c70d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyb3NhcnklMjBiZWFkcyUyMHByYXllcnxlbnwxfHx8fDE3NzMzMDQ3NTR8MA&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Rosário"
@@ -60,7 +62,7 @@ export function RosarioPage() {
             </p>
           </div>
 
-          <div className="bg-church-bg rounded-xl p-6 border border-church-border">
+          <div className="bg-church-bg rounded-xl p-5 md:p-6 border border-church-border">
             <h3 className="text-xl font-serif mb-4 text-church-accent-hover">
               Como rezar o Rosário:
             </h3>
@@ -99,7 +101,7 @@ export function RosarioPage() {
               key={index}
               className="bg-church-bg-secondary rounded-2xl p-8 border border-church-border-hover shadow-none"
             >
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                 <h2 className="text-2xl font-serif text-church-accent-hover">{categoria.tipo}</h2>
                 <span className="bg-church-bg px-4 py-2 rounded-full text-sm border border-church-border text-church-accent/80">
                   {categoria.dia}
@@ -113,11 +115,11 @@ export function RosarioPage() {
                     key={idx}
                     className="border-b border-church-border-hover last:border-0"
                   >
-                    <AccordionTrigger className="hover:no-underline py-3 text-left transition-all duration-300 text-lg hover:text-church-accent text-church-text">
+                    <AccordionTrigger className="hover:no-underline py-3 text-left transition-all duration-300 text-base md:text-lg hover:text-church-accent text-church-text">
                       {misterio.titulo}
                     </AccordionTrigger>
                     <AccordionContent className="transition-all duration-300">
-                      <div className="bg-church-bg p-5 rounded-lg border border-church-border text-sm mt-2 mb-4 italic leading-relaxed text-lg shadow-inner text-church-text/90">
+                      <div className="bg-church-bg p-4 md:p-5 rounded-lg border border-church-border text-sm mt-2 mb-4 italic leading-relaxed text-base md:text-lg shadow-inner text-church-text/90">
                         {misterio.leitura}
                       </div>
                     </AccordionContent>

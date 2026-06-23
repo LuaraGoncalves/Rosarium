@@ -41,8 +41,8 @@ export function NovenaDia() {
   };
 
   return (
-    <div className="min-h-screen bg-church-bg text-church-text font-sans pb-32">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-6 transition-all">
+    <div className="min-h-screen bg-church-bg text-church-text font-sans pb-40 sm:pb-32">
+      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
         <div className="max-w-3xl mx-auto px-4">
           <div className="mb-4">
             <button
@@ -54,17 +54,19 @@ export function NovenaDia() {
             </button>
           </div>
 
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-serif text-church-accent-hover">Dia {diaInfo.dia}</h1>
-            <span className="bg-church-bg-secondary text-church-accent/80 px-3 py-1 rounded-full text-sm border border-church-border-hover">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <h1 className="text-2xl md:text-3xl font-serif text-church-accent-hover">
+              Dia {diaInfo.dia}
+            </h1>
+            <span className="bg-church-bg-secondary text-church-accent/80 px-3 py-1 rounded-full text-sm border border-church-border-hover self-start sm:self-auto">
               {diaInfo.dia} de {novena.duracao}
             </span>
           </div>
-          <h2 className="text-xl font-serif mt-2 text-church-text/70">{diaInfo.titulo}</h2>
+          <h2 className="text-lg md:text-xl font-serif mt-2 text-church-text/70">{diaInfo.titulo}</h2>
         </div>
       </header>
 
-      <div className="max-w-2xl mx-auto px-4 py-12">
+      <div className="max-w-2xl mx-auto px-4 py-8 md:py-12">
         {novena.id === 'divina-misericordia' && (
           <div className="bg-church-bg-secondary border border-church-border-hover rounded-lg p-4 mb-8 text-church-accent text-sm md:text-base text-center shadow-sm">
             <span className="font-medium block mb-1">
@@ -75,9 +77,9 @@ export function NovenaDia() {
           </div>
         )}
 
-        <div className="space-y-12">
+        <div className="space-y-10 md:space-y-12">
           {/* Oração Inicial */}
-          <section className="p-6 rounded-2xl bg-church-bg-secondary border border-church-border-hover shadow-none">
+          <section className="p-5 md:p-6 rounded-2xl bg-church-bg-secondary border border-church-border-hover shadow-none">
             <h3 className="text-sm uppercase tracking-wider mb-4 font-bold flex items-center gap-2 text-church-accent-hover/80">
               <span className="w-8 h-px bg-[#C89B3C]/30"></span>
               Oração Inicial
@@ -89,7 +91,7 @@ export function NovenaDia() {
           </section>
 
           {/* Oração Principal da Novena */}
-          <section className="p-6 rounded-2xl bg-church-bg-secondary border border-church-border-hover shadow-none">
+          <section className="p-5 md:p-6 rounded-2xl bg-church-bg-secondary border border-church-border-hover shadow-none">
             <h3 className="text-sm uppercase tracking-wider mb-4 font-bold flex items-center gap-2 text-church-accent-hover/80">
               <span className="w-8 h-px bg-[#C89B3C]/30"></span>
               Oração Principal
@@ -101,7 +103,7 @@ export function NovenaDia() {
           </section>
 
           {/* Meditação e Oração do Dia */}
-          <section className="p-8 rounded-2xl bg-church-bg-tertiary border border-church-border relative overflow-hidden">
+          <section className="p-6 md:p-8 rounded-2xl bg-church-bg-tertiary border border-church-border relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1 h-full bg-[#D4AF37]/50"></div>
 
             <h3 className="text-sm uppercase tracking-wider mb-2 font-bold text-church-accent/80">
@@ -120,7 +122,7 @@ export function NovenaDia() {
           </section>
 
           {/* Oração Final */}
-          <section className="p-6 rounded-2xl bg-church-bg-secondary border border-church-border-hover shadow-none mb-12">
+          <section className="p-5 md:p-6 rounded-2xl bg-church-bg-secondary border border-church-border-hover shadow-none mb-12">
             <h3 className="text-sm uppercase tracking-wider mb-4 font-bold flex items-center gap-2 text-church-accent-hover/80">
               <span className="w-8 h-px bg-[#C89B3C]/30"></span>
               Oração Final
@@ -135,7 +137,7 @@ export function NovenaDia() {
 
       {/* Botão Fixo Embaixo para Concluir */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-church-bg/95 backdrop-blur-md border-t border-church-border">
-        <div className="max-w-2xl mx-auto flex gap-4">
+        <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-3 sm:gap-4">
           <button
             onClick={() => toggleDay(numDia)}
             className={`flex-1 py-4 rounded-xl flex items-center justify-center gap-2 font-medium transition-all border

@@ -2,6 +2,9 @@
   "name": "@rosarium/liturgy-engine",
   "version": "1.0.0",
   "description": "Liturgy calculation and processing engine for the Rosarium project",
+  "engines": {
+    "node": "24.x"
+  },
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc"

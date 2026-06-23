@@ -61,7 +61,7 @@ export function ChurchHome() {
     <div className="min-h-screen bg-church-bg linen-bg text-church-text font-sans">
       {/* Navbar Suave */}
       <header className="bg-church-header border-b border-church-border backdrop-blur-md sticky top-0 z-50 transition-all">
-        <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-2.5 text-church-accent hover:text-church-accent-hover transition-colors cursor-pointer">
             <Cross className="w-5 h-5 stroke-[1.5]" />
             <h1 className="text-xl font-serif tracking-wide">Rosarium</h1>
@@ -110,11 +110,63 @@ export function ChurchHome() {
               </button>
             )}
           </nav>
+
+          <div className="flex items-center justify-between md:hidden">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => navigate('/rosario')}
+                className="rounded-sm border border-church-border bg-church-bg-secondary px-3 py-2 text-xs font-medium text-church-text"
+              >
+                Rosário
+              </button>
+              <button
+                onClick={() => navigate('/novenas')}
+                className="rounded-sm border border-church-border bg-church-bg-secondary px-3 py-2 text-xs font-medium text-church-text"
+              >
+                Novenas
+              </button>
+              <button
+                onClick={() => navigate('/oracoes')}
+                className="rounded-sm border border-church-border bg-church-bg-secondary px-3 py-2 text-xs font-medium text-church-text"
+              >
+                Orações
+              </button>
+            </div>
+            <ThemeToggle />
+          </div>
+
+          <div className="md:hidden flex items-center justify-between rounded-lg border border-church-border bg-church-bg-secondary px-3 py-2">
+            {isAuthenticated ? (
+              <>
+                <span className="text-xs italic text-church-accent-hover truncate">
+                  Paz e bem, {firstName}
+                </span>
+                <button
+                  onClick={logout}
+                  className="rounded-sm border border-church-border px-3 py-1.5 text-xs font-medium text-church-text"
+                  title="Sair"
+                >
+                  Sair
+                </button>
+              </>
+            ) : (
+              <>
+                <span className="text-xs text-church-text-secondary">Entre para salvar seu ritmo de oração</span>
+                <button
+                  onClick={() => navigate('/auth/login')}
+                  className="rounded-sm border border-church-border px-3 py-1.5 text-xs font-medium text-church-text"
+                  title="Entrar"
+                >
+                  Entrar
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </header>
 
       {/* Hero Section Minimalista e Claro com Imagem de Fundo */}
-      <div className="relative pt-20 pb-24 md:pt-32 md:pb-40 px-6 flex flex-col items-center text-center overflow-hidden">
+      <div className="relative pt-14 pb-14 sm:pt-20 sm:pb-24 md:pt-32 md:pb-40 px-4 sm:px-6 flex flex-col items-center text-center overflow-hidden">
         {/* Imagem de fundo e Overlay */}
         <div className="absolute inset-0 z-0 bg-church-bg">
           <img
@@ -127,26 +179,26 @@ export function ChurchHome() {
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
-          <span className="font-medium tracking-[0.2em] text-xs uppercase mb-6 px-4 py-1.5 rounded-sm border bg-church-bg-secondary/80 backdrop-blur-sm border-church-border text-church-accent-hover">
+          <span className="font-medium tracking-[0.2em] text-[11px] uppercase mb-5 sm:mb-6 px-4 py-1.5 rounded-sm border bg-church-bg-secondary/80 backdrop-blur-sm border-church-border text-church-accent-hover">
             Refúgio Espiritual
           </span>
-          <h2 className="text-4xl md:text-6xl font-serif mb-8 max-w-3xl leading-[1.15] text-church-accent-hover">
+          <h2 className="text-[2rem] sm:text-4xl md:text-6xl font-serif mb-5 sm:mb-6 md:mb-8 max-w-3xl leading-[1.08] sm:leading-[1.12] text-church-accent-hover">
             Encontre paz e propósito através da oração diária
           </h2>
-          <p className="text-lg md:text-xl font-light max-w-2xl mb-12 leading-relaxed text-church-text-secondary">
+          <p className="text-sm sm:text-lg md:text-xl font-light max-w-2xl mb-8 sm:mb-10 md:mb-12 leading-relaxed text-church-text-secondary">
             Uma coleção serena de devoções, novenas e liturgias para guiar sua jornada de fé, onde
             quer que você esteja.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
             <button
               onClick={() => navigate('/rosario')}
-              className="px-8 py-3.5 rounded-sm font-medium transition-all shadow-sm flex items-center justify-center gap-2 text-sm bg-church-bg-secondary border-b-2 border-r-2 border-church-bg-darker hover:bg-church-border text-church-text"
+              className="px-8 py-3.5 rounded-sm font-medium transition-all shadow-sm flex items-center justify-center gap-2 text-sm bg-church-bg-secondary border-b-2 border-r-2 border-church-bg-darker hover:bg-church-border text-church-text w-full sm:w-auto"
             >
               <Cross className="w-4 h-4 text-church-accent" /> Rezar o Rosário
             </button>
             <button
               onClick={() => navigate('/oracoes')}
-              className="px-8 py-3.5 rounded-sm font-medium transition-all shadow-sm flex items-center justify-center gap-2 text-sm bg-church-bg border-b-2 border-r-2 border-church-bg-darker hover:bg-church-bg-secondary text-church-accent"
+              className="px-8 py-3.5 rounded-sm font-medium transition-all shadow-sm flex items-center justify-center gap-2 text-sm bg-church-bg border-b-2 border-r-2 border-church-bg-darker hover:bg-church-bg-secondary text-church-accent w-full sm:w-auto"
             >
               <Book className="w-4 h-4 text-church-accent-hover" /> Ver Orações
             </button>
@@ -155,17 +207,17 @@ export function ChurchHome() {
       </div>
 
       {/* Main Devotions - Cards Minimalistas */}
-      <div className="py-24 border-y bg-church-bg-tertiary border-church-border relative">
+      <div className="py-16 sm:py-20 md:py-24 border-y bg-church-bg-tertiary border-church-border relative">
         <div className="absolute inset-0 linen-bg pointer-events-none"></div>
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-12 md:mb-16">
             <h3 className="text-2xl md:text-3xl font-serif mb-4 text-church-accent uppercase tracking-wider">
               Devoções Principais
             </h3>
             <div className="w-12 h-px mx-auto bg-church-accent/50"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8">
             {mainSections.map((section, index) => {
               const Icon = section.icon;
               return (
@@ -174,7 +226,7 @@ export function ChurchHome() {
                   onClick={() => navigate(section.path)}
                   className="group cursor-pointer rounded-t-full overflow-hidden border transition-all duration-500 hover:-translate-y-1 flex flex-col h-full bg-church-bg border-church-border hover:border-church-border-hover shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
                 >
-                  <div className="relative h-64 overflow-hidden bg-church-bg-secondary border-b-4 border-church-bg-darker">
+                  <div className="relative h-52 sm:h-60 md:h-64 overflow-hidden bg-church-bg-secondary border-b-4 border-church-bg-darker">
                     <img
                       src={section.image}
                       alt={section.title}
@@ -182,7 +234,7 @@ export function ChurchHome() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-church-bg via-transparent to-transparent"></div>
                   </div>
-                  <div className="p-8 flex flex-col flex-grow items-center text-center relative z-10">
+                  <div className="p-6 sm:p-8 flex flex-col flex-grow items-center text-center relative z-10">
                     <div className="w-12 h-12 rounded-sm flex items-center justify-center mb-5 shadow-sm border bg-church-bg-secondary border-church-border-hover text-church-accent-hover group-hover:text-church-accent rotate-45 transform">
                       <Icon className="w-5 h-5 stroke-[1.5] -rotate-45" />
                     </div>
@@ -201,9 +253,9 @@ export function ChurchHome() {
       </div>
 
       {/* Seção de Citação / Inspiração Limpa */}
-      <div className="py-24 relative overflow-hidden bg-church-bg border-y-8 border-double border-church-border">
+      <div className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-church-bg border-y-8 border-double border-church-border">
         <div className="absolute inset-0 linen-bg pointer-events-none"></div>
-        <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <Cross className="w-6 h-6 mx-auto mb-8 opacity-60 text-church-accent" />
           <h2 className="text-2xl md:text-4xl font-serif mb-8 leading-snug text-church-accent-hover italic">
             "A oração é a elevação da alma a Deus ou o pedido a Deus dos bens convenientes."
@@ -215,10 +267,10 @@ export function ChurchHome() {
       </div>
 
       {/* Secondary Resources - Ícones Sutis */}
-      <div className="py-24 bg-church-bg-tertiary relative">
+      <div className="py-16 sm:py-20 md:py-24 bg-church-bg-tertiary relative">
         <div className="absolute inset-0 linen-bg pointer-events-none"></div>
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-12 md:mb-16">
             <h3 className="text-2xl md:text-3xl font-serif mb-4 text-church-accent uppercase tracking-wider">
               Recursos Diários
             </h3>
@@ -232,7 +284,7 @@ export function ChurchHome() {
                 <div
                   key={index}
                   onClick={() => navigate(section.path)}
-                  className="rounded-sm p-6 border cursor-pointer transition-all group flex items-center gap-6 bg-church-bg border-l-4 border-y border-r border-church-border border-l-church-accent-hover hover:bg-church-bg-secondary hover:border-church-border-hover hover:border-l-church-accent"
+                  className="rounded-sm p-5 sm:p-6 border cursor-pointer transition-all group flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 bg-church-bg border-l-4 border-y border-r border-church-border border-l-church-accent-hover hover:bg-church-bg-secondary hover:border-church-border-hover hover:border-l-church-accent"
                 >
                   <div className="w-12 h-12 rounded-none flex items-center justify-center flex-shrink-0 shadow-sm border transition-colors duration-300 bg-church-bg-secondary text-church-accent-hover border-church-border-hover group-hover:text-church-accent">
                     <Icon className="w-5 h-5 stroke-[1.5]" />
@@ -252,7 +304,7 @@ export function ChurchHome() {
 
       {/* Footer Minimalista e Elegante */}
       <footer className="py-12 bg-church-bg relative">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col items-center justify-center gap-6 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col items-center justify-center gap-6 relative z-10">
           <div className="flex items-center gap-2 opacity-60 text-church-accent-hover">
             <Cross className="w-4 h-4 stroke-[1.5]" />
           </div>

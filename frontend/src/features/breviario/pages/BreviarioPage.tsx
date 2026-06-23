@@ -46,7 +46,7 @@ export function BreviarioPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-6 transition-all">
+      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-4">
             <button
@@ -59,14 +59,16 @@ export function BreviarioPage() {
           </div>
           <div className="flex items-center justify-center gap-3">
             <Clock className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-4xl text-center font-serif text-church-accent">Breviário</h1>
+            <h1 className="text-3xl md:text-4xl text-center font-serif text-church-accent">
+              Breviário
+            </h1>
           </div>
         </div>
       </header>
 
-      <div className="max-w-5xl mx-auto px-4 py-12">
-        <div className="bg-church-bg-secondary rounded-2xl p-8 mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-64 mb-8 rounded-xl">
+      <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
+        <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
+          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-xl">
             <img
               src="https://images.unsplash.com/photo-1709541658608-dfe38af68925?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdGFpbmVkJTIwZ2xhc3MlMjBjaHVyY2glMjB3aW5kb3d8ZW58MXx8fHwxNzczMzI2MDI0fDA&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Vitral de Igreja"
@@ -110,22 +112,22 @@ export function BreviarioPage() {
           </div>
         )}
 
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           {horas.map((hora) => {
             const Icon = hora.icon;
             return (
               <div
                 key={hora.id}
                 onClick={() => navigate(`/breviario/${hora.id}`)}
-                className="bg-church-bg-secondary rounded-xl p-6 border border-church-border-hover 
+                className="bg-church-bg-secondary rounded-xl p-5 md:p-6 border border-church-border-hover 
                   hover:border-[#C89B3C]/50 transition-all cursor-pointer group shadow-none"
               >
-                <div className="flex items-start gap-6">
+                <div className="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-6">
                   <div className="w-16 h-16 bg-church-bg border border-church-border-hover rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                     <Icon className="w-8 h-8 text-church-accent-hover" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-serif text-church-accent mb-2 group-hover:text-church-accent-hover transition-colors">
+                    <h3 className="text-xl md:text-2xl font-serif text-church-accent mb-2 group-hover:text-church-accent-hover transition-colors">
                       {hora.nome}
                     </h3>
                     <p className="text-church-text/60 mb-2">{hora.horario}</p>
@@ -136,7 +138,7 @@ export function BreviarioPage() {
                       e.stopPropagation();
                       navigate(`/breviario/${hora.id}`);
                     }}
-                    className="bg-church-bg hover:bg-church-bg-darker text-church-accent border border-church-border-hover px-6 py-2 rounded-lg transition-colors"
+                    className="bg-church-bg hover:bg-church-bg-darker text-church-accent border border-church-border-hover px-5 py-2 rounded-lg transition-colors w-full lg:w-auto"
                   >
                     Rezar
                   </button>

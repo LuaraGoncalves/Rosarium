@@ -30,12 +30,12 @@ export function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-100px)] items-center justify-center p-4">
-      <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-sm dark:bg-[#1C1C1C]">
-        <h1 className="mb-2 text-center text-2xl font-bold font-display text-[#8B4513] dark:text-[#D4A373]">
+    <div className="flex min-h-[calc(100vh-100px)] items-center justify-center px-4 py-8 sm:p-4">
+      <div className="w-full max-w-md rounded-2xl bg-white p-6 sm:p-8 shadow-sm dark:bg-[#1C1C1C]">
+        <h1 className="mb-2 text-center text-2xl sm:text-3xl font-bold font-display text-[#8B4513] dark:text-[#D4A373]">
           Bem-vindo de volta
         </h1>
-        <p className="mb-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
+        <p className="mb-6 sm:mb-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
           Entre para salvar suas orações e progresso.
         </p>
 
@@ -53,7 +53,7 @@ export function LoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-md border border-neutral-300 px-3 py-2 outline-none focus:border-[#8B4513] dark:border-neutral-700 dark:bg-neutral-800 dark:focus:border-[#D4A373]"
+              className="w-full rounded-md border border-neutral-300 px-3 py-3 outline-none focus:border-[#8B4513] dark:border-neutral-700 dark:bg-neutral-800 dark:focus:border-[#D4A373]"
               placeholder="seu@email.com"
             />
           </div>
@@ -65,7 +65,7 @@ export function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-md border border-neutral-300 px-3 py-2 outline-none focus:border-[#8B4513] dark:border-neutral-700 dark:bg-neutral-800 dark:focus:border-[#D4A373]"
+              className="w-full rounded-md border border-neutral-300 px-3 py-3 outline-none focus:border-[#8B4513] dark:border-neutral-700 dark:bg-neutral-800 dark:focus:border-[#D4A373]"
               placeholder="••••••"
             />
           </div>
@@ -73,13 +73,13 @@ export function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-4 w-full rounded-md bg-[#8B4513] px-4 py-2 text-white transition-colors hover:bg-[#6b350e] disabled:opacity-50 dark:bg-[#D4A373] dark:text-black dark:hover:bg-[#b0875f]"
+            className="mt-4 w-full rounded-md bg-[#8B4513] px-4 py-3 text-white transition-colors hover:bg-[#6b350e] disabled:opacity-50 dark:bg-[#D4A373] dark:text-black dark:hover:bg-[#b0875f]"
           >
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm">
+        <div className="mt-6 text-center text-sm leading-relaxed">
           <span className="text-neutral-500 dark:text-neutral-400">Não tem uma conta? </span>
           <Link
             to="/auth/register"

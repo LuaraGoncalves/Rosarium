@@ -30,7 +30,7 @@ export function LiturgiaHojePage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans pb-24">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-6 transition-all">
+      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
         <div className="max-w-3xl mx-auto px-4">
           <div className="mb-4">
             <button
@@ -43,7 +43,9 @@ export function LiturgiaHojePage() {
           </div>
           <div className="flex flex-col items-center justify-center gap-3">
             <BookOpen className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-3xl text-center font-serif text-church-accent">Liturgia de Hoje</h1>
+            <h1 className="text-2xl md:text-3xl text-center font-serif text-church-accent">
+              Liturgia de Hoje
+            </h1>
             <p className="text-church-text/60 mt-1">{liturgia.data} • {liturgia.liturgia}</p>
             <span className="inline-block px-3 py-1 mt-2 rounded-full text-xs font-medium border border-church-border-hover bg-church-bg-secondary text-church-text/80">
               Cor litúrgica: <span className="text-church-accent">{liturgia.cor}</span>
@@ -52,11 +54,11 @@ export function LiturgiaHojePage() {
         </div>
       </header>
 
-      <div className="max-w-3xl mx-auto px-4 py-12 space-y-12 text-lg leading-relaxed text-church-text/90">
+      <div className="max-w-3xl mx-auto px-4 py-8 md:py-12 space-y-8 md:space-y-12 text-base md:text-lg leading-relaxed text-church-text/90">
         
         {/* Primeira Leitura */}
         {liturgia.primeiraLeitura && (
-          <div className="bg-church-bg-secondary p-8 rounded-2xl border border-church-border-hover">
+          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-2xl border border-church-border-hover">
             <h3 className="text-[#C89B3C] font-serif mb-2 uppercase text-sm tracking-wider text-center">Primeira Leitura</h3>
             <p className="text-center font-serif text-church-accent mb-6">{liturgia.primeiraLeitura.referencia}</p>
             <div className="whitespace-pre-line text-justify">
@@ -69,7 +71,7 @@ export function LiturgiaHojePage() {
 
         {/* Salmo */}
         {liturgia.salmo && (
-          <div className="bg-church-bg-secondary p-8 rounded-2xl border border-church-border-hover">
+          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-2xl border border-church-border-hover">
             <h3 className="text-[#C89B3C] font-serif mb-2 uppercase text-sm tracking-wider text-center">Salmo Responsorial</h3>
             <p className="text-center font-serif text-church-accent mb-6">{liturgia.salmo.referencia}</p>
             <div className="text-center font-semibold italic mb-6 text-church-accent-hover">
@@ -83,7 +85,7 @@ export function LiturgiaHojePage() {
 
         {/* Segunda Leitura */}
         {liturgia.segundaLeitura && liturgia.segundaLeitura.texto && (
-          <div className="bg-church-bg-secondary p-8 rounded-2xl border border-church-border-hover">
+          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-2xl border border-church-border-hover">
             <h3 className="text-[#C89B3C] font-serif mb-2 uppercase text-sm tracking-wider text-center">Segunda Leitura</h3>
             <p className="text-center font-serif text-church-accent mb-6">{liturgia.segundaLeitura.referencia}</p>
             <div className="whitespace-pre-line text-justify">
@@ -96,7 +98,7 @@ export function LiturgiaHojePage() {
 
         {/* Evangelho */}
         {liturgia.evangelho && (
-          <div className="bg-church-bg-secondary p-8 rounded-2xl border border-[#C89B3C]/30 shadow-[0_0_15px_rgba(200,155,60,0.1)]">
+          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-2xl border border-[#C89B3C]/30 shadow-[0_0_15px_rgba(200,155,60,0.1)]">
             <h3 className="text-[#C89B3C] font-serif mb-2 uppercase text-sm tracking-wider text-center">Evangelho</h3>
             <p className="text-center font-serif text-church-accent mb-6">{liturgia.evangelho.referencia}</p>
             

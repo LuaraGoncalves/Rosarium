@@ -30,7 +30,7 @@ export function NovenaDetalhe() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-6 transition-all">
+      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
         <div className="max-w-3xl mx-auto px-4">
           <div className="mb-4">
             <button
@@ -41,7 +41,7 @@ export function NovenaDetalhe() {
               Voltar
             </button>
           </div>
-          <h1 className="text-3xl font-serif text-church-accent-hover">{novena.titulo}</h1>
+          <h1 className="text-2xl md:text-3xl font-serif text-church-accent-hover">{novena.titulo}</h1>
           <p className="mt-2 text-church-text/70">{novena.descricao}</p>
 
           <div className="mt-6 flex items-center justify-between text-sm">
@@ -68,7 +68,7 @@ export function NovenaDetalhe() {
               <div
                 key={diaInfo.dia}
                 onClick={() => navigate(`/novenas/${novena.id}/dia/${diaInfo.dia}`)}
-                className={`p-5 rounded-xl border transition-all cursor-pointer flex items-center gap-4 shadow-sm
+                className={`p-4 md:p-5 rounded-xl border transition-all cursor-pointer flex items-center gap-4 shadow-sm
                   ${
                     isCompleted
                       ? 'bg-church-bg-darker border-[#2C1F1A] opacity-40 hover:opacity-70'
