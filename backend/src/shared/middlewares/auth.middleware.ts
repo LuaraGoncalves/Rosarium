@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { AppError } from '../errors/AppError';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'rosarium-super-secret-key-12345';
+const AUTH_COOKIE_NAME = 'rosarium_auth';
 
 interface TokenPayload {
   id: string;
@@ -16,14 +17,31 @@ type AuthenticatedRequest = Request & {
   };
 };
 
-export function authMiddleware(req: Request, res: Response, next: NextFunction) {
-  const authHeader = req.headers.authorization;
-
-  if (!authHeader) {
-    throw new AppError('Token JWT não fornecido.', 401);
+function getCookieValue(cookieHeader: string | undefined, cookieName: string) {
+  if (!cookieHeader) {
+    return undefined;
   }
 
-  const [, token] = authHeader.split(' ');
+  const cookies = cookieHeader.split(';').map((part) => part.trim());
+  const match = cookies.find((cookie) => cookie.startsWith(`${cookieName}=`));
+
+  if (!match) {
+    return undefined;
+  }
+
+  return decodeURIComponent(match.slice(cookieName.length + 1));
+}
+
+export function authMiddleware(req: Request, res: Response, next: NextFunction) {
+  const authHeader = req.headers.authorization;
+  const cookieToken = getCookieValue(req.headers.cookie, AUTH_COOKIE_NAME);
+
+  const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : undefined;
+  const token = bearerToken || cookieToken;
+
+  if (!token) {
+    throw new AppError('Token JWT não fornecido.', 401);
+  }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as TokenPayload;
