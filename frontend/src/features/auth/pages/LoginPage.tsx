@@ -15,9 +15,8 @@ export function LoginPage() {
     setLoading(true);
 
     try {
-      const { user, token } = await authApi.login(email, password);
+      const { user } = await authApi.login(email, password);
 
-      localStorage.setItem('@Rosarium:token', token);
       localStorage.setItem('@Rosarium:user', JSON.stringify(user));
       navigate('/');
     } catch (error: unknown) {

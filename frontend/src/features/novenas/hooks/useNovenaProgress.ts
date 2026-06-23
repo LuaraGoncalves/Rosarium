@@ -24,9 +24,6 @@ export function useNovenaProgress(novenaId: string) {
   useEffect(() => {
     const fetchProgress = async () => {
       try {
-        const token = localStorage.getItem('@Rosarium:token');
-        if (!token) return;
-
         const pendingSyncStr = localStorage.getItem(`novena_sync_pending_${novenaId}`);
 
         if (pendingSyncStr) {
@@ -48,6 +45,12 @@ export function useNovenaProgress(novenaId: string) {
             setTimeout(() => setSyncStatus('idle'), 3000);
             return;
           } catch (syncError: unknown) {
+            if (axios.isAxiosError(syncError) && syncError.response?.status === 401) {
+              localStorage.removeItem(`novena_sync_pending_${novenaId}`);
+              setSyncStatus('idle');
+              return;
+            }
+
             if (
               axios.isAxiosError<ConflictResponse>(syncError) &&
               syncError.response?.status === 409
@@ -82,7 +85,9 @@ export function useNovenaProgress(novenaId: string) {
             localStorage.setItem(`novena_progress_updatedAt_${novenaId}`, data.updatedAt);
         }
       } catch (error) {
-        console.error('Failed to fetch novena progress from backend:', error);
+        if (!axios.isAxiosError(error) || error.response?.status !== 401) {
+          console.error('Failed to fetch novena progress from backend:', error);
+        }
       }
     };
     fetchProgress();
@@ -98,9 +103,6 @@ export function useNovenaProgress(novenaId: string) {
 
     const syncWithBackend = async () => {
       try {
-        const token = localStorage.getItem('@Rosarium:token');
-        if (!token) return;
-
         setSyncStatus('syncing');
 
         const now = new Date().toISOString();
@@ -139,6 +141,11 @@ export function useNovenaProgress(novenaId: string) {
           localStorage.removeItem(`novena_sync_pending_${novenaId}`);
           setSyncStatus('saved');
           setTimeout(() => setSyncStatus('idle'), 3000);
+          return;
+        }
+
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          setSyncStatus('idle');
           return;
         }
 

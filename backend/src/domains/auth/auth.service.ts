@@ -7,7 +7,78 @@ import { AppError } from '../../shared/errors/AppError';
 const JWT_SECRET = process.env.JWT_SECRET || 'rosarium-super-secret-key-12345';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
 
+const COOKIE_NAME = 'rosarium_auth';
+
+function parseExpiresInToMs(expiresIn: string) {
+  const match = /^(\d+)([smhd])$/.exec(expiresIn.trim());
+
+  if (!match) {
+    return 7 * 24 * 60 * 60 * 1000;
+  }
+
+  const value = Number(match[1]);
+  const unit = match[2];
+
+  switch (unit) {
+    case 's':
+      return value * 1000;
+    case 'm':
+      return value * 60 * 1000;
+    case 'h':
+      return value * 60 * 60 * 1000;
+    case 'd':
+      return value * 24 * 60 * 60 * 1000;
+    default:
+      return 7 * 24 * 60 * 60 * 1000;
+  }
+}
+
 export class AuthService {
+  private sanitizeUser(user: {
+    id: string;
+    email: string;
+    name: string;
+    password: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }) {
+    const { password: _password, ...userWithoutPassword } = user;
+    return userWithoutPassword;
+  }
+
+  public getCookieName() {
+    return COOKIE_NAME;
+  }
+
+  public getCookieOptions() {
+    const isProd = process.env.NODE_ENV === 'production';
+
+    return {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
+      path: '/',
+      maxAge: parseExpiresInToMs(JWT_EXPIRES_IN),
+    };
+  }
+
+  public getClearCookieOptions() {
+    const isProd = process.env.NODE_ENV === 'production';
+
+    return {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
+      path: '/',
+    };
+  }
+
+  public createAuthToken(userId: string) {
+    return jwt.sign({ id: userId }, JWT_SECRET, {
+      expiresIn: JWT_EXPIRES_IN as SignOptions['expiresIn'],
+    });
+  }
+
   async register(data: RegisterDTO) {
     const { name, email, password } = data;
 
@@ -29,15 +100,9 @@ export class AuthService {
       },
     });
 
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, {
-      expiresIn: JWT_EXPIRES_IN as SignOptions['expiresIn'],
-    });
-
-    const { password: _password, ...userWithoutPassword } = user;
-
     return {
-      user: userWithoutPassword,
-      token,
+      user: this.sanitizeUser(user),
+      token: this.createAuthToken(user.id),
     };
   }
 
@@ -58,15 +123,21 @@ export class AuthService {
       throw new AppError('E-mail ou senha incorretos.', 401);
     }
 
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, {
-      expiresIn: JWT_EXPIRES_IN as SignOptions['expiresIn'],
+    return {
+      user: this.sanitizeUser(user),
+      token: this.createAuthToken(user.id),
+    };
+  }
+
+  async me(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
     });
 
-    const { password: _password, ...userWithoutPassword } = user;
+    if (!user) {
+      throw new AppError('Usuário não encontrado.', 404);
+    }
 
-    return {
-      user: userWithoutPassword,
-      token,
-    };
+    return this.sanitizeUser(user);
   }
 }
