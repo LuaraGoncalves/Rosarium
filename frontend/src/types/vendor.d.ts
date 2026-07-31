@@ -7,7 +7,9 @@ declare module 'vaul' {
     Portal: React.ComponentType<React.PropsWithChildren<Record<string, unknown>>>;
     Close: React.ComponentType<React.ButtonHTMLAttributes<HTMLButtonElement>>;
     Overlay: React.ComponentType<React.HTMLAttributes<HTMLDivElement>>;
-    Content: React.ComponentType<React.HTMLAttributes<HTMLDivElement> & { children?: React.ReactNode }>;
+    Content: React.ComponentType<
+      React.HTMLAttributes<HTMLDivElement> & { children?: React.ReactNode }
+    >;
     Title: React.ComponentType<React.HTMLAttributes<HTMLHeadingElement>>;
     Description: React.ComponentType<React.HTMLAttributes<HTMLParagraphElement>>;
   };
