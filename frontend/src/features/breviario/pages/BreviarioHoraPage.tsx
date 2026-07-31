@@ -34,11 +34,11 @@ export function BreviarioHoraPage() {
   }
 
   let horaData: BreviarioHoraSection | null = null;
-  if (hora === 'oficio') horaData = breviario.oficio;
-  if (hora === 'laudes') horaData = breviario.laudes;
-  if (hora === 'hora-media') horaData = breviario.hora_media;
-  if (hora === 'vesperas') horaData = breviario.vesperas;
-  if (hora === 'completas') horaData = breviario.completas;
+  if (hora === 'oficio') horaData = breviario.oficio ?? null;
+  if (hora === 'laudes') horaData = breviario.laudes ?? null;
+  if (hora === 'hora-media') horaData = breviario.hora_media ?? null;
+  if (hora === 'vesperas') horaData = breviario.vesperas ?? null;
+  if (hora === 'completas') horaData = breviario.completas ?? null;
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans pb-24">
