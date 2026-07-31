@@ -10,8 +10,12 @@
     "test:backend": "pnpm --dir backend test",
     "test:frontend": "pnpm --dir frontend test",
     "test": "pnpm run test:backend && pnpm run test:frontend",
+    "typecheck:backend": "pnpm --dir backend typecheck",
+    "typecheck:frontend": "pnpm --dir frontend typecheck",
+    "typecheck": "pnpm run typecheck:backend && pnpm run typecheck:frontend",
     "prepare": "husky install || true",
     "lint": "eslint . --ext .ts,.tsx",
+    "check": "pnpm run lint && pnpm run typecheck && pnpm run test",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
   },
   "devDependencies": {
