@@ -1,14 +1,16 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { prisma } from '@/infra/database/prisma';
+import { logger } from '@/infra/logger/logger';
+import { AppError } from '@/shared/errors/AppError';
 
 const LITURGIA_API_URL = 'https://liturgia.up.railway.app/';
+
 const normalizeParam = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value[0] : value;
 
-export const getLiturgiaDiaria = async (req: Request, res: Response) => {
+export const getLiturgiaDiaria = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const today = new Date();
-
     const todayZeroed = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
     const liturgiaNoBanco = await prisma.liturgia.findUnique({
@@ -20,13 +22,12 @@ export const getLiturgiaDiaria = async (req: Request, res: Response) => {
     }
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 6000); // 6 segundos de tolerância
+    const timeout = setTimeout(() => controller.abort(), 6000);
 
     try {
       const response = await fetch(LITURGIA_API_URL, { signal: controller.signal });
       if (response.ok) {
         const rawData = await response.json();
-
         const dateString = today.toLocaleDateString('pt-BR');
 
         const normalizedData = {
@@ -110,8 +111,8 @@ export const getLiturgiaDiaria = async (req: Request, res: Response) => {
 
         return res.json(normalizedData);
       }
-    } catch {
-      console.log('Timeout ou erro ao ler a API Externa Litúrgica');
+    } catch (error) {
+      logger.warn({ error }, 'Falha ao buscar liturgia na API externa; usando fallback local.');
     } finally {
       clearTimeout(timeout);
     }
@@ -124,50 +125,59 @@ export const getLiturgiaDiaria = async (req: Request, res: Response) => {
       return res.json(JSON.parse(ultimaLiturgia.conteudo));
     }
 
-    return res
-      .status(503)
-      .json({ error: 'A Liturgia Diária não pôde ser carregada hoje. O acervo está vazio.' });
+    throw new AppError('A Liturgia Diária não pôde ser carregada hoje. O acervo está vazio.', 503);
   } catch (error) {
-    console.error('Erro no controller de Liturgia:', error);
-    res.status(500).json({ error: 'Erro interno ao processar a Liturgia Diária.' });
+    return next(error);
   }
 };
 
-export const getLiturgias = async (req: Request, res: Response) => {
+export const getLiturgias = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const liturgias = await prisma.liturgia.findMany({ orderBy: { data: 'desc' } });
-    res.json(liturgias);
-  } catch {
-    res.status(500).json({ error: 'Erro ao buscar liturgias.' });
+    return res.json(liturgias);
+  } catch (error) {
+    return next(error);
   }
 };
 
-export const getLiturgiaByData = async (req: Request, res: Response) => {
+export const getLiturgiaByData = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const dataString = normalizeParam(req.params.data);
     if (!dataString) {
-      return res.status(400).json({ error: 'Data inválida.' });
+      throw new AppError('Data inválida.', 400);
     }
+
     const liturgiaDate = new Date(dataString);
+    if (Number.isNaN(liturgiaDate.getTime())) {
+      throw new AppError('Data inválida.', 400);
+    }
 
     const liturgia = await prisma.liturgia.findUnique({
       where: { data: liturgiaDate },
     });
 
-    if (liturgia) {
-      res.json(JSON.parse(liturgia.conteudo));
-    } else {
-      res.status(404).json({ error: 'Liturgia não encontrada para essa data' });
+    if (!liturgia) {
+      throw new AppError('Liturgia não encontrada para essa data.', 404);
     }
-  } catch {
-    res.status(500).json({ error: 'Erro ao buscar a liturgia' });
+
+    return res.json(JSON.parse(liturgia.conteudo));
+  } catch (error) {
+    return next(error);
   }
 };
 
-export const createOrUpdateLiturgia = async (req: Request, res: Response) => {
+export const createOrUpdateLiturgia = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { data, conteudo } = req.body;
+
+    if (!data || !conteudo) {
+      throw new AppError('Dados inválidos.', 400);
+    }
+
     const liturgiaDate = new Date(data);
+    if (Number.isNaN(liturgiaDate.getTime())) {
+      throw new AppError('Data inválida.', 400);
+    }
 
     const result = await prisma.liturgia.upsert({
       where: { data: liturgiaDate },
@@ -175,8 +185,8 @@ export const createOrUpdateLiturgia = async (req: Request, res: Response) => {
       create: { data: liturgiaDate, conteudo: JSON.stringify(conteudo) },
     });
 
-    res.status(200).json(result);
-  } catch {
-    res.status(500).json({ error: 'Erro ao salvar liturgia' });
+    return res.status(200).json(result);
+  } catch (error) {
+    return next(error);
   }
 };

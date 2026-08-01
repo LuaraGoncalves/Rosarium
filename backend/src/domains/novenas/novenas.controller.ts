@@ -1,5 +1,6 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { prisma } from '@/infra/database/prisma';
+import { AppError } from '@/shared/errors/AppError';
 import { z } from 'zod';
 
 interface INovenaProgress {
@@ -51,17 +52,17 @@ const normalizeParam = (value: string | string[] | undefined) => {
 };
 
 export class NovenasController {
-  async getProgress(req: Request, res: Response) {
+  async getProgress(req: Request, res: Response, next: NextFunction) {
     try {
       const novenaId = normalizeParam(req.params.novenaId);
       if (!novenaId) {
-        return res.status(400).json({ error: 'novenaId é obrigatório.' });
+        throw new AppError('novenaId é obrigatório.', 400);
       }
 
       const userId = (req as Request & { user?: { id: string } }).user?.id;
 
       if (!userId) {
-        return res.status(401).json({ error: 'Unauthorized' });
+        throw new AppError('Não autorizado.', 401);
       }
 
       const progress = await db.novenaProgress.findUnique({
@@ -78,21 +79,20 @@ export class NovenasController {
         updatedAt: progress?.updatedAt ? progress.updatedAt.toISOString() : null,
       });
     } catch (error) {
-      console.error('Error fetching novena progress:', error);
-      return res.status(500).json({ error: 'Internal server error' });
+      return next(error);
     }
   }
 
-  async saveProgress(req: Request, res: Response) {
+  async saveProgress(req: Request, res: Response, next: NextFunction) {
     try {
       const novenaId = normalizeParam(req.params.novenaId);
       if (!novenaId) {
-        return res.status(400).json({ error: 'novenaId é obrigatório.' });
+        throw new AppError('novenaId é obrigatório.', 400);
       }
       const userId = (req as Request & { user?: { id: string } }).user?.id;
 
       if (!userId) {
-        return res.status(401).json({ error: 'Unauthorized' });
+        throw new AppError('Não autorizado.', 401);
       }
 
       const bodySchema = z.object({
@@ -113,8 +113,7 @@ export class NovenasController {
         const serverDate = new Date(currentProgress.updatedAt);
 
         if (serverDate.getTime() > clientDate.getTime() + 1000) {
-          return res.status(409).json({
-            error: 'Conflict: Server has newer data',
+          throw new AppError('Conflict: Server has newer data', 409, {
             completedDays: currentProgress.completedDays,
             updatedAt: currentProgress.updatedAt.toISOString(),
           });
@@ -143,16 +142,10 @@ export class NovenasController {
         updatedAt: progress.updatedAt.toISOString(),
       });
     } catch (error: unknown) {
-      console.error('Error saving novena progress:', error);
       if (error instanceof z.ZodError) {
-        return res.status(400).json({
-          error: error.issues.map((issue) => ({
-            campo: issue.path.join('.'),
-            mensagem: issue.message,
-          })),
-        });
+        return next(new AppError('Erro de validação', 400, error.format()));
       }
-      return res.status(500).json({ error: 'Internal server error' });
+      return next(error);
     }
   }
 }

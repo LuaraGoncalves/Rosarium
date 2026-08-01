@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import routes from '@/infra/http/routes';
 import { errorHandler } from '@/shared/middlewares/errorHandler';
+import { requestLogger } from '@/shared/middlewares/requestLogger';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger';
 import { setupCronJobs } from './config/cron';
@@ -45,6 +46,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(requestLogger);
 app.use(express.json());
 
 app.use('/api', routes);

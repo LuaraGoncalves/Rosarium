@@ -1,14 +1,15 @@
 import cron from 'node-cron';
 import { spawn } from 'child_process';
 import path from 'path';
+import { logger } from '@/infra/logger/logger';
 
 export function setupCronJobs() {
-  console.log('⏳ Configurando Cron Jobs...');
+  logger.info('configuring cron jobs');
 
   cron.schedule(
     '5 0 * * *',
     () => {
-      console.log('🔄 Executando tarefa diária: Atualização do Santo do Dia');
+      logger.info('running daily santo do dia update');
 
       const scriptPath = path.resolve(__dirname, '../../scripts/update-santo-do-dia.ts');
 
@@ -18,11 +19,11 @@ export function setupCronJobs() {
       });
 
       child.on('close', (code) => {
-        console.log(`✅ Atualização finalizada com código ${code}`);
+        logger.info({ code }, 'daily update finished');
       });
 
       child.on('error', (err) => {
-        console.error('❌ Erro ao executar script de atualização:', err);
+        logger.error({ err }, 'failed to run daily update');
       });
     },
     {

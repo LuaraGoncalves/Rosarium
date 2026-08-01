@@ -4,6 +4,7 @@ import { SantoScraper } from '../services/santo.scraper';
 import { parseSantoHtml } from '../services/santo.parser';
 import { SantoFormatter } from '../services/santo.formatter';
 import { SantoDoDia } from '@prisma/client';
+import { logger } from '@/infra/logger/logger';
 
 export async function getSantoDoDia(): Promise<Result<SantoDoDia>> {
   try {
@@ -49,9 +50,9 @@ export async function getSantoDoDia(): Promise<Result<SantoDoDia>> {
               },
             });
           }
-        }
-      } catch (updateError) {
-        console.error('[getSantoDoDia] Erro ao atualizar o santo do dia sob demanda:', updateError);
+      }
+    } catch (updateError) {
+        logger.warn({ updateError }, 'failed to refresh santo do dia on demand');
       }
     }
 
@@ -61,7 +62,7 @@ export async function getSantoDoDia(): Promise<Result<SantoDoDia>> {
 
     return { success: true, data: santoDoDia };
   } catch (error) {
-    console.error('[getSantoDoDia] Erro ao buscar no banco:', error);
+    logger.error({ error }, 'failed to fetch santo do dia from database');
     return { success: false, error: 'DATABASE_ERROR', details: error };
   }
 }
