@@ -7,6 +7,11 @@ export function SantoDetalhePage() {
   const { id } = useParams<{ id: string }>();
 
   const { santo, loading, error } = useSanto(id);
+  const historiaParagraphs =
+    santo?.historia
+      ?.split(/\n{2,}|\r?\n/)
+      .map((paragraph) => paragraph.trim())
+      .filter(Boolean) ?? [];
 
   if (loading) {
     return (
@@ -54,11 +59,11 @@ export function SantoDetalhePage() {
 
       <main className="max-w-5xl mx-auto px-4 py-8 md:py-10">
         {/* Header Content with Image and Title */}
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 mb-8 md:mb-10 bg-church-bg-secondary p-6 md:p-10 rounded-2xl border border-church-border shadow-sm">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 mb-8 md:mb-10 bg-church-bg-secondary p-6 md:p-10 rounded-lg border border-church-border shadow-sm">
           {/* Image - Smaller & Circular */}
           <div className="shrink-0">
             {santo.imagemUrl ? (
-              <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-lg ring-2 ring-[#D4AF37]/40 bg-church-bg border-4 border-church-bg-secondary">
+              <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-lg ring-2 ring-church-accent-hover/30 bg-church-bg border-4 border-church-bg-secondary">
                 <img
                   src={santo.imagemUrl}
                   alt={santo.nome}
@@ -66,7 +71,7 @@ export function SantoDetalhePage() {
                 />
               </div>
             ) : (
-              <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-lg ring-2 ring-[#D4AF37]/40 bg-church-bg-tertiary border-4 border-church-bg-secondary flex items-center justify-center">
+              <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-lg ring-2 ring-church-accent-hover/30 bg-church-bg-tertiary border-4 border-church-bg-secondary flex items-center justify-center">
                 <p className="text-church-text/40 font-serif italic text-sm">Sem imagem</p>
               </div>
             )}
@@ -83,7 +88,7 @@ export function SantoDetalhePage() {
               </p>
             )}
             {santo.fraseMarcante && (
-              <blockquote className="text-lg font-serif italic text-church-text/90 border-l-4 border-[#D4AF37]/60 pl-5 py-2 mt-2 bg-church-bg/30 rounded-r-lg">
+              <blockquote className="text-lg font-serif italic text-church-text/90 border-l-4 border-church-accent-hover/60 pl-5 py-2 mt-2 bg-church-bg/30 rounded-r-lg">
                 "{santo.fraseMarcante}"
               </blockquote>
             )}
@@ -94,8 +99,8 @@ export function SantoDetalhePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
           {/* Sidebar - Ficha */}
           <div className="lg:col-span-4">
-            <div className="bg-church-bg-secondary rounded-2xl p-5 md:p-8 border border-church-border shadow-sm lg:sticky lg:top-24">
-              <h3 className="text-xs md:text-sm uppercase tracking-widest text-church-accent font-semibold mb-6 flex items-center gap-2 pb-4 border-b border-church-border/70">
+            <div className="bg-church-bg-secondary rounded-lg p-5 md:p-8 border border-church-border shadow-sm lg:sticky lg:top-24">
+              <h3 className="text-xs md:text-sm uppercase text-church-accent font-semibold mb-6 flex items-center gap-2 pb-4 border-b border-church-border/70">
                 Ficha do Santo
               </h3>
 
@@ -103,8 +108,8 @@ export function SantoDetalhePage() {
                 {santo.diaFesta && (
                   <li className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-2 text-church-text/60">
-                      <CalendarDays className="w-4 h-4 text-[#D4AF37]" />
-                      <span className="text-[11px] md:text-xs uppercase font-semibold tracking-wider">
+                      <CalendarDays className="w-4 h-4 text-church-accent-hover" />
+                      <span className="text-[11px] md:text-xs uppercase font-semibold">
                         Dia Festivo
                       </span>
                     </div>
@@ -115,8 +120,8 @@ export function SantoDetalhePage() {
                 {santo.categoria && (
                   <li className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-2 text-church-text/60">
-                      <Tag className="w-4 h-4 text-[#D4AF37]" />
-                      <span className="text-[11px] md:text-xs uppercase font-semibold tracking-wider">
+                      <Tag className="w-4 h-4 text-church-accent-hover" />
+                      <span className="text-[11px] md:text-xs uppercase font-semibold">
                         Categoria
                       </span>
                     </div>
@@ -127,8 +132,8 @@ export function SantoDetalhePage() {
                 {santo.padroeiroDe && (
                   <li className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-2 text-church-text/60">
-                      <Shield className="w-4 h-4 text-[#D4AF37]" />
-                      <span className="text-[11px] md:text-xs uppercase font-semibold tracking-wider">
+                      <Shield className="w-4 h-4 text-church-accent-hover" />
+                      <span className="text-[11px] md:text-xs uppercase font-semibold">
                         Padroeiro(a) de
                       </span>
                     </div>
@@ -141,8 +146,8 @@ export function SantoDetalhePage() {
                 {santo.intercessao && (
                   <li className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-2 text-church-text/60">
-                      <BookHeart className="w-4 h-4 text-[#D4AF37]" />
-                      <span className="text-[11px] md:text-xs uppercase font-semibold tracking-wider">
+                      <BookHeart className="w-4 h-4 text-church-accent-hover" />
+                      <span className="text-[11px] md:text-xs uppercase font-semibold">
                         Intercessão
                       </span>
                     </div>
@@ -158,8 +163,8 @@ export function SantoDetalhePage() {
                       {santo.origem && (
                         <div className="flex flex-col gap-1.5">
                           <div className="flex items-center gap-2 text-church-text/60">
-                            <MapPin className="w-4 h-4 text-[#D4AF37]" />
-                            <span className="text-[11px] md:text-xs uppercase font-semibold tracking-wider">
+                            <MapPin className="w-4 h-4 text-church-accent-hover" />
+                            <span className="text-[11px] md:text-xs uppercase font-semibold">
                               Origem
                             </span>
                           </div>
@@ -171,8 +176,8 @@ export function SantoDetalhePage() {
                       {santo.seculo && (
                         <div className="flex flex-col gap-1.5">
                           <div className="flex items-center gap-2 text-church-text/60">
-                            <Clock className="w-4 h-4 text-[#D4AF37]" />
-                            <span className="text-[11px] md:text-xs uppercase font-semibold tracking-wider">
+                            <Clock className="w-4 h-4 text-church-accent-hover" />
+                            <span className="text-[11px] md:text-xs uppercase font-semibold">
                               Época
                             </span>
                           </div>
@@ -190,13 +195,25 @@ export function SantoDetalhePage() {
 
           {/* Main Content - History */}
           <div className="lg:col-span-8">
-            <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-12 border border-church-border shadow-sm min-h-full">
-              <h2 className="text-2xl md:text-3xl font-serif text-church-accent mb-8 flex items-center gap-4">
+            <div className="bg-church-bg-secondary rounded-lg p-6 md:p-10 border border-church-border shadow-sm min-h-full">
+              <h2 className="text-2xl md:text-3xl font-serif text-church-accent mb-3 flex items-center gap-4">
                 História
                 <div className="h-px bg-church-border/60 flex-1 mt-1"></div>
               </h2>
-              <div className="text-church-text/90 font-serif leading-[1.8] text-lg whitespace-pre-line text-justify">
-                {santo.historia}
+              <p className="mb-8 text-xs uppercase text-church-text-muted">
+                Texto formatado para leitura contínua
+              </p>
+              <div className="mx-auto max-w-[68ch] rounded-sm border border-church-border/70 bg-church-bg/45 px-5 py-6 md:px-8 md:py-8">
+                <article className="font-serif text-[1.02rem] leading-[1.65] text-church-text/90 md:text-[1.08rem]">
+                  {historiaParagraphs.map((paragraph, index) => (
+                    <p
+                      key={`${paragraph.slice(0, 24)}-${index}`}
+                      className="mb-4 text-justify indent-8 last:mb-0 md:indent-12"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </article>
               </div>
             </div>
           </div>

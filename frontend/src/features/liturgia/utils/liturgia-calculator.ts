@@ -44,7 +44,9 @@ export function generateLiturgicalCalendar(year: number): DiaLiturgico[] {
   const eventos: DiaLiturgico[] = [
     { dia: 1, mes: 1, titulo: 'Santa Maria, Mãe de Deus', cor: 'Branco', tipo: 'Solenidade' },
     { dia: 6, mes: 1, titulo: 'Epifania do Senhor', cor: 'Branco', tipo: 'Solenidade' },
+    { dia: 25, mes: 1, titulo: 'Conversão de São Paulo', cor: 'Branco', tipo: 'Festa' },
     { dia: 2, mes: 2, titulo: 'Apresentação do Senhor', cor: 'Branco', tipo: 'Festa' },
+    { dia: 22, mes: 2, titulo: 'Cátedra de São Pedro', cor: 'Branco', tipo: 'Festa' },
 
     // Movable Feasts
     {
@@ -107,6 +109,10 @@ export function generateLiturgicalCalendar(year: number): DiaLiturgico[] {
     // Fixed Feasts
     { dia: 19, mes: 3, titulo: 'São José, Esposo de Maria', cor: 'Branco', tipo: 'Solenidade' },
     { dia: 25, mes: 3, titulo: 'Anunciação do Senhor', cor: 'Branco', tipo: 'Solenidade' },
+    { dia: 25, mes: 4, titulo: 'São Marcos, Evangelista', cor: 'Vermelho', tipo: 'Festa' },
+    { dia: 1, mes: 5, titulo: 'São José Operário', cor: 'Branco', tipo: 'Memória' },
+    { dia: 3, mes: 5, titulo: 'São Filipe e São Tiago, Apóstolos', cor: 'Vermelho', tipo: 'Festa' },
+    { dia: 31, mes: 5, titulo: 'Visitação de Nossa Senhora', cor: 'Branco', tipo: 'Festa' },
     {
       dia: 24,
       mes: 6,
@@ -115,11 +121,40 @@ export function generateLiturgicalCalendar(year: number): DiaLiturgico[] {
       tipo: 'Solenidade',
     },
     { dia: 29, mes: 6, titulo: 'São Pedro e São Paulo', cor: 'Vermelho', tipo: 'Solenidade' },
+    { dia: 3, mes: 7, titulo: 'São Tomé, Apóstolo', cor: 'Vermelho', tipo: 'Festa' },
+    { dia: 11, mes: 7, titulo: 'São Bento', cor: 'Branco', tipo: 'Memória' },
+    { dia: 22, mes: 7, titulo: 'Santa Maria Madalena', cor: 'Branco', tipo: 'Festa' },
+    { dia: 25, mes: 7, titulo: 'São Tiago Maior, Apóstolo', cor: 'Vermelho', tipo: 'Festa' },
+    {
+      dia: 26,
+      mes: 7,
+      titulo: 'São Joaquim e Sant’Ana',
+      cor: 'Branco',
+      tipo: 'Memória',
+    },
+    {
+      dia: 29,
+      mes: 7,
+      titulo: 'Santos Marta, Maria e Lázaro',
+      cor: 'Branco',
+      tipo: 'Memória',
+    },
+    { dia: 31, mes: 7, titulo: 'Santo Inácio de Loyola', cor: 'Branco', tipo: 'Memória' },
     { dia: 6, mes: 8, titulo: 'Transfiguração do Senhor', cor: 'Branco', tipo: 'Festa' },
     { dia: 15, mes: 8, titulo: 'Assunção de Nossa Senhora', cor: 'Branco', tipo: 'Solenidade' },
+    { dia: 24, mes: 8, titulo: 'São Bartolomeu, Apóstolo', cor: 'Vermelho', tipo: 'Festa' },
     { dia: 8, mes: 9, titulo: 'Natividade de Nossa Senhora', cor: 'Branco', tipo: 'Festa' },
     { dia: 14, mes: 9, titulo: 'Exaltação da Santa Cruz', cor: 'Vermelho', tipo: 'Festa' },
+    { dia: 21, mes: 9, titulo: 'São Mateus, Apóstolo e Evangelista', cor: 'Vermelho', tipo: 'Festa' },
     { dia: 12, mes: 10, titulo: 'Nossa Senhora Aparecida', cor: 'Branco', tipo: 'Solenidade' },
+    { dia: 18, mes: 10, titulo: 'São Lucas, Evangelista', cor: 'Vermelho', tipo: 'Festa' },
+    {
+      dia: 28,
+      mes: 10,
+      titulo: 'São Simão e São Judas Tadeu, Apóstolos',
+      cor: 'Vermelho',
+      tipo: 'Festa',
+    },
     { dia: 1, mes: 11, titulo: 'Todos os Santos', cor: 'Branco', tipo: 'Solenidade' },
     {
       dia: 2,
@@ -128,6 +163,8 @@ export function generateLiturgicalCalendar(year: number): DiaLiturgico[] {
       cor: 'Roxo',
       tipo: 'Comemoração',
     },
+    { dia: 9, mes: 11, titulo: 'Dedicação da Basílica do Latrão', cor: 'Branco', tipo: 'Festa' },
+    { dia: 30, mes: 11, titulo: 'Santo André, Apóstolo', cor: 'Vermelho', tipo: 'Festa' },
     {
       dia: 8,
       mes: 12,
