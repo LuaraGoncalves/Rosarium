@@ -27,8 +27,8 @@ export function LiturgiaPage() {
       </header>
 
       <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-        <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-xl">
+        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
+          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-lg">
             <img
               src="https://images.unsplash.com/photo-1696261803446-e9847baf4a6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXRob2xpYyUyMGNodXJjaCUyMGFsdGFyJTIwc3RhdHVlfGVufDF8fHx8MTc3MzQwOTg2MHww&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Interior da Igreja"
@@ -46,7 +46,7 @@ export function LiturgiaPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-12">
-          <div className="bg-church-bg-secondary rounded-xl p-6 md:p-8 border border-church-border-hover shadow-none">
+          <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 border border-church-border-hover shadow-none">
             <div className="w-14 h-14 bg-church-bg border border-church-border-hover rounded-full flex items-center justify-center mb-6">
               <BookOpen className="w-7 h-7 text-church-accent-hover" />
             </div>
@@ -63,7 +63,7 @@ export function LiturgiaPage() {
             </button>
           </div>
 
-          <div className="bg-church-bg-secondary rounded-xl p-6 md:p-8 border border-church-border-hover shadow-none">
+          <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 border border-church-border-hover shadow-none">
             <div className="w-14 h-14 bg-church-bg border border-church-border-hover rounded-full flex items-center justify-center mb-6">
               <Calendar className="w-7 h-7 text-church-accent-hover" />
             </div>
@@ -80,7 +80,7 @@ export function LiturgiaPage() {
           </div>
         </div>
 
-        <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 border border-church-border-hover">
+        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 border border-church-border-hover">
           <h3 className="text-2xl font-serif text-church-accent mb-8">Tempos Litúrgicos</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {[
@@ -113,7 +113,7 @@ export function LiturgiaPage() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="bg-church-bg rounded-xl p-6 border border-church-border-hover transition-all hover:border-[#D4AF37]/50"
+                className="bg-church-bg rounded-lg p-6 border border-church-border-hover transition-all hover:border-church-accent-hover/50"
               >
                 <h4 className="text-xl font-serif text-church-accent-hover mb-2">{item.tempo}</h4>
                 <p className="text-church-text/80 mb-3">{item.desc}</p>

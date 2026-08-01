@@ -11,8 +11,8 @@ function NovenaCard({ novena }: { novena: (typeof novenasData)[number] }) {
   return (
     <div
       onClick={() => navigate(`/novenas/${novena.id}`)}
-      className="bg-church-bg-secondary rounded-xl p-5 sm:p-6 border border-church-border-hover 
-        hover:border-[#C89B3C]/50 transition-all cursor-pointer 
+      className="bg-church-bg-secondary rounded-lg p-5 sm:p-6 border border-church-border-hover
+        hover:border-church-accent-hover/50 transition-all cursor-pointer
         hover:-translate-y-1 group shadow-none"
     >
       <div className="flex flex-col sm:flex-row items-start gap-4 mb-4">
@@ -44,7 +44,7 @@ function NovenaCard({ novena }: { novena: (typeof novenasData)[number] }) {
       {/* Barra de progresso minimalista */}
       <div className="w-full bg-church-bg h-1.5 rounded-full mt-4 overflow-hidden border border-church-border-hover">
         <div
-          className="bg-[#C89B3C] h-full transition-all duration-500 opacity-80"
+          className="bg-church-accent-hover h-full transition-all duration-500 opacity-80"
           style={{ width: `${percentage}%` }}
         />
       </div>
@@ -76,8 +76,8 @@ export function NovenasPage() {
       </header>
 
       <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-        <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-xl">
+        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
+          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-lg">
             <img
               src="https://images.unsplash.com/photo-1559536454-5a69386e8075?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaHVyY2glMjBpbnRlcmlvciUyMGNhbmRsZXN8ZW58MXx8fHwxNzczNDA5ODYyfDA&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Velas na Igreja"

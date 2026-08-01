@@ -59,8 +59,8 @@ export function LiturgiaHojePage() {
       <div className="max-w-3xl mx-auto px-4 py-8 md:py-12 space-y-8 md:space-y-12 text-base md:text-lg leading-relaxed text-church-text/90">
         {/* Primeira Leitura */}
         {liturgia.primeiraLeitura && (
-          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-2xl border border-church-border-hover">
-            <h3 className="text-[#C89B3C] font-serif mb-2 uppercase text-sm tracking-wider text-center">
+          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-lg border border-church-border-hover">
+            <h3 className="text-church-accent-hover font-serif mb-2 uppercase text-sm text-center">
               Primeira Leitura
             </h3>
             <p className="text-center font-serif text-church-accent mb-6">
@@ -74,8 +74,8 @@ export function LiturgiaHojePage() {
 
         {/* Salmo */}
         {liturgia.salmo && (
-          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-2xl border border-church-border-hover">
-            <h3 className="text-[#C89B3C] font-serif mb-2 uppercase text-sm tracking-wider text-center">
+          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-lg border border-church-border-hover">
+            <h3 className="text-church-accent-hover font-serif mb-2 uppercase text-sm text-center">
               Salmo Responsorial
             </h3>
             <p className="text-center font-serif text-church-accent mb-6">
@@ -90,8 +90,8 @@ export function LiturgiaHojePage() {
 
         {/* Segunda Leitura */}
         {liturgia.segundaLeitura && liturgia.segundaLeitura.texto && (
-          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-2xl border border-church-border-hover">
-            <h3 className="text-[#C89B3C] font-serif mb-2 uppercase text-sm tracking-wider text-center">
+          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-lg border border-church-border-hover">
+            <h3 className="text-church-accent-hover font-serif mb-2 uppercase text-sm text-center">
               Segunda Leitura
             </h3>
             <p className="text-center font-serif text-church-accent mb-6">
@@ -105,8 +105,8 @@ export function LiturgiaHojePage() {
 
         {/* Evangelho */}
         {liturgia.evangelho && (
-          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-2xl border border-[#C89B3C]/30 shadow-[0_0_15px_rgba(200,155,60,0.1)]">
-            <h3 className="text-[#C89B3C] font-serif mb-2 uppercase text-sm tracking-wider text-center">
+          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-lg border border-church-accent-hover/30 shadow-[0_0_15px_rgba(200,155,60,0.1)]">
+            <h3 className="text-church-accent-hover font-serif mb-2 uppercase text-sm text-center">
               Evangelho
             </h3>
             <p className="text-center font-serif text-church-accent mb-6">

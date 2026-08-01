@@ -2,22 +2,22 @@
 
 :root {
   /* Modo Oficial (Claro) */
-  --church-bg-primary: #F5E6D3;
-  --church-bg-secondary: #EBE0D3;
-  --church-bg-tertiary: #E1D4C5;
-  --church-bg-darker: #D6C7B5;
+  --church-bg-primary: #F7EFE5;
+  --church-bg-secondary: #FFF9F1;
+  --church-bg-tertiary: #EADAC6;
+  --church-bg-darker: #D8BEA1;
   
-  --church-text-primary: #3A322C;
-  --church-text-secondary: #5A4E45;
-  --church-text-muted: #7A6A5E;
+  --church-text-primary: #2E211B;
+  --church-text-secondary: #5B493F;
+  --church-text-muted: #7B6A60;
   
-  --church-accent: #B8860B;
-  --church-accent-hover: #996515;
+  --church-accent: #7A2E3A;
+  --church-accent-hover: #B2832D;
   
-  --church-border: #DED3C6;
-  --church-border-hover: #D1C4B5;
+  --church-border: #E1CDB7;
+  --church-border-hover: #CBAE8B;
   
-  --church-header-bg: rgba(245, 230, 211, 0.95);
+  --church-header-bg: rgba(247, 239, 229, 0.94);
 
   --font-size: 16px;
   --background: #ffffff;
@@ -61,22 +61,22 @@
 
 .dark {
   /* Modo Contemplativo (Escuro) */
-  --church-bg-primary: #2A2420;
-  --church-bg-secondary: #342D28;
-  --church-bg-tertiary: #241E1A;
-  --church-bg-darker: #1E1A17;
+  --church-bg-primary: #201512;
+  --church-bg-secondary: #2B1C18;
+  --church-bg-tertiary: #170E0C;
+  --church-bg-darker: #100907;
   
-  --church-text-primary: #F5E6D3;
-  --church-text-secondary: rgba(245, 230, 211, 0.8);
-  --church-text-muted: rgba(245, 230, 211, 0.5);
+  --church-text-primary: #F8EBDD;
+  --church-text-secondary: rgba(248, 235, 221, 0.78);
+  --church-text-muted: rgba(248, 235, 221, 0.56);
   
-  --church-accent: #D4AF37;
-  --church-accent-hover: #C89B3C;
+  --church-accent: #C69A4A;
+  --church-accent-hover: #9E3B4A;
   
-  --church-border: #342D28;
-  --church-border-hover: #423A33;
+  --church-border: #412A23;
+  --church-border-hover: #5D3C30;
   
-  --church-header-bg: rgba(42, 36, 32, 0.95);
+  --church-header-bg: rgba(32, 21, 18, 0.94);
 
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -115,6 +115,9 @@
 }
 
 @theme inline {
+  --font-sans: 'Source Sans 3', sans-serif;
+  --font-serif: 'Literata', serif;
+
   --color-church-bg: var(--church-bg-primary);
   --color-church-bg-secondary: var(--church-bg-secondary);
   --color-church-bg-tertiary: var(--church-bg-tertiary);
@@ -185,7 +188,9 @@
   }
 
   body {
-    @apply bg-church-bg text-church-text;
+    @apply bg-church-bg text-church-text antialiased;
+    font-family: 'Source Sans 3', sans-serif;
+    text-rendering: optimizeLegibility;
   }
   
   html {
@@ -195,25 +200,30 @@
   h1 {
     font-size: var(--text-2xl);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.18;
+    color: var(--church-text-primary);
+    font-family: 'Literata', serif;
   }
 
   h2 {
     font-size: var(--text-xl);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.24;
+    color: var(--church-text-primary);
+    font-family: 'Literata', serif;
   }
 
   h3 {
     font-size: var(--text-lg);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.3;
+    color: var(--church-text-primary);
   }
 
   h4 {
     font-size: var(--text-base);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.35;
   }
 
   label {
@@ -232,5 +242,14 @@
     font-size: var(--text-base);
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
+  }
+
+  p,
+  li {
+    line-height: 1.7;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--church-accent) 22%, transparent);
   }
 }

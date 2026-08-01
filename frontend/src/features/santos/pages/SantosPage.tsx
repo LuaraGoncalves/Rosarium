@@ -32,8 +32,8 @@ export function SantosPage() {
       </header>
 
       <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-        <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-xl">
+        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
+          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-lg">
             <img
               src="https://images.unsplash.com/photo-1637331664385-17bbf6be1d93?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXRob2xpYyUyMHNhaW50JTIwc3RhdHVlfGVufDF8fHx8MTc3MzQwOTg2Mnww&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Estátua de Santo"
@@ -55,7 +55,7 @@ export function SantosPage() {
             </h2>
             <div
               onClick={() => navigate(`/santos/${santoDoDia.id}`)}
-              className="bg-church-bg-secondary rounded-2xl overflow-hidden border border-[#D4AF37]/30 transition-all hover:border-[#D4AF37]/70 cursor-pointer shadow-none group"
+              className="bg-church-bg-secondary rounded-lg overflow-hidden border border-church-accent-hover/30 transition-all hover:border-church-accent-hover/70 cursor-pointer shadow-none group"
             >
               <div className="grid md:grid-cols-2">
                 <div className="h-56 md:h-auto overflow-hidden relative bg-church-bg-tertiary flex items-center justify-center">
@@ -117,7 +117,7 @@ export function SantosPage() {
               <div
                 key={santo.id}
                 onClick={() => navigate(`/santos/${santo.id}`)}
-                className="bg-church-bg-secondary rounded-xl overflow-hidden border border-church-border-hover transition-all hover:border-[#D4AF37]/50 group cursor-pointer shadow-none flex flex-col"
+                className="bg-church-bg-secondary rounded-lg overflow-hidden border border-church-border-hover transition-all hover:border-church-accent-hover/50 group cursor-pointer shadow-none flex flex-col"
               >
                 <div className="h-44 md:h-48 overflow-hidden relative shrink-0 bg-church-bg-tertiary flex items-center justify-center">
                   {santo.imagemUrl ? (

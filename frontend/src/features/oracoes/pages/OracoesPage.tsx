@@ -116,8 +116,8 @@ export function OracoesPage() {
       </header>
 
       <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-        <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-xl">
+        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
+          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-lg">
             <img
               src="https://images.unsplash.com/photo-1616428882609-7443facdbe81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiaWJsZSUyMG9wZW4lMjBib29rJTIwY2h1cmNofGVufDF8fHx8MTc3MzQwOTg2Mnww&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Bíblia Aberta"
@@ -142,7 +142,7 @@ export function OracoesPage() {
             return (
               <div
                 key={index}
-                className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 border border-church-border-hover shadow-none"
+                className="bg-church-bg-secondary rounded-lg p-6 md:p-8 border border-church-border-hover shadow-none"
               >
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-14 h-14 rounded-full flex items-center justify-center bg-church-bg border border-church-border-hover">
@@ -162,7 +162,7 @@ export function OracoesPage() {
                             'Texto desta oração ainda não foi adicionado ao acervo.',
                         })
                       }
-                      className="bg-church-bg hover:bg-church-bg-darker p-4 rounded-lg cursor-pointer transition-all border border-church-border-hover hover:border-[#D4AF37]/50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 group"
+                      className="bg-church-bg hover:bg-church-bg-darker p-4 rounded-lg cursor-pointer transition-all border border-church-border-hover hover:border-church-accent-hover/50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 group"
                     >
                       <span className="text-church-text font-medium group-hover:text-church-accent-hover transition-colors">
                         {oracao}
@@ -181,7 +181,7 @@ export function OracoesPage() {
       {oracaoAberta && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
           <div
-            className="bg-church-bg-secondary w-full max-w-2xl max-h-[85vh] rounded-2xl shadow-2xl flex flex-col border border-church-border animate-in zoom-in-95 duration-200"
+            className="bg-church-bg-secondary w-full max-w-2xl max-h-[85vh] rounded-lg shadow-2xl flex flex-col border border-church-border animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header do Modal */}

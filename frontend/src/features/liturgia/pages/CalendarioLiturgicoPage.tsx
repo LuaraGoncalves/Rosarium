@@ -62,7 +62,7 @@ export function CalendarioLiturgicoPage() {
       </header>
 
       <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
-        <div className="flex items-center justify-between gap-3 mb-8 bg-church-bg-secondary p-4 rounded-xl border border-church-border-hover">
+        <div className="flex items-center justify-between gap-3 mb-8 bg-church-bg-secondary p-4 rounded-lg border border-church-border-hover">
           <button
             onClick={handlePrevMonth}
             className="p-2 text-church-accent hover:bg-church-bg rounded-full transition-colors"
@@ -81,7 +81,7 @@ export function CalendarioLiturgicoPage() {
         </div>
 
         {currentMonthData.length === 0 ? (
-          <div className="text-center py-16 bg-church-bg-secondary rounded-xl border border-church-border-hover">
+          <div className="text-center py-16 bg-church-bg-secondary rounded-lg border border-church-border-hover">
             <CalendarIcon className="w-12 h-12 text-church-text/20 mx-auto mb-4" />
             <p className="text-church-text/60 italic font-serif">
               Nenhuma solenidade ou festa principal registrada para este mês.
@@ -92,11 +92,11 @@ export function CalendarioLiturgicoPage() {
             {currentMonthData.map((dia, index) => (
               <div
                 key={index}
-                className="bg-church-bg-secondary p-5 md:p-6 rounded-xl border border-church-border-hover flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 transition-colors hover:border-[#C89B3C]/50"
+                className="bg-church-bg-secondary p-5 md:p-6 rounded-lg border border-church-border-hover flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 transition-colors hover:border-church-accent-hover/50"
               >
                 <div className="flex-shrink-0 w-20 h-20 bg-church-bg border border-church-border-hover rounded-full flex flex-col items-center justify-center shadow-inner">
                   <span className="text-2xl font-serif text-church-accent">{dia.dia}</span>
-                  <span className="text-xs uppercase tracking-wider text-church-text/60">
+                  <span className="text-xs uppercase text-church-text/60">
                     {meses[dia.mes - 1].substring(0, 3)}
                   </span>
                 </div>

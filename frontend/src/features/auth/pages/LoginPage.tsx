@@ -29,42 +29,46 @@ export function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-100px)] items-center justify-center px-4 py-8 sm:p-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-6 sm:p-8 shadow-sm dark:bg-[#1C1C1C]">
-        <h1 className="mb-2 text-center text-2xl sm:text-3xl font-bold font-display text-[#8B4513] dark:text-[#D4A373]">
+    <div className="flex min-h-screen items-center justify-center bg-church-bg px-4 py-10">
+      <div className="w-full max-w-md rounded-lg border border-church-border bg-church-bg-secondary p-6 shadow-sm sm:p-8">
+        <h1 className="mb-2 text-center text-2xl font-semibold text-church-accent sm:text-3xl">
           Bem-vindo de volta
         </h1>
-        <p className="mb-6 sm:mb-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
+        <p className="mb-6 text-center text-sm text-church-text-secondary sm:mb-8">
           Entre para salvar suas orações e progresso.
         </p>
 
         {error && (
-          <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400">
+          <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/30 dark:text-red-200">
             {error}
           </div>
         )}
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="mb-1 block text-sm font-medium">E-mail</label>
+            <label className="mb-1.5 block text-sm font-medium text-church-text-secondary">
+              E-mail
+            </label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-md border border-neutral-300 px-3 py-3 outline-none focus:border-[#8B4513] dark:border-neutral-700 dark:bg-neutral-800 dark:focus:border-[#D4A373]"
+              className="w-full rounded-md border border-church-border bg-church-bg px-3 py-3 text-church-text outline-none transition-colors placeholder:text-church-text-muted focus:border-church-accent"
               placeholder="seu@email.com"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium">Senha</label>
+            <label className="mb-1.5 block text-sm font-medium text-church-text-secondary">
+              Senha
+            </label>
             <input
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-md border border-neutral-300 px-3 py-3 outline-none focus:border-[#8B4513] dark:border-neutral-700 dark:bg-neutral-800 dark:focus:border-[#D4A373]"
+              className="w-full rounded-md border border-church-border bg-church-bg px-3 py-3 text-church-text outline-none transition-colors placeholder:text-church-text-muted focus:border-church-accent"
               placeholder="••••••"
             />
           </div>
@@ -72,17 +76,17 @@ export function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-4 w-full rounded-md bg-[#8B4513] px-4 py-3 text-white transition-colors hover:bg-[#6b350e] disabled:opacity-50 dark:bg-[#D4A373] dark:text-black dark:hover:bg-[#b0875f]"
+            className="mt-4 w-full rounded-md bg-church-accent px-4 py-3 text-white transition-colors hover:bg-church-accent-hover disabled:opacity-50 dark:text-church-bg"
           >
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
 
         <div className="mt-6 text-center text-sm leading-relaxed">
-          <span className="text-neutral-500 dark:text-neutral-400">Não tem uma conta? </span>
+          <span className="text-church-text-secondary">Não tem uma conta? </span>
           <Link
             to="/auth/register"
-            className="font-medium text-[#8B4513] hover:underline dark:text-[#D4A373]"
+            className="font-medium text-church-accent hover:text-church-accent-hover"
           >
             Cadastre-se
           </Link>

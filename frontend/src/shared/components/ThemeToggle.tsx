@@ -7,7 +7,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+      className="rounded-md border border-church-border bg-church-bg-secondary p-2 text-church-text-muted transition-colors hover:border-church-border-hover hover:text-church-accent"
       title={theme === "light" ? "Mudar para Modo Contemplativo" : "Mudar para Modo Oficial"}
     >
       {theme === "light" ? (
