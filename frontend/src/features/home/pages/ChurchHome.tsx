@@ -390,9 +390,7 @@ export function ChurchHome() {
             {'"Orai sem cessar"'}
           </p>
 
-          <p className="text-xs text-church-text-muted">
-            © {new Date().getFullYear()} ROSARIUM
-          </p>
+          <p className="text-xs text-church-text-muted">© {new Date().getFullYear()} ROSARIUM</p>
         </div>
       </footer>
     </div>
