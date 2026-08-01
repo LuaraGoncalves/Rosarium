@@ -3,19 +3,23 @@
 A arquitetura do nosso frontend é **Feature-Based** e dividida em três diretórios principais: `app/`, `features/` e `shared/`. Essa divisão promove alta coesão, baixo acoplamento e facilita a escalabilidade e a manutenção do projeto.
 
 ## 1. `app/` (App-Centric)
+
 **Responsabilidade:** Ponto de entrada da aplicação, configurações globais, provedores de contexto e roteamento principal.
 **O que deve ter:**
+
 - Arquivos de inicialização como `App.tsx` e `main.tsx`.
 - Configuração de rotas principais (`routes.ts`).
 - Provedores de contexto globais (`providers/ThemeProvider.tsx`, etc.).
 - Componentes de layout base e estruturais globais (`components/`).
-**O que NÃO deve ter:**
+  **O que NÃO deve ter:**
 - Lógicas de negócio, telas específicas ou componentes genéricos de UI.
 - O arquivo `routes.ts` deve apenas compor as rotas vindas das features.
 
 ## 2. `features/` (Feature-Based)
+
 **Responsabilidade:** Encapsular módulos de negócio independentes. Cada feature atua como um "micro-app" contendo sua própria lógica, UI e integração com APIs. **Uma feature não deve importar código de outra feature.**
 **Estrutura Padrão (ex: `auth/`, `liturgia/`, `santos/`, `novenas/`, `breviario/`):**
+
 - `components/`: Componentes visuais exclusivos da feature.
 - `hooks/`: Custom hooks com regras de negócio específicas da feature.
 - `services/`: Integrações com a API (ex: `[feature].api.ts`).
@@ -25,8 +29,10 @@ A arquitetura do nosso frontend é **Feature-Based** e dividida em três diretó
 - `data/` ou `utils/`: Dados estáticos, formatações e funções auxiliares locais.
 
 ## 3. `shared/`
+
 **Responsabilidade:** Código global transversal, agnóstico a domínio de negócio, reutilizável em qualquer parte do sistema.
 **O que deve ter:**
+
 - `components/`: Componentes de UI genéricos (botões, modais, inputs, tipografia).
 - `hooks/`: Hooks utilitários globais (ex: debounce, manipulação de janela).
 - `services/`: Configurações base de rede (ex: cliente HTTP `api.ts`, interceptors).
@@ -34,13 +40,16 @@ A arquitetura do nosso frontend é **Feature-Based** e dividida em três diretó
 - `styles/`: Classes CSS, variáveis CSS e temas globais (ex: `theme.css`).
 
 ## 4. `tests/`
+
 **Responsabilidade:** Centralizar a infraestrutura de testes e garantir a confiabilidade do frontend.
+
 - `unit/`: Testes isolados de componentes e hooks (via Vitest + Testing Library).
 - `integration/`: Testes de fluxo e interação.
 - `mocks/`: Simulações de respostas de API (`api.mock.ts`).
 - `setup.ts`: Configurações de ambiente de teste e limpeza do DOM.
 
 ## 5. Organização Atual
+
 - As rotas estão divididas por feature em arquivos como `features/auth/routes.ts`, `features/novenas/routes.ts` e `features/liturgia/routes.ts`.
 - A configuração da API central fica em `shared/services/api.ts`, usando `config/env.ts` para ler a URL do backend.
 
