@@ -50,8 +50,8 @@ export async function getSantoDoDia(): Promise<Result<SantoDoDia>> {
               },
             });
           }
-      }
-    } catch (updateError) {
+        }
+      } catch (updateError) {
         logger.warn({ updateError }, 'failed to refresh santo do dia on demand');
       }
     }
