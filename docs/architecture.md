@@ -19,6 +19,7 @@ O Frontend é rigidamente dividido em três áreas de escopo principais para gar
 ### `app/` (App-Centric)
 O ponto de entrada e de orquestração global da aplicação. 
 - Contém provedores de contexto (`ThemeProvider.tsx`), o roteamento central (`routes.ts`) e layouts raiz.
+- O roteamento central apenas compõe as rotas; cada feature expõe o seu próprio arquivo de rotas.
 - **Regra:** Não deve conter lógica de negócio e nem componentes visuais de detalhes. É puramente um ambiente de montagem (bootstrap) e configurações de escopo global.
 
 ### `features/` (Feature-Based)
@@ -49,11 +50,15 @@ A divisão principal da lógica da API (ex: `santos/`, `liturgia/`, `auth/`). Ca
 
 ### `shared/` (Infraestrutura Global)
 Centraliza a infraestrutura transversal e lida com as complexidades externas:
-- **`infra/`:** Configurações de Banco de Dados (`prisma.ts`), Logging, e integrações globais externas.
+- **`infra/`:** Configurações de Banco de Dados (`prisma.ts`), logging estruturado e integrações globais externas.
 - **`middlewares/` e `errors/`:** Tratamentos de exceção customizados (`AppError`), validação de tokens e middlewares essenciais do Express.
 
 ### `config/` e `scripts/`
 A inicialização e orquestração de ambiente (Swagger, Variáveis de Ambiente `env.ts`) e utilitários e web-scrapers em lote (`update-santo.ts`, scripts de seed/teste).
+
+### Saúde e Observabilidade
+- O backend expõe `GET /api/health` como verificação simples de disponibilidade.
+- As respostas de erro seguem o middleware centralizado e incluem `status`, `message`, `path` e `timestamp`.
 
 Para mais detalhes da implementação do Backend, consulte [Arquitetura Backend](./backend.md).
 

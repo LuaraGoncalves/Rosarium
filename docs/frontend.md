@@ -11,6 +11,7 @@ A arquitetura do nosso frontend é **Feature-Based** e dividida em três diretó
 - Componentes de layout base e estruturais globais (`components/`).
 **O que NÃO deve ter:**
 - Lógicas de negócio, telas específicas ou componentes genéricos de UI.
+- O arquivo `routes.ts` deve apenas compor as rotas vindas das features.
 
 ## 2. `features/` (Feature-Based)
 **Responsabilidade:** Encapsular módulos de negócio independentes. Cada feature atua como um "micro-app" contendo sua própria lógica, UI e integração com APIs. **Uma feature não deve importar código de outra feature.**
@@ -18,6 +19,7 @@ A arquitetura do nosso frontend é **Feature-Based** e dividida em três diretó
 - `components/`: Componentes visuais exclusivos da feature.
 - `hooks/`: Custom hooks com regras de negócio específicas da feature.
 - `services/`: Integrações com a API (ex: `[feature].api.ts`).
+- `routes/`: Declarações de rotas da feature, usadas pela composição central em `app/routes.ts`.
 - `pages/`: Componentes de tela inteira que agregam a lógica e UI da feature.
 - `types/`: Tipagens TypeScript específicas do domínio.
 - `data/` ou `utils/`: Dados estáticos, formatações e funções auxiliares locais.
@@ -37,6 +39,10 @@ A arquitetura do nosso frontend é **Feature-Based** e dividida em três diretó
 - `integration/`: Testes de fluxo e interação.
 - `mocks/`: Simulações de respostas de API (`api.mock.ts`).
 - `setup.ts`: Configurações de ambiente de teste e limpeza do DOM.
+
+## 5. Organização Atual
+- As rotas estão divididas por feature em arquivos como `features/auth/routes.ts`, `features/novenas/routes.ts` e `features/liturgia/routes.ts`.
+- A configuração da API central fica em `shared/services/api.ts`, usando `config/env.ts` para ler a URL do backend.
 
 ---
 

@@ -15,12 +15,12 @@ Monorepo da plataforma Rosarium, com frontend em React/Vite e backend em Node.js
 Este repositório usa `pnpm` como gerenciador padrão.
 
 - `pnpm-workspace.yaml` define os pacotes do monorepo
-- `packageManager` está travado para `pnpm@11.1.2`
 - há um único `pnpm-lock.yaml` na raiz
+- os scripts da raiz centralizam lint, test e typecheck
 
 ## Requisitos
 
-- Node.js `20.x`
+- Node.js `24.x`
 - `pnpm`
 - PostgreSQL para o backend
 
@@ -86,4 +86,7 @@ pnpm --dir frontend build
 
 - O backend sobe a aplicação a partir de `backend/src/infra/http/server.ts`
 - `backend/src/main.ts` monta o app Express
+- existe healthcheck em `GET /api/health`
+- o backend usa `pino` para logs estruturados
+- o frontend organiza as rotas por feature em arquivos `routes.ts`
 - arquivos de build como `dist/` e `*.tsbuildinfo` são artefatos gerados e não devem ser versionados

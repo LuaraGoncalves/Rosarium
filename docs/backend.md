@@ -14,7 +14,7 @@ O Backend do Rosarium adota um padrão de arquitetura modularizado (**Module-Bas
 
 ## 2. `shared/`
 **Responsabilidade:** Fornecer componentes estruturais transversais e agnósticos a domínio, compartilhados por toda a aplicação.
-- `infra/`: Configurações e integrações externas globais (ex: instâncias singleton de banco de dados, `prisma.ts`, clientes HTTP globais, sistema de logging).
+- `infra/`: Configurações e integrações externas globais (ex: instâncias singleton de banco de dados, `prisma.ts`, clientes HTTP globais, sistema de logging estruturado).
 - `middlewares/`: Interceptadores do Express utilizados globalmente (`errorHandler.ts`, `validate.ts`, validações de tokens de autenticação como `auth.middleware.ts`).
 - `errors/`: Definições padronizadas de classes de erro (ex: `AppError.ts`) que mapeiam diretamente para códigos HTTP e garantem um formato de exceção consistente em toda a API.
 - `utils/`: Funções auxiliares matemáticas, de datação, geração de chaves e helpers globais.
@@ -33,5 +33,10 @@ O Backend do Rosarium adota um padrão de arquitetura modularizado (**Module-Bas
 - `integration/`: Testes simulando requisições HTTP às rotas (via Supertest), validando todo o fluxo de ponta-a-ponta com um banco de dados de teste (ex: ambiente shadow/test com o Prisma).
 - `mocks/`: Arquivos de dados de simulação usados em testes (ex: respostas fixas, mock de banco de dados).
 - `setup.ts`: Configurações preparatórias e de teardown para suítes de teste globais.
+
+## 6. Saúde da API
+- `GET /api/health` retorna um JSON simples com `status`, `uptime` e `timestamp`.
+- O bootstrap da aplicação fica em `src/main.ts` e a execução do servidor em `src/infra/http/server.ts`.
+- As rotas são agregadas em `src/infra/http/routes/index.ts`, mantendo o domínio separado por módulo.
 
 Esta arquitetura baseada em domínios assegura baixo acoplamento, flexibiliza integrações, melhora a escalabilidade para novas funcionalidades (basta adicionar um novo domínio em `domains/`) e garante testes independentes e robustos.

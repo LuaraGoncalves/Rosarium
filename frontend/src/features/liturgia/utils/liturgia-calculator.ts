@@ -145,7 +145,13 @@ export function generateLiturgicalCalendar(year: number): DiaLiturgico[] {
     { dia: 24, mes: 8, titulo: 'São Bartolomeu, Apóstolo', cor: 'Vermelho', tipo: 'Festa' },
     { dia: 8, mes: 9, titulo: 'Natividade de Nossa Senhora', cor: 'Branco', tipo: 'Festa' },
     { dia: 14, mes: 9, titulo: 'Exaltação da Santa Cruz', cor: 'Vermelho', tipo: 'Festa' },
-    { dia: 21, mes: 9, titulo: 'São Mateus, Apóstolo e Evangelista', cor: 'Vermelho', tipo: 'Festa' },
+    {
+      dia: 21,
+      mes: 9,
+      titulo: 'São Mateus, Apóstolo e Evangelista',
+      cor: 'Vermelho',
+      tipo: 'Festa',
+    },
     { dia: 12, mes: 10, titulo: 'Nossa Senhora Aparecida', cor: 'Branco', tipo: 'Solenidade' },
     { dia: 18, mes: 10, titulo: 'São Lucas, Evangelista', cor: 'Vermelho', tipo: 'Festa' },
     {
