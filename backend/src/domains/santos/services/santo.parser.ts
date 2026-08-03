@@ -1,6 +1,7 @@
 import * as cheerio from 'cheerio';
 import { SantoFormatter } from './santo.formatter';
 import { Result } from '../../../shared/types/Result';
+import { logger } from '@/infra/logger/logger';
 
 export enum CategoriaSanto {
   PAPA = 'Papa',
@@ -111,7 +112,7 @@ export function parseSantoHtml(html: string): Result<SantoScrapedData> {
       },
     };
   } catch (error) {
-    console.error('[SantoParser] Erro ao fazer parse do HTML:', error);
+    logger.error({ error }, 'failed to parse santo html');
     return { success: false, error: 'PARSE_FAILED', details: error };
   }
 }

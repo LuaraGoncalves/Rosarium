@@ -12,12 +12,12 @@ export function NovenaDetalhe() {
 
   if (!novena) {
     return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center text-stone-800">
+      <div className="flex min-h-screen items-center justify-center bg-church-bg text-church-text">
         <div className="text-center">
-          <h2 className="text-2xl font-serif text-amber-900 mb-4">Novena não encontrada</h2>
+          <h2 className="text-2xl font-serif text-church-accent mb-4">Novena não encontrada</h2>
           <button
             onClick={() => navigate('/novenas')}
-            className="text-stone-600 hover:text-amber-900 flex items-center gap-2 mx-auto"
+            className="mx-auto flex items-center gap-2 text-church-text-secondary hover:text-church-accent"
           >
             <ArrowLeft className="w-4 h-4" /> Voltar para Novenas
           </button>
@@ -54,7 +54,7 @@ export function NovenaDetalhe() {
           </div>
           <div className="w-full bg-church-bg-darker h-2 rounded-full overflow-hidden border border-church-border mt-2">
             <div
-              className="bg-[#C89B3C] h-full transition-all duration-500 opacity-80"
+              className="bg-church-accent-hover h-full transition-all duration-500 opacity-80"
               style={{ width: `${percentage}%` }}
             />
           </div>
@@ -70,11 +70,11 @@ export function NovenaDetalhe() {
               <div
                 key={diaInfo.dia}
                 onClick={() => navigate(`/novenas/${novena.id}/dia/${diaInfo.dia}`)}
-                className={`p-4 md:p-5 rounded-xl border transition-all cursor-pointer flex items-center gap-4 shadow-sm
+                className={`p-4 md:p-5 rounded-lg border transition-all cursor-pointer flex items-center gap-4 shadow-sm
                   ${
                     isCompleted
-                      ? 'bg-church-bg-darker border-[#2C1F1A] opacity-40 hover:opacity-70'
-                      : 'bg-church-bg-secondary border-church-border-hover hover:border-[#D4AF37]/50'
+                      ? 'bg-church-bg-darker border-church-border opacity-40 hover:opacity-70'
+                      : 'bg-church-bg-secondary border-church-border-hover hover:border-church-accent-hover/50'
                   }`}
               >
                 <div className="flex-shrink-0">

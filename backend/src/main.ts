@@ -2,14 +2,16 @@ import express from 'express';
 import cors from 'cors';
 import routes from '@/infra/http/routes';
 import { errorHandler } from '@/shared/middlewares/errorHandler';
+import { requestLogger } from '@/shared/middlewares/requestLogger';
 import swaggerUi from 'swagger-ui-express';
+import { env } from './config/env';
 import { swaggerSpec } from './config/swagger';
 import { setupCronJobs } from './config/cron';
 
 const app = express();
 const allowedOrigins = new Set(
   [
-    process.env.FRONTEND_URL,
+    env.FRONTEND_URL,
     'http://localhost:3000',
     'http://localhost:5173',
     'http://127.0.0.1:3000',
@@ -45,6 +47,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(requestLogger);
 app.use(express.json());
 
 app.use('/api', routes);

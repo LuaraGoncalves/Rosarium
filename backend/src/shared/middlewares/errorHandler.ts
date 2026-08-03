@@ -9,6 +9,8 @@ export const errorHandler = (err: Error, req: Request, res: Response, _next: Nex
     return res.status(err.statusCode).json({
       status: 'error',
       message: err.message,
+      path: req.originalUrl,
+      timestamp: new Date().toISOString(),
       ...(errors ? { errors } : {}),
     });
   }
@@ -17,11 +19,13 @@ export const errorHandler = (err: Error, req: Request, res: Response, _next: Nex
     message: err.message,
     stack: err.stack,
     method: req.method,
-    url: req.url,
+    url: req.originalUrl,
   });
 
   return res.status(500).json({
     status: 'error',
     message: 'Internal server error',
+    path: req.originalUrl,
+    timestamp: new Date().toISOString(),
   });
 };

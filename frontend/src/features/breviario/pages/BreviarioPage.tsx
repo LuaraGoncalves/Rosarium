@@ -67,8 +67,8 @@ export function BreviarioPage() {
       </header>
 
       <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-        <div className="bg-church-bg-secondary rounded-2xl p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-xl">
+        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
+          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-lg">
             <img
               src="https://images.unsplash.com/photo-1709541658608-dfe38af68925?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdGFpbmVkJTIwZ2xhc3MlMjBjaHVyY2glMjB3aW5kb3d8ZW58MXx8fHwxNzczMzI2MDI0fDA&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Vitral de Igreja"
@@ -97,13 +97,13 @@ export function BreviarioPage() {
         )}
 
         {error && (
-          <div className="text-center py-12 bg-red-500/10 rounded-xl border border-red-500/20 mb-12">
+          <div className="text-center py-12 bg-red-500/10 rounded-lg border border-red-500/20 mb-12">
             <p className="text-red-400 font-serif">Erro ao carregar o breviário: {error}</p>
           </div>
         )}
 
         {!loading && !error && breviario && (
-          <div className="mb-12 bg-church-bg-secondary rounded-xl p-6 border border-church-border-hover text-center">
+          <div className="mb-12 bg-church-bg-secondary rounded-lg p-6 border border-church-border-hover text-center">
             <h3 className="text-xl font-serif text-church-accent mb-2">Hoje: {breviario.data}</h3>
             <p className="text-church-text/80">
               {breviario.tempo} - {breviario.semana}
@@ -118,8 +118,8 @@ export function BreviarioPage() {
               <div
                 key={hora.id}
                 onClick={() => navigate(`/breviario/${hora.id}`)}
-                className="bg-church-bg-secondary rounded-xl p-5 md:p-6 border border-church-border-hover 
-                  hover:border-[#C89B3C]/50 transition-all cursor-pointer group shadow-none"
+                className="bg-church-bg-secondary rounded-lg p-5 md:p-6 border border-church-border-hover
+                  hover:border-church-accent-hover/50 transition-all cursor-pointer group shadow-none"
               >
                 <div className="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-6">
                   <div className="w-16 h-16 bg-church-bg border border-church-border-hover rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
@@ -147,42 +147,42 @@ export function BreviarioPage() {
           })}
         </div>
 
-        <div className="mt-12 bg-church-bg-secondary rounded-2xl p-8 border border-church-border-hover">
+        <div className="mt-12 bg-church-bg-secondary rounded-lg p-8 border border-church-border-hover">
           <h3 className="text-xl font-serif text-church-accent mb-6">Estrutura de cada Hora</h3>
           <ul className="space-y-4 text-church-text/80">
-            <li className="pl-4 border-l-2 border-[#C89B3C]">
+            <li className="pl-4 border-l-2 border-church-accent-hover">
               <div className="font-semibold text-church-accent-hover mb-1">
                 Invocação inicial e Hino
               </div>
               "Vinde, ó Deus, em meu auxílio. Socorrei-me sem demora." Seguido de um hino apropriado
               para o momento do dia.
             </li>
-            <li className="pl-4 border-l-2 border-[#C89B3C]">
+            <li className="pl-4 border-l-2 border-church-accent-hover">
               <div className="font-semibold text-church-accent-hover mb-1">Salmodia</div>
               Dois a três salmos com suas respectivas antífonas, muitas vezes concluídos com o
               "Glória ao Pai".
             </li>
-            <li className="pl-4 border-l-2 border-[#C89B3C]">
+            <li className="pl-4 border-l-2 border-church-accent-hover">
               <div className="font-semibold text-church-accent-hover mb-1">
                 Leitura bíblica ou patrística
               </div>
               Uma passagem curta das Escrituras ou dos Padres da Igreja.
             </li>
-            <li className="pl-4 border-l-2 border-[#C89B3C]">
+            <li className="pl-4 border-l-2 border-church-accent-hover">
               <div className="font-semibold text-church-accent-hover mb-1">Responsório</div>
               Um cântico curto ou verso em resposta à leitura.
             </li>
-            <li className="pl-4 border-l-2 border-[#C89B3C]">
+            <li className="pl-4 border-l-2 border-church-accent-hover">
               <div className="font-semibold text-church-accent-hover mb-1">Cântico Evangélico</div>
               Cântico de Zacarias (Benedictus) nas Laudes, Cântico de Maria (Magnificat) nas
               Vésperas, ou Cântico de Simeão nas Completas.
             </li>
-            <li className="pl-4 border-l-2 border-[#C89B3C]">
+            <li className="pl-4 border-l-2 border-church-accent-hover">
               <div className="font-semibold text-church-accent-hover mb-1">Preces e Pai Nosso</div>
               Preces de intercessão pela Igreja e pelo mundo, concluídas com a oração que Jesus nos
               ensinou.
             </li>
-            <li className="pl-4 border-l-2 border-[#C89B3C]">
+            <li className="pl-4 border-l-2 border-church-accent-hover">
               <div className="font-semibold text-church-accent-hover mb-1">
                 Oração conclusiva e bênção
               </div>

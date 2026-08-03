@@ -7,9 +7,15 @@ export function BreviarioHoraPage() {
   const { hora } = useParams<{ hora: string }>();
   const { data: breviario, loading, error } = useBreviario();
 
-  const tituloHora = hora
-    ? hora.charAt(0).toUpperCase() + hora.slice(1).replace('-', ' ')
-    : 'Hora não encontrada';
+  const titulosPorHora: Record<string, string> = {
+    oficio: 'Ofício das Leituras',
+    laudes: 'Laudes',
+    'hora-media': 'Hora Média',
+    vesperas: 'Vésperas',
+    completas: 'Completas',
+  };
+
+  const tituloHora = hora ? (titulosPorHora[hora] ?? 'Hora não encontrada') : 'Hora não encontrada';
 
   if (loading) {
     return (
@@ -39,6 +45,8 @@ export function BreviarioHoraPage() {
   if (hora === 'hora-media') horaData = breviario.hora_media ?? null;
   if (hora === 'vesperas') horaData = breviario.vesperas ?? null;
   if (hora === 'completas') horaData = breviario.completas ?? null;
+
+  const usaLeituraBreve = ['laudes', 'hora-media', 'vesperas', 'completas'].includes(hora ?? '');
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans pb-24">
@@ -71,10 +79,20 @@ export function BreviarioHoraPage() {
           </div>
         ) : (
           <>
+            {/* Introdução */}
+            {horaData.introducao && (
+              <div className="bg-church-bg-secondary p-5 md:p-6 rounded-lg border border-church-border-hover">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm">
+                  Introdução
+                </h3>
+                <div className="whitespace-pre-line">{horaData.introducao}</div>
+              </div>
+            )}
+
             {/* Invocação */}
             {horaData.invitatorio && (
-              <div className="bg-church-bg-secondary p-5 md:p-6 rounded-xl border border-church-border-hover">
-                <h3 className="text-[#C89B3C] font-serif mb-2 uppercase text-sm tracking-wider">
+              <div className="bg-church-bg-secondary p-5 md:p-6 rounded-lg border border-church-border-hover">
+                <h3 className="text-church-accent-hover font-serif mb-2 uppercase text-sm">
                   Invitatório
                 </h3>
                 <p className="italic">{horaData.invitatorio}</p>
@@ -84,7 +102,7 @@ export function BreviarioHoraPage() {
             {/* Hino */}
             {horaData.hino && (
               <div className="mb-8">
-                <h3 className="text-[#C89B3C] font-serif mb-4 uppercase text-sm tracking-wider text-center">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm text-center">
                   Hino
                 </h3>
                 <div className="text-center whitespace-pre-line italic text-church-text/80">
@@ -96,39 +114,68 @@ export function BreviarioHoraPage() {
             {/* Salmodia */}
             {horaData.salmodia && horaData.salmodia.length > 0 && (
               <div className="space-y-6">
-                <h3 className="text-[#C89B3C] font-serif uppercase text-sm tracking-wider text-center border-b border-church-border-hover pb-2">
+                <h3 className="text-church-accent-hover font-serif uppercase text-sm text-center border-b border-church-border-hover pb-2">
                   Salmodia
                 </h3>
                 {horaData.salmodia.map((salmo: string, index: number) => (
                   <div
                     key={index}
-                    className="bg-church-bg-secondary p-5 md:p-6 rounded-xl border border-church-border-hover"
+                    className="bg-church-bg-secondary p-5 md:p-6 rounded-lg border border-church-border-hover"
                   >
-                    <p>{salmo}</p>
+                    <p className="whitespace-pre-line">{salmo}</p>
                   </div>
                 ))}
+              </div>
+            )}
+
+            {hora === 'oficio' && horaData.versiculo && (
+              <div className="my-8 text-center">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm">
+                  Versículo
+                </h3>
+                <p className="whitespace-pre-line italic">{horaData.versiculo}</p>
               </div>
             )}
 
             {/* Leituras */}
             {(horaData.leitura1 || horaData.leitura) && (
               <div className="my-8">
-                <h3 className="text-[#C89B3C] font-serif mb-4 uppercase text-sm tracking-wider text-center border-b border-church-border-hover pb-2">
-                  Leitura
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm text-center border-b border-church-border-hover pb-2">
+                  {usaLeituraBreve ? 'Leitura Breve' : 'Leitura'}
                 </h3>
-                <div className="bg-church-bg p-5 md:p-6 rounded-xl border border-church-border-hover">
-                  <p>{horaData.leitura1 || horaData.leitura}</p>
+                <div className="bg-church-bg p-5 md:p-6 rounded-lg border border-church-border-hover">
+                  <p className="whitespace-pre-line">{horaData.leitura1 || horaData.leitura}</p>
                 </div>
               </div>
             )}
 
             {horaData.leitura2 && (
               <div className="my-8">
-                <h3 className="text-[#C89B3C] font-serif mb-4 uppercase text-sm tracking-wider text-center border-b border-church-border-hover pb-2">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm text-center border-b border-church-border-hover pb-2">
                   Segunda Leitura
                 </h3>
-                <div className="bg-church-bg p-5 md:p-6 rounded-xl border border-church-border-hover">
-                  <p>{horaData.leitura2}</p>
+                <div className="bg-church-bg p-5 md:p-6 rounded-lg border border-church-border-hover">
+                  <p className="whitespace-pre-line">{horaData.leitura2}</p>
+                </div>
+              </div>
+            )}
+
+            {hora !== 'oficio' && horaData.versiculo && (
+              <div className="my-8 text-center">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm">
+                  Versículo
+                </h3>
+                <p className="whitespace-pre-line italic">{horaData.versiculo}</p>
+              </div>
+            )}
+
+            {horaData.responsorioBreve && (
+              <div className="my-8">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm text-center border-b border-church-border-hover pb-2">
+                  {hora === 'oficio' ? 'Responsório' : 'Responsório Breve'}
+                </h3>
+                <div className="bg-church-bg-secondary p-5 md:p-6 rounded-lg border border-church-border-hover">
+                  <p className="whitespace-pre-line italic">{horaData.responsorioBreve}</p>
                 </div>
               </div>
             )}
@@ -136,40 +183,40 @@ export function BreviarioHoraPage() {
             {/* Cânticos Evangélicos */}
             {horaData.benedictus && (
               <div className="my-8 text-center">
-                <h3 className="text-[#C89B3C] font-serif mb-4 uppercase text-sm tracking-wider text-center">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm text-center">
                   Benedictus
                 </h3>
-                <p className="italic">{horaData.benedictus}</p>
+                <p className="whitespace-pre-line italic">{horaData.benedictus}</p>
               </div>
             )}
 
             {horaData.magnificat && (
               <div className="my-8 text-center">
-                <h3 className="text-[#C89B3C] font-serif mb-4 uppercase text-sm tracking-wider text-center">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm text-center">
                   Magnificat
                 </h3>
-                <p className="italic">{horaData.magnificat}</p>
+                <p className="whitespace-pre-line italic">{horaData.magnificat}</p>
               </div>
             )}
 
             {horaData.nunc_dimittis && (
               <div className="my-8 text-center">
-                <h3 className="text-[#C89B3C] font-serif mb-4 uppercase text-sm tracking-wider text-center">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm text-center">
                   Cântico de Simeão
                 </h3>
-                <p className="italic">{horaData.nunc_dimittis}</p>
+                <p className="whitespace-pre-line italic">{horaData.nunc_dimittis}</p>
               </div>
             )}
 
             {/* Preces */}
             {horaData.preces && horaData.preces.length > 0 && (
               <div className="my-8">
-                <h3 className="text-[#C89B3C] font-serif mb-4 uppercase text-sm tracking-wider text-center border-b border-church-border-hover pb-2">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm text-center border-b border-church-border-hover pb-2">
                   Preces
                 </h3>
                 <ul className="space-y-3">
                   {horaData.preces.map((prece: string, index: number) => (
-                    <li key={index} className="pl-4 border-l-2 border-[#C89B3C]">
+                    <li key={index} className="pl-4 border-l-2 border-church-accent-hover">
                       {prece}
                     </li>
                   ))}
@@ -177,14 +224,40 @@ export function BreviarioHoraPage() {
               </div>
             )}
 
+            {horaData.paiNosso && (
+              <div className="my-8 text-center bg-church-bg p-5 md:p-6 rounded-lg border border-church-border-hover">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm">
+                  Pai-Nosso
+                </h3>
+                <p className="whitespace-pre-line">{horaData.paiNosso}</p>
+              </div>
+            )}
+
             {/* Oração Conclusiva */}
             {horaData.oracao && (
-              <div className="mt-12 text-center bg-church-bg-secondary p-6 md:p-8 rounded-xl border border-church-border-hover">
-                <h3 className="text-[#C89B3C] font-serif mb-4 uppercase text-sm tracking-wider">
-                  Oração
+              <div className="mt-12 text-center bg-church-bg-secondary p-6 md:p-8 rounded-lg border border-church-border-hover">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm">
+                  Oração Final
                 </h3>
-                <p>{horaData.oracao}</p>
-                <p className="mt-6 text-church-text/60 italic">Amém.</p>
+                <p className="whitespace-pre-line">{horaData.oracao}</p>
+              </div>
+            )}
+
+            {horaData.bencao && (
+              <div className="my-8 text-center">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm">
+                  Bênção Final
+                </h3>
+                <p className="whitespace-pre-line italic">{horaData.bencao}</p>
+              </div>
+            )}
+
+            {horaData.antifonaMariana && (
+              <div className="my-8 text-center bg-church-bg p-5 md:p-6 rounded-lg border border-church-border-hover">
+                <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm">
+                  Antífona Mariana
+                </h3>
+                <p className="whitespace-pre-line italic">{horaData.antifonaMariana}</p>
               </div>
             )}
           </>

@@ -1,67 +1,88 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { AppError } from '@/shared/errors/AppError';
 import { SantoService } from './services/santo.service';
 
-export const listSantos = async (req: Request, res: Response) => {
+export const listSantos = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const santos = await SantoService.listSantos();
-    res.json(santos);
-  } catch {
-    res.status(500).json({ error: 'Erro ao buscar santos.' });
+    return res.json(santos);
+  } catch (error) {
+    return next(error);
   }
 };
 
-export const getSantosByDiaFesta = async (req: Request, res: Response) => {
+export const getSantosByDiaFesta = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const diaFesta = req.params.diaFesta as string;
+    if (!diaFesta) {
+      throw new AppError('Dia de festa inválido.', 400);
+    }
+
     const santos = await SantoService.getSantosByDiaFesta(diaFesta);
-    res.json(santos);
-  } catch {
-    res.status(500).json({ error: 'Erro ao buscar santos.' });
+    return res.json(santos);
+  } catch (error) {
+    return next(error);
   }
 };
 
-export const getSantoDoDia = async (req: Request, res: Response) => {
+export const getSantoDoDia = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const santo = await SantoService.getSantoDoDiaList();
     return res.json(santo);
   } catch (error) {
-    console.error('Erro grave no controller de Santo do Dia:', error);
-    res.status(500).json({ error: 'Erro ao processar o Santo do Dia.' });
+    return next(error);
   }
 };
 
-export const getSantoById = async (req: Request, res: Response) => {
+export const getSantoById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = parseInt(req.params.id as string);
+    const id = Number.parseInt(req.params.id as string, 10);
+    if (Number.isNaN(id)) {
+      throw new AppError('ID inválido.', 400);
+    }
+
     const santo = await SantoService.getSantoById(id);
 
-    if (santo) {
-      res.json(santo);
-    } else {
-      res.status(404).json({ error: 'Santo não encontrado no banco de dados.' });
+    if (!santo) {
+      throw new AppError('Santo não encontrado no banco de dados.', 404);
     }
-  } catch {
-    res.status(500).json({ error: 'Erro ao buscar santo.' });
+
+    return res.json(santo);
+  } catch (error) {
+    return next(error);
   }
 };
 
-export const createSanto = async (req: Request, res: Response) => {
+export const createSanto = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { nome, historia, diaFesta } = req.body;
+
+    if (!nome || !historia) {
+      throw new AppError('Dados inválidos.', 400);
+    }
+
     const santo = await SantoService.createSanto({ nome, historia, diaFesta });
-    res.json(santo);
-  } catch {
-    res.status(500).json({ error: 'Erro ao criar santo.' });
+    return res.json(santo);
+  } catch (error) {
+    return next(error);
   }
 };
 
-export const updateSanto = async (req: Request, res: Response) => {
+export const updateSanto = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = parseInt(req.params.id as string);
+    const id = Number.parseInt(req.params.id as string, 10);
+    if (Number.isNaN(id)) {
+      throw new AppError('ID inválido.', 400);
+    }
+
     const { nome, historia, diaFesta } = req.body;
+    if (!nome || !historia) {
+      throw new AppError('Dados inválidos.', 400);
+    }
+
     const santo = await SantoService.updateSanto(id, { nome, historia, diaFesta });
-    res.json(santo);
-  } catch {
-    res.status(500).json({ error: 'Erro ao atualizar santo.' });
+    return res.json(santo);
+  } catch (error) {
+    return next(error);
   }
 };
