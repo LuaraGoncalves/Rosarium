@@ -6,7 +6,6 @@ Monorepo da plataforma Rosarium, com frontend em React/Vite e backend em Node.js
 
 - `frontend`: React, TypeScript, Vite, Tailwind CSS
 - `backend`: Node.js, Express, Prisma, PostgreSQL
-- `shared`: `packages/liturgy-engine`
 - testes: Jest, Supertest e Vitest
 - validação: Zod
 
@@ -80,10 +79,10 @@ pnpm --dir frontend build
 
 - `frontend/`: aplicação web
 - `backend/`: API e regras de negócio
-- `packages/liturgy-engine/`: pacote compartilhado
 
 ## Observações
 
+- a branch principal do repositório é `master`
 - O backend sobe a aplicação a partir de `backend/src/infra/http/server.ts`
 - `backend/src/main.ts` monta o app Express
 - existe healthcheck em `GET /api/health`
