@@ -9,6 +9,8 @@
   "scripts": {
     "start": "tsx src/infra/http/server.ts",
     "dev": "nodemon --exec tsx src/infra/http/server.ts",
+    "santo:update": "tsx scripts/update-santo-do-dia.ts",
+    "santo:test-scraper": "tsx scripts/test-scraper.script.ts",
     "test": "prisma generate && jest --runInBand --detectOpenHandles",
     "typecheck": "prisma generate && tsc --noEmit -p tsconfig.json"
   },

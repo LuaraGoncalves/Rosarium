@@ -32,7 +32,14 @@ O Backend do Rosarium adota um padrão de arquitetura modularizado (**Module-Bas
 
 ## 4. `scripts/`
 
-**Responsabilidade:** Tarefas operacionais avulsas, scripts de testes de scraping, manutenção do banco de dados e crawlers automatizados (ex: `update-santo.ts`, `test-scraper.ts`).
+**Responsabilidade:** Tarefas operacionais controladas, scripts de scraping e crawlers automatizados.
+
+Scripts oficiais:
+
+- `pnpm --dir backend santo:update`: atualiza o Santo do Dia no banco e é a mesma rotina usada pelo cron.
+- `pnpm --dir backend santo:test-scraper`: testa o scraper do Santo do Dia sem ficar dentro de `src/`.
+
+Scripts pontuais de correção manual não devem ficar versionados quando deixam de ser necessários.
 
 ## 5. `tests/`
 
