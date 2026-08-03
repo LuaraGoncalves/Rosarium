@@ -6,6 +6,52 @@ import { SantoFormatter } from '../services/santo.formatter';
 import { SantoDoDia } from '@prisma/client';
 import { logger } from '@/infra/logger/logger';
 
+const meses = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
+];
+
+function formatDiaFesta(date: Date) {
+  return `${date.getDate().toString().padStart(2, '0')} de ${meses[date.getMonth()]}`;
+}
+
+async function archiveSantoDoDia(santoDoDia: SantoDoDia) {
+  const diaFesta = formatDiaFesta(santoDoDia.data);
+
+  const santoJaArquivado = await prisma.santo.findFirst({
+    where: {
+      nome: santoDoDia.nome,
+      diaFesta,
+    },
+  });
+
+  if (santoJaArquivado) return;
+
+  await prisma.santo.create({
+    data: {
+      nome: santoDoDia.nome,
+      historia: santoDoDia.historiaCompleta || santoDoDia.historiaResumo,
+      diaFesta,
+      descricaoCurta: santoDoDia.historiaResumo || 'Santo do Dia',
+      imagemUrl: santoDoDia.imagemUrl,
+      padroeiroDe: santoDoDia.padroeiroDe,
+      intercessao: santoDoDia.intercessao,
+      categoria: santoDoDia.categoria,
+      fraseMarcante: santoDoDia.fraseMarcante,
+    },
+  });
+}
+
 export async function getSantoDoDia(): Promise<Result<SantoDoDia>> {
   try {
     let santoDoDia = await prisma.santoDoDia.findUnique({
@@ -17,6 +63,10 @@ export async function getSantoDoDia(): Promise<Result<SantoDoDia>> {
 
     if (!santoDoDia || santoDoDia.data.getTime() !== today.getTime()) {
       try {
+        if (santoDoDia) {
+          await archiveSantoDoDia(santoDoDia);
+        }
+
         const fetchResult = await SantoScraper.fetch();
         if (fetchResult.success && fetchResult.data) {
           const parseResult = parseSantoHtml(fetchResult.data);

@@ -1,13 +1,39 @@
 import { useNavigate } from 'react-router';
-import { ArrowLeft, Users, Star, Calendar, Book } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowLeft, Users, Star, Calendar, Book, Search, X } from 'lucide-react';
 import { useSantos } from '../hooks/useSantos';
 
 export function SantosPage() {
   const navigate = useNavigate();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { santos, santoDoDia } = useSantos();
 
   const outrosSantos = santos.filter((s) => s.id !== santoDoDia?.id);
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const santosFiltrados = normalizedSearch
+    ? outrosSantos.filter((santo) =>
+        [
+          santo.nome,
+          santo.descricaoCurta,
+          santo.historia,
+          santo.diaFesta,
+          santo.categoria,
+          santo.padroeiroDe,
+          santo.intercessao,
+          santo.origem,
+        ]
+          .filter(Boolean)
+          .some((value) => value?.toLowerCase().includes(normalizedSearch))
+      )
+    : outrosSantos;
+  const recomendacoes = normalizedSearch ? santosFiltrados.slice(0, 5) : [];
+
+  const closeSearch = () => {
+    setIsSearchOpen(false);
+    setSearchTerm('');
+  };
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
@@ -111,9 +137,75 @@ export function SantosPage() {
         )}
 
         <div className="mb-8">
-          <h2 className="text-2xl font-serif text-church-accent mb-6">Conheça outros Santos</h2>
+          <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+            <h2 className="text-2xl font-serif text-church-accent">Conheça outros Santos</h2>
+
+            <div className="relative w-full md:w-auto">
+              {!isSearchOpen ? (
+                <button
+                  type="button"
+                  onClick={() => setIsSearchOpen(true)}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg border border-church-border-hover bg-church-bg-secondary px-4 py-2 text-sm text-church-accent transition-colors hover:border-church-accent-hover hover:text-church-accent-hover md:w-auto"
+                  aria-label="Pesquisar santos"
+                >
+                  <Search className="h-4 w-4" />
+                  Pesquisar
+                </button>
+              ) : (
+                <div className="relative w-full md:w-80">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-church-text-muted" />
+                  <input
+                    type="search"
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                    autoFocus
+                    placeholder="Buscar por nome, data ou devoção..."
+                    className="w-full rounded-lg border border-church-border-hover bg-church-bg-secondary py-2 pl-10 pr-10 text-sm text-church-text outline-none transition-colors placeholder:text-church-text-muted focus:border-church-accent-hover"
+                  />
+                  <button
+                    type="button"
+                    onClick={closeSearch}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-church-text-muted transition-colors hover:text-church-accent"
+                    aria-label="Fechar pesquisa"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+
+                  {recomendacoes.length > 0 && (
+                    <div className="absolute right-0 z-30 mt-2 w-full overflow-hidden rounded-lg border border-church-border-hover bg-church-bg-secondary shadow-lg">
+                      {recomendacoes.map((santo) => (
+                        <button
+                          key={santo.id}
+                          type="button"
+                          onClick={() => navigate(`/santos/${santo.id}`)}
+                          className="flex w-full items-start gap-3 border-b border-church-border/60 px-4 py-3 text-left transition-colors last:border-b-0 hover:bg-church-bg"
+                        >
+                          <Search className="mt-1 h-4 w-4 shrink-0 text-church-accent-hover" />
+                          <span>
+                            <span className="block font-serif text-sm text-church-accent">
+                              {santo.nome}
+                            </span>
+                            <span className="line-clamp-1 text-xs text-church-text-muted">
+                              {santo.diaFesta || santo.descricaoCurta || santo.categoria}
+                            </span>
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {normalizedSearch && santosFiltrados.length === 0 && (
+            <div className="mb-6 rounded-lg border border-church-border-hover bg-church-bg-secondary p-5 text-center text-sm text-church-text-muted">
+              Nenhum santo encontrado para "{searchTerm}".
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {outrosSantos.map((santo) => (
+            {santosFiltrados.map((santo) => (
               <div
                 key={santo.id}
                 onClick={() => navigate(`/santos/${santo.id}`)}
