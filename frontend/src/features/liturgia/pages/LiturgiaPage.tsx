@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { ArrowLeft, Church, BookOpen, Calendar } from 'lucide-react';
+import { ArrowLeft, Church, BookOpen, Calendar, ChevronDown } from 'lucide-react';
 
 export function LiturgiaPage() {
   const navigate = useNavigate();
+  const [tempoAberto, setTempoAberto] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
@@ -88,35 +90,69 @@ export function LiturgiaPage() {
                 tempo: 'Advento',
                 desc: 'Preparação para o Natal',
                 cor: 'Roxo',
+                periodo: '4 domingos antes do Natal - 24/12',
               },
-              { tempo: 'Natal', desc: 'Celebração do nascimento de Jesus', cor: 'Branco' },
+              {
+                tempo: 'Natal',
+                desc: 'Celebração do nascimento de Jesus',
+                cor: 'Branco',
+                periodo: '25/12 - Batismo do Senhor',
+              },
               {
                 tempo: 'Quaresma',
                 desc: 'Preparação para a Páscoa',
                 cor: 'Roxo',
+                periodo: 'Quarta-feira de Cinzas - Quinta-feira Santa',
               },
               {
                 tempo: 'Páscoa',
                 desc: 'Celebração da Ressurreição',
                 cor: 'Branco',
+                periodo: 'Domingo de Páscoa - Pentecostes',
               },
               {
                 tempo: 'Tempo Comum',
                 desc: 'Crescimento na vida cristã',
                 cor: 'Verde',
+                periodo: 'Após o Natal - Cristo Rei',
               },
               {
                 tempo: 'Solenidades',
                 desc: 'Festas especiais do ano',
                 cor: 'Variável',
+                periodo: 'Datas próprias - ao longo do ano',
               },
             ].map((item, index) => (
               <div
                 key={index}
                 className="bg-church-bg rounded-lg p-6 border border-church-border-hover transition-all hover:border-church-accent-hover/50"
               >
-                <h4 className="text-xl font-serif text-church-accent-hover mb-2">{item.tempo}</h4>
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <h4 className="text-xl font-serif text-church-accent-hover">{item.tempo}</h4>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setTempoAberto((tempoAtual) =>
+                        tempoAtual === item.tempo ? null : item.tempo,
+                      )
+                    }
+                    className="mt-1 rounded-full border border-church-border-hover bg-church-bg-secondary/70 p-1 text-church-text/50 transition-all hover:border-church-accent-hover/50 hover:text-church-accent"
+                    aria-expanded={tempoAberto === item.tempo}
+                    aria-label={`Ver período de ${item.tempo}`}
+                  >
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform ${
+                        tempoAberto === item.tempo ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                </div>
                 <p className="text-church-text/80 mb-3">{item.desc}</p>
+                {tempoAberto === item.tempo && (
+                  <p className="mb-3 rounded-md border border-church-border-hover/70 bg-church-bg-secondary/60 px-3 py-2 text-xs text-church-text/55">
+                    {item.periodo}
+                  </p>
+                )}
                 <span className="inline-block px-3 py-1 rounded-full text-xs font-medium border border-church-border-hover bg-church-bg-darker text-church-text/60">
                   Cor litúrgica: <span className="text-church-accent">{item.cor}</span>
                 </span>
