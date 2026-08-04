@@ -6,5 +6,5 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
-  setupFilesAfterEnv: ['<rootDir>/src/tests/setup.ts'],
+  setupFiles: ['<rootDir>/src/tests/setup.ts'],
 };
