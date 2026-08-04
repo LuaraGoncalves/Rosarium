@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { api } from '@/shared/services/api';
 
 export interface LiturgiaDiaria {
   data: string;
@@ -36,17 +37,12 @@ export function useLiturgia() {
     async function fetchLiturgia() {
       try {
         setLoading(true);
-        const response = await fetch('https://liturgia.up.railway.app/');
-        if (!response.ok) {
-           throw new Error('Falha ao obter dados da liturgia diária');
-        }
-        
-        const json = await response.json();
-        setData(json);
+        const response = await api.get<LiturgiaDiaria>('/liturgia/hoje');
+        setData(response.data);
         setError(null);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar orações da API');
-        console.error("Erro no fetch da liturgia", err);
+        setError(err instanceof Error ? err.message : 'Erro ao carregar a liturgia diária');
+        console.error('Erro no fetch da liturgia', err);
       } finally {
         setLoading(false);
       }
