@@ -11,6 +11,37 @@ const normalizeParam = (value: string | string[] | undefined) =>
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
 
+const stringValue = (value: unknown, fallback = '') =>
+  typeof value === 'string' ? value : fallback;
+
+const normalizeReading = (value: unknown, fallbackTitle: string) => {
+  const section = isRecord(value) ? value : {};
+
+  return {
+    referencia: stringValue(section.referencia),
+    titulo: stringValue(section.titulo, fallbackTitle),
+    texto: stringValue(section.texto),
+  };
+};
+
+const normalizePsalm = (value: unknown) => {
+  const section = isRecord(value) ? value : {};
+
+  return {
+    referencia: stringValue(section.referencia),
+    refrao: stringValue(section.refrao),
+    texto: stringValue(section.texto),
+  };
+};
+
+const normalizeSecondReading = (value: unknown) => {
+  if (!isRecord(value) || !stringValue(value.texto).trim()) {
+    return undefined;
+  }
+
+  return normalizeReading(value, 'Segunda Leitura');
+};
+
 const hasStructuredBreviario = (liturgia: unknown) => {
   if (!isRecord(liturgia) || !isRecord(liturgia.laudes)) return false;
   if (!isRecord(liturgia.oficio)) return false;
@@ -110,6 +141,16 @@ export const getLiturgiaDiaria = async (_req: Request, res: Response, next: Next
 
         const normalizedData = {
           data: rawData.data || dateString,
+          liturgia: stringValue(rawData.liturgia, 'Liturgia diária'),
+          cor: stringValue(rawData.cor, 'Verde'),
+          dia: stringValue(rawData.dia, stringValue(rawData.oracao)),
+          primeiraLeitura: normalizeReading(rawData.primeiraLeitura, 'Primeira Leitura'),
+          segundaLeitura: normalizeSecondReading(rawData.segundaLeitura),
+          salmo: normalizePsalm(rawData.salmo),
+          evangelho: normalizeReading(rawData.evangelho, 'Evangelho'),
+          antifonas: rawData.antifonas,
+          oferendas: rawData.oferendas,
+          comunhao: rawData.comunhao,
           tempo: rawData.liturgia || 'Tempo Comum',
           semana: rawData.cor || 'Verde',
           oficio: {
