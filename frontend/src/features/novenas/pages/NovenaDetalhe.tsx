@@ -2,13 +2,16 @@ import { useParams, useNavigate } from 'react-router';
 import { ArrowLeft, CheckCircle, Circle } from 'lucide-react';
 import { novenasData } from '../data/novenas';
 import { useNovenaProgress } from '../hooks/useNovenaProgress';
+import { useAuth } from '../../auth/hooks/useAuth';
+import { getNovenaProgressStatus } from '../utils/progressStatus';
 
 export function NovenaDetalhe() {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const novena = novenasData.find((n) => n.id === id);
-  const { completedDays, progressPercentage } = useNovenaProgress(id || '');
+  const { isAuthenticated } = useAuth();
+  const { completedDays, progressPercentage, syncStatus } = useNovenaProgress(id || '');
 
   if (!novena) {
     return (
@@ -27,6 +30,7 @@ export function NovenaDetalhe() {
   }
 
   const percentage = progressPercentage(novena.duracao);
+  const progressStatus = getNovenaProgressStatus(syncStatus, isAuthenticated);
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
@@ -58,6 +62,9 @@ export function NovenaDetalhe() {
               style={{ width: `${percentage}%` }}
             />
           </div>
+          <p className={`mt-4 rounded-md border px-3 py-2 text-xs ${progressStatus.className}`}>
+            {progressStatus.text}
+          </p>
         </div>
       </header>
 

@@ -3,6 +3,8 @@ import { ArrowLeft, CheckCircle, Circle } from 'lucide-react';
 import { novenasData } from '../data/novenas';
 import { useNovenaProgress } from '../hooks/useNovenaProgress';
 import { useEffect } from 'react';
+import { useAuth } from '../../auth/hooks/useAuth';
+import { getNovenaProgressStatus } from '../utils/progressStatus';
 
 export function NovenaDia() {
   const { id, dia } = useParams();
@@ -14,7 +16,8 @@ export function NovenaDia() {
 
   const numDia = Number(dia);
   const novena = novenasData.find((n) => n.id === id);
-  const { isDayCompleted, toggleDay } = useNovenaProgress(id || '');
+  const { isAuthenticated } = useAuth();
+  const { isDayCompleted, toggleDay, syncStatus } = useNovenaProgress(id || '');
 
   if (!novena || !dia) {
     return (
@@ -31,6 +34,7 @@ export function NovenaDia() {
 
   const completed = isDayCompleted(numDia);
   const isLastDay = numDia === novena.duracao;
+  const progressStatus = getNovenaProgressStatus(syncStatus, isAuthenticated);
 
   const handleComplete = () => {
     if (!completed) toggleDay(numDia);
@@ -67,6 +71,9 @@ export function NovenaDia() {
           <h2 className="text-lg md:text-xl font-serif mt-2 text-church-text/70">
             {diaInfo.titulo}
           </h2>
+          <p className={`mt-4 rounded-md border px-3 py-2 text-xs ${progressStatus.className}`}>
+            {progressStatus.text}
+          </p>
         </div>
       </header>
 

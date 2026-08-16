@@ -2,11 +2,20 @@ import { useNavigate } from 'react-router';
 import { ArrowLeft, Heart, Calendar, CheckCircle } from 'lucide-react';
 import { novenasData } from '../data/novenas';
 import { useNovenaProgress } from '../hooks/useNovenaProgress';
+import { useAuth } from '../../auth/hooks/useAuth';
+import { getNovenaProgressStatus } from '../utils/progressStatus';
 
-function NovenaCard({ novena }: { novena: (typeof novenasData)[number] }) {
+function NovenaCard({
+  novena,
+  isAuthenticated,
+}: {
+  novena: (typeof novenasData)[number];
+  isAuthenticated: boolean;
+}) {
   const navigate = useNavigate();
-  const { completedDays, progressPercentage } = useNovenaProgress(novena.id);
+  const { completedDays, progressPercentage, syncStatus } = useNovenaProgress(novena.id);
   const percentage = progressPercentage(novena.duracao);
+  const progressStatus = getNovenaProgressStatus(syncStatus, isAuthenticated);
 
   return (
     <div
@@ -48,12 +57,16 @@ function NovenaCard({ novena }: { novena: (typeof novenasData)[number] }) {
           style={{ width: `${percentage}%` }}
         />
       </div>
+      <p className={`mt-4 rounded-md border px-3 py-2 text-xs ${progressStatus.className}`}>
+        {progressStatus.text}
+      </p>
     </div>
   );
 }
 
 export function NovenasPage() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
@@ -93,7 +106,7 @@ export function NovenasPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {novenasData.map((novena) => (
-            <NovenaCard key={novena.id} novena={novena} />
+            <NovenaCard key={novena.id} novena={novena} isAuthenticated={isAuthenticated} />
           ))}
         </div>
       </div>
