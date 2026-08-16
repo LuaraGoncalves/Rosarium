@@ -22,7 +22,7 @@ const envSchema = z.object({
   PORT: z.string().default('3001'),
   DATABASE_URL: z.string().min(1, 'DATABASE_URL é obrigatória.'),
   FRONTEND_URL: z.string().url().optional(),
-  JWT_SECRET: z.string().optional(),
+  JWT_SECRET: z.string().min(12, 'JWT_SECRET deve ter pelo menos 12 caracteres.'),
   JWT_EXPIRES_IN: z.string().default('7d'),
 })
 

@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { AppError } from '../errors/AppError';
+import { env } from '@/config/env';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'rosarium-super-secret-key-12345';
+const JWT_SECRET = env.JWT_SECRET;
 const AUTH_COOKIE_NAME = 'rosarium_auth';
 
 interface TokenPayload {
