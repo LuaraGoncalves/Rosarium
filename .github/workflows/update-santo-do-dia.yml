@@ -1,0 +1,19 @@
+name: Atualizar Santo do Dia
+
+on:
+  schedule:
+    - cron: '10 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-santo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Chamar backend para atualizar santo do dia
+        run: |
+          curl --fail --show-error --location \
+            --retry 5 \
+            --retry-delay 20 \
+            --max-time 120 \
+            https://rosarium-6x3i.onrender.com/api/santos/hoje

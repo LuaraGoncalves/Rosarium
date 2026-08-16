@@ -3,9 +3,10 @@ import bcrypt from 'bcryptjs';
 import jwt, { SignOptions } from 'jsonwebtoken';
 import { RegisterDTO, LoginDTO } from './auth.dto';
 import { AppError } from '../../shared/errors/AppError';
+import { env } from '@/config/env';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'rosarium-super-secret-key-12345';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+const JWT_SECRET = env.JWT_SECRET;
+const JWT_EXPIRES_IN = env.JWT_EXPIRES_IN;
 
 const COOKIE_NAME = 'rosarium_auth';
 
