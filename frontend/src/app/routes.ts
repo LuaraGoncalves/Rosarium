@@ -21,12 +21,7 @@ function ScrollToTop() {
 }
 
 function RootRoute() {
-  return createElement(
-    Fragment,
-    null,
-    createElement(ScrollToTop),
-    createElement(Outlet)
-  );
+  return createElement(Fragment, null, createElement(ScrollToTop), createElement(Outlet));
 }
 
 export const router = createBrowserRouter([
