@@ -195,24 +195,43 @@ export function SantoDetalhePage() {
 
           {/* Main Content - History */}
           <div className="lg:col-span-8">
-            <div className="bg-church-bg-secondary rounded-lg p-6 md:p-10 border border-church-border shadow-sm min-h-full">
-              <h2 className="text-2xl md:text-3xl font-serif text-church-accent mb-3 flex items-center gap-4">
+            <div className="min-h-full rounded-lg border border-church-border bg-church-bg-secondary p-4 shadow-sm md:p-10">
+              <h2 className="mb-3 flex items-center gap-4 font-serif text-2xl text-church-accent md:text-3xl">
                 História
                 <div className="h-px bg-church-border/60 flex-1 mt-1"></div>
               </h2>
               <p className="mb-8 text-xs uppercase text-church-text-muted">
                 Texto formatado para leitura contínua
               </p>
-              <div className="mx-auto max-w-[68ch] rounded-sm border border-church-border/70 bg-church-bg/45 px-5 py-6 md:px-8 md:py-8">
-                <article className="font-serif text-[1.02rem] leading-[1.65] text-church-text/90 md:text-[1.08rem]">
-                  {historiaParagraphs.map((paragraph, index) => (
-                    <p
-                      key={`${paragraph.slice(0, 24)}-${index}`}
-                      className="mb-4 text-justify indent-8 last:mb-0 md:indent-12"
-                    >
-                      {paragraph}
+              <div className="mx-auto max-w-[76ch] rounded-sm border border-church-border/70 bg-church-bg/70 px-5 py-7 shadow-[0_18px_45px_rgba(79,45,31,0.08)] md:px-10 md:py-10">
+                <header className="mb-8 border-b border-church-border/70 pb-5 text-center">
+                  <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-church-text-muted">
+                    Historia do Santo
+                  </p>
+                  <h3 className="font-serif text-2xl font-semibold uppercase leading-snug text-church-accent md:text-3xl">
+                    {santo.nome}
+                  </h3>
+                  <p className="mt-4 text-xs leading-relaxed text-church-text-muted md:text-sm">
+                    Texto organizado com recuo, alinhamento justificado e espacamento inspirado nas
+                    normas ABNT para leitura continua.
+                  </p>
+                </header>
+
+                <article className="font-serif text-[1.02rem] leading-[1.75] text-church-text/90 [hyphens:auto] md:text-[1.08rem] md:leading-[1.8]">
+                  {historiaParagraphs.length > 0 ? (
+                    historiaParagraphs.map((paragraph, index) => (
+                      <p
+                        key={`${paragraph.slice(0, 24)}-${index}`}
+                        className="mb-3 text-justify [text-align-last:auto] [text-indent:1.25cm] last:mb-0"
+                      >
+                        {paragraph}
+                      </p>
+                    ))
+                  ) : (
+                    <p className="text-center italic text-church-text-muted">
+                      A historia deste santo ainda nao esta disponivel.
                     </p>
-                  ))}
+                  )}
                 </article>
               </div>
             </div>

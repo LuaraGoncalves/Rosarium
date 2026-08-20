@@ -59,8 +59,8 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-.dark {
-  /* Modo Contemplativo (Escuro) */
+.brown {
+  /* Modo Marrom (Contemplativo) */
   --church-bg-primary: #201512;
   --church-bg-secondary: #2B1C18;
   --church-bg-tertiary: #170E0C;
@@ -112,6 +112,63 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+}
+
+.wine {
+  /* Modo Vinho */
+  --church-bg-primary: #2A1017;
+  --church-bg-secondary: #3A1721;
+  --church-bg-tertiary: #1E0B11;
+  --church-bg-darker: #14070B;
+
+  --church-text-primary: #FFF2E6;
+  --church-text-secondary: rgba(255, 242, 230, 0.8);
+  --church-text-muted: rgba(255, 242, 230, 0.58);
+
+  --church-accent: #D2A34A;
+  --church-accent-hover: #B96A3A;
+
+  --church-border: #5A2531;
+  --church-border-hover: #7A3545;
+
+  --church-header-bg: rgba(42, 16, 23, 0.94);
+
+  --background: #2A1017;
+  --foreground: #FFF2E6;
+  --card: #3A1721;
+  --card-foreground: #FFF2E6;
+  --popover: #3A1721;
+  --popover-foreground: #FFF2E6;
+  --primary: #D2A34A;
+  --primary-foreground: #2A1017;
+  --secondary: #4A1D2A;
+  --secondary-foreground: #FFF2E6;
+  --muted: #4A1D2A;
+  --muted-foreground: rgba(255, 242, 230, 0.62);
+  --accent: #5A2531;
+  --accent-foreground: #FFF2E6;
+  --destructive: #D74E62;
+  --destructive-foreground: #FFF2E6;
+  --border: #5A2531;
+  --input: #4A1D2A;
+  --input-background: #4A1D2A;
+  --switch-background: #7A3545;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #D2A34A;
+  --chart-1: #D2A34A;
+  --chart-2: #B96A3A;
+  --chart-3: #7A3545;
+  --chart-4: #E8C986;
+  --chart-5: #F3A1A5;
+  --sidebar: #1E0B11;
+  --sidebar-foreground: #FFF2E6;
+  --sidebar-primary: #D2A34A;
+  --sidebar-primary-foreground: #2A1017;
+  --sidebar-accent: #4A1D2A;
+  --sidebar-accent-foreground: #FFF2E6;
+  --sidebar-border: #5A2531;
+  --sidebar-ring: #D2A34A;
 }
 
 @theme inline {
@@ -178,7 +235,8 @@
 .linen-bg, body {
   background-image: var(--linen-texture, url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E"));
 }
-.dark .linen-bg, .dark body {
+.brown .linen-bg, .brown body,
+.wine .linen-bg, .wine body {
   --linen-texture: none;
 }
 
