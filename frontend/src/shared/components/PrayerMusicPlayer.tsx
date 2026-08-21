@@ -1,4 +1,4 @@
-import { Music, Pause } from 'lucide-react';
+import { Disc3, Music, Pause } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 export function PrayerMusicPlayer() {
@@ -34,16 +34,22 @@ export function PrayerMusicPlayer() {
       <button
         type="button"
         onClick={toggleMusic}
-        className="fixed right-4 top-20 z-[60] flex min-h-11 items-center gap-2 rounded-full border border-church-border-hover bg-church-bg-secondary/95 px-3 py-2 text-xs font-medium text-church-accent shadow-lg backdrop-blur transition-colors hover:border-church-accent-hover hover:text-church-accent-hover md:right-6 md:px-4 md:text-sm"
+        className="fixed right-20 top-3 z-[60] flex min-h-11 min-w-11 items-center justify-center rounded-md border border-church-border bg-church-bg-secondary/95 p-2 text-church-text-muted shadow-lg backdrop-blur transition-colors hover:border-church-border-hover hover:text-church-accent md:right-20"
         aria-pressed={isPlaying}
+        title="Som ambiente"
         aria-label={isPlaying ? 'Pausar musica contemplativa' : 'Tocar musica contemplativa'}
       >
         {isPlaying ? (
-          <Pause className="h-4 w-4" aria-hidden="true" />
+          <>
+            <Disc3
+              className="absolute h-6 w-6 animate-spin text-church-accent/35"
+              aria-hidden="true"
+            />
+            <Pause className="relative h-4 w-4 text-church-accent" aria-hidden="true" />
+          </>
         ) : (
-          <Music className="h-4 w-4" aria-hidden="true" />
+          <Music className="h-5 w-5" aria-hidden="true" />
         )}
-        <span className="hidden sm:inline">{isPlaying ? 'Pausar ambiente' : 'Som ambiente'}</span>
       </button>
     </>
   );
