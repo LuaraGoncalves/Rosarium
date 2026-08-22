@@ -200,9 +200,6 @@ export function SantoDetalhePage() {
                 História
                 <div className="h-px bg-church-border/60 flex-1 mt-1"></div>
               </h2>
-              <p className="mb-8 text-xs uppercase text-church-text-muted">
-                Texto formatado para leitura contínua
-              </p>
               <div className="mx-auto max-w-[76ch] rounded-sm border border-church-border/70 bg-church-bg/70 px-5 py-7 shadow-[0_18px_45px_rgba(79,45,31,0.08)] md:px-10 md:py-10">
                 <header className="mb-8 border-b border-church-border/70 pb-5 text-center">
                   <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-church-text-muted">
@@ -211,10 +208,6 @@ export function SantoDetalhePage() {
                   <h3 className="font-serif text-2xl font-semibold uppercase leading-snug text-church-accent md:text-3xl">
                     {santo.nome}
                   </h3>
-                  <p className="mt-4 text-xs leading-relaxed text-church-text-muted md:text-sm">
-                    Texto organizado com recuo, alinhamento justificado e espacamento inspirado nas
-                    normas ABNT para leitura continua.
-                  </p>
                 </header>
 
                 <article className="font-serif text-[1.02rem] leading-[1.75] text-church-text/90 [hyphens:auto] md:text-[1.08rem] md:leading-[1.8]">
