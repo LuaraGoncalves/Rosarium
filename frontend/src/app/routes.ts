@@ -9,7 +9,7 @@ import { breviarioRoutes } from '../features/breviario/routes';
 import { liturgiaRoutes } from '../features/liturgia/routes';
 import { santosRoutes } from '../features/santos/routes';
 import { errorRoutes } from '../features/erros/routes';
-import { PrayerMusicPlayer } from '../shared/components/PrayerMusicPlayer';
+import { AppFloatingControls } from '../shared/components/AppFloatingControls';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -26,7 +26,7 @@ function RootRoute() {
     Fragment,
     null,
     createElement(ScrollToTop),
-    createElement(PrayerMusicPlayer),
+    createElement(AppFloatingControls),
     createElement(Outlet)
   );
 }
