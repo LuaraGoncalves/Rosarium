@@ -12,7 +12,6 @@ import {
   Menu,
   X,
 } from 'lucide-react';
-import { ThemeToggle } from '../../../shared/components/ThemeToggle';
 import { useAuth } from '../../auth/hooks/useAuth';
 
 export function ChurchHome() {
@@ -99,7 +98,6 @@ export function ChurchHome() {
             >
               Orações
             </button>
-            <ThemeToggle />
             <div className="h-6 w-px bg-church-border mx-2"></div>
             {isAuthenticated ? (
               <div className="flex items-center gap-3">
@@ -126,7 +124,6 @@ export function ChurchHome() {
           </nav>
 
           <div className="flex items-center gap-4 md:hidden">
-            <ThemeToggle />
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
