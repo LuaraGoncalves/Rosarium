@@ -4,6 +4,7 @@ import { logger } from '@/infra/logger/logger';
 import { AppError } from '@/shared/errors/AppError';
 
 const LITURGIA_API_URL = 'https://liturgia.up.railway.app/';
+const LITURGIA_CACHE_RETENTION_DAYS = 1;
 
 const normalizeParam = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value[0] : value;
@@ -111,6 +112,23 @@ const hasStructuredBreviario = (liturgia: unknown) => {
   );
 };
 
+async function cleanupOldLiturgiaCache(todayZeroed: Date) {
+  const retentionStart = new Date(todayZeroed);
+  retentionStart.setDate(retentionStart.getDate() - LITURGIA_CACHE_RETENTION_DAYS);
+
+  const result = await prisma.liturgia.deleteMany({
+    where: {
+      data: {
+        lt: retentionStart,
+      },
+    },
+  });
+
+  if (result.count > 0) {
+    logger.info({ removed: result.count }, 'old liturgia cache entries removed');
+  }
+}
+
 export const getLiturgiaDiaria = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const today = new Date();
@@ -124,6 +142,7 @@ export const getLiturgiaDiaria = async (_req: Request, res: Response, next: Next
       const liturgiaEmCache = JSON.parse(liturgiaNoBanco.conteudo);
 
       if (hasStructuredBreviario(liturgiaEmCache)) {
+        await cleanupOldLiturgiaCache(todayZeroed);
         return res.json(liturgiaEmCache);
       }
 
@@ -301,6 +320,8 @@ export const getLiturgiaDiaria = async (_req: Request, res: Response, next: Next
             conteudo: JSON.stringify(normalizedData),
           },
         });
+
+        await cleanupOldLiturgiaCache(todayZeroed);
 
         return res.json(normalizedData);
       }

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-export type Theme = 'light' | 'brown' | 'wine';
+export type Theme = 'light' | 'brown';
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -29,11 +29,12 @@ export function ThemeProvider({
   const [theme, setTheme] = useState<Theme>(() => {
     const storedTheme = localStorage.getItem(storageKey);
 
-    if (storedTheme === 'dark') {
+    if (storedTheme === 'dark' || storedTheme === 'wine') {
+      localStorage.setItem(storageKey, 'brown');
       return 'brown';
     }
 
-    if (storedTheme === 'light' || storedTheme === 'brown' || storedTheme === 'wine') {
+    if (storedTheme === 'light' || storedTheme === 'brown') {
       return storedTheme;
     }
 

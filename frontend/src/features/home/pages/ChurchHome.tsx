@@ -76,7 +76,7 @@ export function ChurchHome() {
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="flex min-h-11 min-w-11 items-center justify-center rounded-md border border-church-border bg-church-bg-secondary/90 p-2 text-church-accent shadow-sm transition-colors hover:border-church-border-hover hover:bg-church-bg-secondary hover:text-church-accent-hover"
+            className="relative z-[70] flex min-h-11 min-w-11 items-center justify-center rounded-md border border-church-border bg-church-bg-secondary/90 p-2 text-church-accent shadow-sm transition-colors hover:border-church-border-hover hover:bg-church-bg-secondary hover:text-church-accent-hover"
             aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
             aria-expanded={isMobileMenuOpen}
           >
@@ -89,7 +89,16 @@ export function ChurchHome() {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="fixed left-3 right-3 top-16 z-50 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain rounded-3xl bg-church-bg-secondary shadow-2xl shadow-church-bg-darker/20 sm:left-auto sm:right-6 sm:w-[22rem]">
+          <button
+            type="button"
+            className="fixed inset-0 z-[55] cursor-default bg-transparent"
+            aria-label="Fechar menu"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+
+        {isMobileMenuOpen && (
+          <div className="fixed left-3 right-3 top-16 z-[60] max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain rounded-3xl bg-church-bg-secondary shadow-2xl shadow-church-bg-darker/20 sm:left-auto sm:right-6 sm:w-[22rem]">
             <div className="border-b border-church-border bg-church-bg px-5 py-4">
               <p className="font-serif text-xl text-church-accent"> Rosarium</p>
             </div>
@@ -139,14 +148,6 @@ export function ChurchHome() {
           </div>
         )}
 
-        {isMobileMenuOpen && (
-          <button
-            type="button"
-            className="fixed inset-0 z-40 cursor-default bg-transparent"
-            aria-label="Fechar menu"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-        )}
       </header>
 
       {/* Hero Section Minimalista e Claro com Imagem de Fundo */}
