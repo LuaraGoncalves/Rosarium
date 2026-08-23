@@ -27,55 +27,53 @@ export function RosarioPage() {
         imageAlt="Rosário"
         title="Uma oração contemplativa"
       >
-          <div className="rounded-2xl bg-church-bg p-4 text-center text-sm text-church-accent shadow-sm md:text-base">
-            <span className="font-medium block mb-1">
-              Se possível, segure o terço em suas mãos.
-            </span>
-            <span className="text-church-text/60">
-              A oração com o terço físico ajuda na concentração, no ritmo e na meditação dos
-              mistérios.
-            </span>
-          </div>
+        <div className="rounded-2xl bg-church-bg p-4 text-center text-sm text-church-accent shadow-sm md:text-base">
+          <span className="font-medium block mb-1">Se possível, segure o terço em suas mãos.</span>
+          <span className="text-church-text/60">
+            A oração com o terço físico ajuda na concentração, no ritmo e na meditação dos
+            mistérios.
+          </span>
+        </div>
 
-            <p className="font-serif text-lg italic leading-relaxed text-church-text/80">
-              O Santo Rosário é uma oração contemplativa que nos convida a meditar nos principais
-              mistérios da vida de Jesus Cristo e de Maria Santíssima. É uma poderosa arma
-              espiritual e um caminho de santificação.
-            </p>
+        <p className="font-serif text-lg italic leading-relaxed text-church-text/80">
+          O Santo Rosário é uma oração contemplativa que nos convida a meditar nos principais
+          mistérios da vida de Jesus Cristo e de Maria Santíssima. É uma poderosa arma espiritual e
+          um caminho de santificação.
+        </p>
       </FeatureIntroCard>
 
       <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-          <div className="mb-8 rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 md:p-6">
-            <h3 className="text-xl font-serif mb-4 text-church-accent-hover">
-              Como rezar o Rosário:
-            </h3>
+        <div className="mb-8 rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 md:p-6">
+          <h3 className="text-xl font-serif mb-4 text-church-accent-hover">
+            Como rezar o Rosário:
+          </h3>
 
-            <Accordion type="single" collapsible className="w-full text-church-text">
-              {oracoesDoRosario.map((oracao) => (
-                <AccordionItem
-                  value={oracao.id}
-                  key={oracao.id}
-                  className="border-b border-church-border last:border-0"
-                >
-                  <AccordionTrigger className="hover:no-underline py-3 text-left transition-all duration-300 font-medium hover:text-church-accent text-church-text">
-                    {oracao.titulo}
-                  </AccordionTrigger>
-                  <AccordionContent className="transition-all duration-300">
-                    <div className="mb-4 mt-2 rounded-2xl bg-church-bg p-4 text-sm text-church-text shadow-inner">
-                      {oracao.conteudo.map((item, idx) => (
-                        <div key={idx} className={idx > 0 ? 'mt-4' : ''}>
-                          <p className="mb-2 font-medium text-church-accent-hover">
-                            {item.subtitulo}
-                          </p>
-                          <p className="italic leading-relaxed text-lg">{item.texto}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
+          <Accordion type="single" collapsible className="w-full text-church-text">
+            {oracoesDoRosario.map((oracao) => (
+              <AccordionItem
+                value={oracao.id}
+                key={oracao.id}
+                className="border-b border-church-border last:border-0"
+              >
+                <AccordionTrigger className="hover:no-underline py-3 text-left transition-all duration-300 font-medium hover:text-church-accent text-church-text">
+                  {oracao.titulo}
+                </AccordionTrigger>
+                <AccordionContent className="transition-all duration-300">
+                  <div className="mb-4 mt-2 rounded-2xl bg-church-bg p-4 text-sm text-church-text shadow-inner">
+                    {oracao.conteudo.map((item, idx) => (
+                      <div key={idx} className={idx > 0 ? 'mt-4' : ''}>
+                        <p className="mb-2 font-medium text-church-accent-hover">
+                          {item.subtitulo}
+                        </p>
+                        <p className="italic leading-relaxed text-lg">{item.texto}</p>
+                      </div>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
         <div className="space-y-6">
           {misteriosDoRosario.map((categoria, index) => (
             <div

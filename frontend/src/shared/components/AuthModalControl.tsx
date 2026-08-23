@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { LogOut, UserCircle } from 'lucide-react';
+import { Eye, EyeOff, LogOut, UserCircle } from 'lucide-react';
 import { authApi } from '../../features/auth/services/auth.api';
 import { notifyAuthChanged, useAuth } from '../../features/auth/hooks/useAuth';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog';
@@ -13,6 +13,7 @@ export function AuthModalControl() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -37,6 +38,7 @@ export function AuthModalControl() {
       notifyAuthChanged();
       setIsOpen(false);
       setPassword('');
+      setShowPassword(false);
     } catch (error: unknown) {
       setError(
         error instanceof Error
@@ -71,7 +73,15 @@ export function AuthModalControl() {
         )}
       </button>
 
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog
+        open={isOpen}
+        onOpenChange={(open) => {
+          setIsOpen(open);
+          if (!open) {
+            setShowPassword(false);
+          }
+        }}
+      >
         <DialogContent className="max-w-md border-church-border bg-church-bg-secondary p-0 text-church-text shadow-2xl shadow-church-bg-darker/25">
           <div className="overflow-hidden rounded-lg">
             <div className="bg-church-bg px-6 pb-5 pt-6">
@@ -148,15 +158,30 @@ export function AuthModalControl() {
                   <label className="mb-1.5 block text-sm font-medium text-church-text-secondary">
                     Senha
                   </label>
-                  <input
-                    type="password"
-                    required
-                    minLength={isRegister ? 6 : undefined}
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    className="w-full rounded-2xl border border-church-border bg-church-bg px-4 py-3 text-church-text outline-none transition-colors placeholder:text-church-text-muted focus:border-church-accent"
-                    placeholder={isRegister ? 'Mínimo de 6 caracteres' : 'Sua senha'}
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      required
+                      minLength={isRegister ? 6 : undefined}
+                      value={password}
+                      onChange={(event) => setPassword(event.target.value)}
+                      className="w-full rounded-2xl border border-church-border bg-church-bg py-3 pl-4 pr-12 text-church-text outline-none transition-colors placeholder:text-church-text-muted focus:border-church-accent"
+                      placeholder={isRegister ? 'Mínimo de 6 caracteres' : 'Sua senha'}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((current) => !current)}
+                      className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-church-text-muted transition-colors hover:bg-church-bg-secondary hover:text-church-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-church-accent"
+                      aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                      aria-pressed={showPassword}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" aria-hidden="true" />
+                      ) : (
+                        <Eye className="h-4 w-4" aria-hidden="true" />
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 <button
@@ -171,6 +196,7 @@ export function AuthModalControl() {
                   type="button"
                   onClick={() => {
                     setMode(isRegister ? 'login' : 'register');
+                    setShowPassword(false);
                     resetFeedback();
                   }}
                   className="w-full text-center text-sm font-medium text-church-accent transition-colors hover:text-church-accent-hover"

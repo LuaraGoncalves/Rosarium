@@ -109,13 +109,13 @@ export function OracoesPage() {
         title="Orai sem cessar"
         maxWidthClassName="max-w-6xl"
       >
-            <p className="font-serif text-lg italic text-church-text/85">
-              &quot;Orai sem cessar&quot; - 1 Tessalonicenses 5,17
-            </p>
-            <p>
-              A oração é a elevação da alma a Deus. É através dela que nos comunicamos com nosso
-              Criador, agradecemos Suas bênçãos, pedimos Sua ajuda e nos unimos a Ele em amor.
-            </p>
+        <p className="font-serif text-lg italic text-church-text/85">
+          &quot;Orai sem cessar&quot; - 1 Tessalonicenses 5,17
+        </p>
+        <p>
+          A oração é a elevação da alma a Deus. É através dela que nos comunicamos com nosso
+          Criador, agradecemos Suas bênçãos, pedimos Sua ajuda e nos unimos a Ele em amor.
+        </p>
       </FeatureIntroCard>
 
       <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">

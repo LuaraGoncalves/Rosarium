@@ -52,15 +52,14 @@ export function SantosPage() {
         title="Testemunhas da Fé"
         maxWidthClassName="max-w-6xl"
       >
-          <p className="text-church-text/80 leading-relaxed mb-4">
-            Os santos são homens e mulheres que viveram a fé cristã de maneira heroica. Suas vidas
-            nos inspiram e suas intercessões nos ajudam em nosso caminho de santidade. Eles são
-            exemplos vivos de como seguir Cristo em todas as circunstâncias.
-          </p>
+        <p className="text-church-text/80 leading-relaxed mb-4">
+          Os santos são homens e mulheres que viveram a fé cristã de maneira heroica. Suas vidas nos
+          inspiram e suas intercessões nos ajudam em nosso caminho de santidade. Eles são exemplos
+          vivos de como seguir Cristo em todas as circunstâncias.
+        </p>
       </FeatureIntroCard>
 
       <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-
         {santoDoDia && (
           <div className="mb-16">
             <h2 className="text-2xl font-serif text-church-accent-hover mb-6 flex items-center gap-2">

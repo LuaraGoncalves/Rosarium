@@ -81,11 +81,11 @@ export function NovenasPage() {
         imageAlt="Velas na Igreja"
         title="Perseverar na oração"
       >
-          <p className="font-serif text-base italic leading-relaxed text-church-text/80 md:text-lg">
-            As novenas são orações feitas durante nove dias consecutivos, buscando a intercessão de
-            Jesus, Maria ou dos santos. Esta prática antiga da Igreja nos ajuda a perseverar na
-            oração e demonstrar nossa fé e confiança em Deus.
-          </p>
+        <p className="font-serif text-base italic leading-relaxed text-church-text/80 md:text-lg">
+          As novenas são orações feitas durante nove dias consecutivos, buscando a intercessão de
+          Jesus, Maria ou dos santos. Esta prática antiga da Igreja nos ajuda a perseverar na oração
+          e demonstrar nossa fé e confiança em Deus.
+        </p>
       </FeatureIntroCard>
 
       <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">

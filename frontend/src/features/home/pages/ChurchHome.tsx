@@ -176,7 +176,7 @@ export function ChurchHome() {
             </h2>
 
             <p className="mx-auto mb-7 max-w-2xl text-base font-light leading-relaxed text-church-text-secondary sm:text-lg md:mx-0">
-             Rosários, orações e liturgia para acompanhar sua vida de fé.
+              Rosários, orações e liturgia para acompanhar sua vida de fé.
             </p>
 
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row md:justify-start">

@@ -59,14 +59,14 @@ export function BreviarioPage() {
         imageAlt="Vitral de Igreja"
         title="A Liturgia das Horas"
       >
-          <p>
-            O Breviário, também conhecido como Liturgia das Horas, é a oração oficial da Igreja que
-            santifica as diferentes horas do dia. Composto principalmente de salmos, hinos e
-            leituras bíblicas, ele nos convida a rezar com toda a Igreja ao longo do dia.
-          </p>
-          <p className="font-serif italic text-church-text/80">
-            &quot;Sete vezes ao dia eu te louvo&quot; - Salmo 119,164
-          </p>
+        <p>
+          O Breviário, também conhecido como Liturgia das Horas, é a oração oficial da Igreja que
+          santifica as diferentes horas do dia. Composto principalmente de salmos, hinos e leituras
+          bíblicas, ele nos convida a rezar com toda a Igreja ao longo do dia.
+        </p>
+        <p className="font-serif italic text-church-text/80">
+          &quot;Sete vezes ao dia eu te louvo&quot; - Salmo 119,164
+        </p>
       </FeatureIntroCard>
 
       <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">

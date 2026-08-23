@@ -206,7 +206,7 @@ export function BreviarioHoraPage() {
                 </h3>
                 <ul className="space-y-3">
                   {horaData.preces.map((prece: string, index: number) => (
-                <li key={index} className="rounded-2xl bg-church-bg-secondary px-4 py-3">
+                    <li key={index} className="rounded-2xl bg-church-bg-secondary px-4 py-3">
                       {prece}
                     </li>
                   ))}

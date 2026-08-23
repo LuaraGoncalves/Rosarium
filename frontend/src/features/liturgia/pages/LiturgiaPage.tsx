@@ -21,11 +21,11 @@ export function LiturgiaPage() {
         imageAlt="Interior da Igreja"
         title="A oração oficial da Igreja"
       >
-          <p>
-            A Liturgia das Horas é a oração pública e comum do Povo de Deus. Nela, Cristo mesmo
-            &quot;continua a exercer sua função sacerdotal&quot;, reunindo a Igreja em louvor a Deus
-            e intercessão pelo mundo.
-          </p>
+        <p>
+          A Liturgia das Horas é a oração pública e comum do Povo de Deus. Nela, Cristo mesmo
+          &quot;continua a exercer sua função sacerdotal&quot;, reunindo a Igreja em louvor a Deus e
+          intercessão pelo mundo.
+        </p>
       </FeatureIntroCard>
 
       <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
@@ -115,7 +115,7 @@ export function LiturgiaPage() {
                     type="button"
                     onClick={() =>
                       setTempoAberto((tempoAtual) =>
-                        tempoAtual === item.tempo ? null : item.tempo,
+                        tempoAtual === item.tempo ? null : item.tempo
                       )
                     }
                     className="mt-1 rounded-full border border-church-border-hover bg-church-bg-secondary/70 p-1 text-church-text/50 transition-all hover:border-church-accent-hover/50 hover:text-church-accent"
