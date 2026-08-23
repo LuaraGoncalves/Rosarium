@@ -147,7 +147,6 @@ export function ChurchHome() {
             </nav>
           </div>
         )}
-
       </header>
 
       {/* Hero Section Minimalista e Claro com Imagem de Fundo */}

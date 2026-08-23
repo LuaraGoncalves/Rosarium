@@ -67,7 +67,8 @@ export const oracoesDoRosario: RosarioPrayer[] = [
     conteudo: [
       {
         subtitulo: 'Glória ao Pai:',
-        texto: 'Glória ao Pai e ao Filho e ao Espírito Santo. Como era no princípio, agora e sempre. Amém.',
+        texto:
+          'Glória ao Pai e ao Filho e ao Espírito Santo. Como era no princípio, agora e sempre. Amém.',
       },
     ],
   },
@@ -176,7 +177,8 @@ export const misteriosDoRosario: RosarioMysteryGroup[] = [
       },
       {
         titulo: '3. O Anúncio do Reino de Deus',
-        leitura: '"Completou-se o tempo e o Reino de Deus está próximo; fazei penitência e crede no Evangelho." (Mc 1, 15)',
+        leitura:
+          '"Completou-se o tempo e o Reino de Deus está próximo; fazei penitência e crede no Evangelho." (Mc 1, 15)',
       },
       {
         titulo: '4. A Transfiguração de Jesus',
@@ -233,7 +235,8 @@ export const misteriosDoRosario: RosarioMysteryGroup[] = [
       },
       {
         titulo: '2. A Ascensão de Jesus ao Céu',
-        leitura: '"Depois que o Senhor Jesus lhes falou, foi levado ao céu e está sentado à direita de Deus." (Mc 16, 19)',
+        leitura:
+          '"Depois que o Senhor Jesus lhes falou, foi levado ao céu e está sentado à direita de Deus." (Mc 16, 19)',
       },
       {
         titulo: '3. A Vinda do Espírito Santo',
@@ -265,7 +268,9 @@ const mysteryByWeekday: Record<number, string> = {
 };
 
 export function getTodaysMystery() {
-  const saoPauloNow = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
+  const saoPauloNow = new Date(
+    new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' })
+  );
   const slug = mysteryByWeekday[saoPauloNow.getDay()];
 
   return misteriosDoRosario.find((misterio) => misterio.slug === slug) ?? misteriosDoRosario[0];

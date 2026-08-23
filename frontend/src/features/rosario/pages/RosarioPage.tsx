@@ -22,11 +22,7 @@ const weekdayMystery: Record<number, string> = {
   6: 'Mistérios Gozosos',
 };
 
-const preparationSteps = [
-  'Escolha o mistério',
-  'Leia a meditação',
-  'Reze uma dezena por vez',
-];
+const preparationSteps = ['Escolha o mistério', 'Leia a meditação', 'Reze uma dezena por vez'];
 
 function splitStepTitle(title: string) {
   const match = title.match(/^(\d+)\.\s(.+)$/);
@@ -144,8 +140,8 @@ export function RosarioPage() {
                 Escolha o mistério
               </h2>
               <p className="mt-1 max-w-2xl text-sm leading-relaxed text-church-text-muted">
-                O indicado para hoje já vem selecionado, mas você pode trocar se desejar rezar
-                outro conjunto.
+                O indicado para hoje já vem selecionado, mas você pode trocar se desejar rezar outro
+                conjunto.
               </p>
             </div>
             {todaysMystery && (
@@ -179,7 +175,9 @@ export function RosarioPage() {
                 >
                   <span
                     className={`mb-3 inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
-                      isSelected ? 'bg-white/15 text-white' : 'bg-church-bg-secondary text-church-accent'
+                      isSelected
+                        ? 'bg-white/15 text-white'
+                        : 'bg-church-bg-secondary text-church-accent'
                     }`}
                   >
                     {isToday ? 'Hoje' : categoria.dia}
