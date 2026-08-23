@@ -2,13 +2,7 @@ import { FormEvent, useState } from 'react';
 import { LogOut, UserCircle } from 'lucide-react';
 import { authApi } from '../../features/auth/services/auth.api';
 import { notifyAuthChanged, useAuth } from '../../features/auth/hooks/useAuth';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from './ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog';
 
 type AuthMode = 'login' | 'register';
 

@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router';
-import { ArrowLeft, Cross } from 'lucide-react';
+import { Cross } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '../../../shared/components/ui/accordion';
+import { FeatureIntroCard, FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 import { oracoesDoRosario } from '../data/oracoes';
 import { misteriosDoRosario } from '../data/misterios';
 
@@ -14,37 +15,19 @@ export function RosarioPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-4">
-            <button
-              onClick={() => navigate('/igreja')}
-              className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Voltar
-            </button>
-          </div>
-          <div className="flex items-center justify-center gap-3">
-            <Cross className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-3xl md:text-4xl text-center font-serif text-church-accent">
-              Santo Rosário
-            </h1>
-          </div>
-        </div>
-      </header>
+      <FeaturePageHeader
+        icon={Cross}
+        title="Santo Rosário"
+        subtitle="Mistérios, orações e meditações para rezar com calma."
+        onBack={() => navigate('/igreja')}
+      />
 
-      <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 mb-8 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-lg">
-            <img
-              src="https://images.unsplash.com/photo-1624147210060-4c159a6c70d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyb3NhcnklMjBiZWFkcyUyMHByYXllcnxlbnwxfHx8fDE3NzMzMDQ3NTR8MA&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Rosário"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="bg-church-bg border border-church-border rounded-lg p-4 mb-8 text-church-accent text-sm md:text-base text-center shadow-sm">
+      <FeatureIntroCard
+        imageSrc="https://images.unsplash.com/photo-1624147210060-4c159a6c70d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyb3NhcnklMjBiZWFkcyUyMHByYXllcnxlbnwxfHx8fDE3NzMzMDQ3NTR8MA&ixlib=rb-4.1.0&q=80&w=1080"
+        imageAlt="Rosário"
+        title="Uma oração contemplativa"
+      >
+          <div className="rounded-2xl bg-church-bg p-4 text-center text-sm text-church-accent shadow-sm md:text-base">
             <span className="font-medium block mb-1">
               Se possível, segure o terço em suas mãos.
             </span>
@@ -54,15 +37,15 @@ export function RosarioPage() {
             </span>
           </div>
 
-          <div className="mb-8">
-            <p className="text-church-text/80 text-lg leading-relaxed text-center italic font-serif">
+            <p className="font-serif text-lg italic leading-relaxed text-church-text/80">
               O Santo Rosário é uma oração contemplativa que nos convida a meditar nos principais
               mistérios da vida de Jesus Cristo e de Maria Santíssima. É uma poderosa arma
               espiritual e um caminho de santificação.
             </p>
-          </div>
+      </FeatureIntroCard>
 
-          <div className="bg-church-bg rounded-lg p-5 md:p-6 border border-church-border">
+      <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
+          <div className="mb-8 rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 md:p-6">
             <h3 className="text-xl font-serif mb-4 text-church-accent-hover">
               Como rezar o Rosário:
             </h3>
@@ -78,7 +61,7 @@ export function RosarioPage() {
                     {oracao.titulo}
                   </AccordionTrigger>
                   <AccordionContent className="transition-all duration-300">
-                    <div className="bg-church-bg-darker p-4 rounded-lg border border-church-border text-sm mt-2 mb-4 shadow-inner text-church-text">
+                    <div className="mb-4 mt-2 rounded-2xl bg-church-bg p-4 text-sm text-church-text shadow-inner">
                       {oracao.conteudo.map((item, idx) => (
                         <div key={idx} className={idx > 0 ? 'mt-4' : ''}>
                           <p className="mb-2 font-medium text-church-accent-hover">
@@ -93,13 +76,11 @@ export function RosarioPage() {
               ))}
             </Accordion>
           </div>
-        </div>
-
         <div className="space-y-6">
           {misteriosDoRosario.map((categoria, index) => (
             <div
               key={index}
-              className="bg-church-bg-secondary rounded-lg p-8 border border-church-border-hover shadow-none"
+              className="rounded-[1.5rem] bg-church-bg-secondary p-6 shadow-md shadow-church-bg-darker/10 md:p-8"
             >
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                 <h2 className="text-2xl font-serif text-church-accent-hover">{categoria.tipo}</h2>
@@ -119,7 +100,7 @@ export function RosarioPage() {
                       {misterio.titulo}
                     </AccordionTrigger>
                     <AccordionContent className="transition-all duration-300">
-                      <div className="bg-church-bg p-4 md:p-5 rounded-lg border border-church-border text-sm mt-2 mb-4 italic leading-relaxed text-base md:text-lg shadow-inner text-church-text/90">
+                      <div className="mb-4 mt-2 rounded-2xl bg-church-bg p-4 text-base italic leading-relaxed text-church-text/90 shadow-inner md:p-5 md:text-lg">
                         {misterio.leitura}
                       </div>
                     </AccordionContent>

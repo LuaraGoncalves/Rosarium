@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
-import { ArrowLeft, Clock, Sun, Sunset, Moon, Star } from 'lucide-react';
+import { Clock, Sun, Sunset, Moon, Star } from 'lucide-react';
 import { useBreviario } from '../hooks/useBreviario';
+import { FeatureIntroCard, FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 
 export function BreviarioPage() {
   const navigate = useNavigate();
@@ -46,48 +47,29 @@ export function BreviarioPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-4">
-            <button
-              onClick={() => navigate('/igreja')}
-              className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Voltar
-            </button>
-          </div>
-          <div className="flex items-center justify-center gap-3">
-            <Clock className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-3xl md:text-4xl text-center font-serif text-church-accent">
-              Breviário
-            </h1>
-          </div>
-        </div>
-      </header>
+      <FeaturePageHeader
+        icon={Clock}
+        title="Breviário"
+        subtitle="Liturgia das Horas para santificar os momentos do dia."
+        onBack={() => navigate('/igreja')}
+      />
 
-      <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-lg">
-            <img
-              src="https://images.unsplash.com/photo-1709541658608-dfe38af68925?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdGFpbmVkJTIwZ2xhc3MlMjBjaHVyY2glMjB3aW5kb3d8ZW58MXx8fHwxNzczMzI2MDI0fDA&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Vitral de Igreja"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <h2 className="text-2xl font-serif text-church-accent-hover mb-4">
-            A Liturgia das Horas
-          </h2>
-          <p className="text-church-text/80 leading-relaxed mb-4">
+      <FeatureIntroCard
+        imageSrc="https://images.unsplash.com/photo-1709541658608-dfe38af68925?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdGFpbmVkJTIwZ2xhc3MlMjBjaHVyY2glMjB3aW5kb3d8ZW58MXx8fHwxNzczMzI2MDI0fDA&ixlib=rb-4.1.0&q=80&w=1080"
+        imageAlt="Vitral de Igreja"
+        title="A Liturgia das Horas"
+      >
+          <p>
             O Breviário, também conhecido como Liturgia das Horas, é a oração oficial da Igreja que
             santifica as diferentes horas do dia. Composto principalmente de salmos, hinos e
             leituras bíblicas, ele nos convida a rezar com toda a Igreja ao longo do dia.
           </p>
-          <p className="text-church-text/80 leading-relaxed italic font-serif">
-            "Sete vezes ao dia eu te louvo" - Salmo 119:164
+          <p className="font-serif italic text-church-text/80">
+            &quot;Sete vezes ao dia eu te louvo&quot; - Salmo 119,164
           </p>
-        </div>
+      </FeatureIntroCard>
 
+      <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
         {loading && (
           <div className="text-center py-12">
             <p className="text-church-text/60 italic font-serif">
@@ -103,7 +85,7 @@ export function BreviarioPage() {
         )}
 
         {!loading && !error && breviario && (
-          <div className="mb-12 bg-church-bg-secondary rounded-lg p-6 border border-church-border-hover text-center">
+          <div className="mb-12 rounded-[1.5rem] bg-church-bg-secondary p-6 text-center shadow-md shadow-church-bg-darker/10">
             <h3 className="text-xl font-serif text-church-accent mb-2">Hoje: {breviario.data}</h3>
             <p className="text-church-text/80">
               {breviario.tempo} - {breviario.semana}
@@ -118,11 +100,10 @@ export function BreviarioPage() {
               <div
                 key={hora.id}
                 onClick={() => navigate(`/breviario/${hora.id}`)}
-                className="bg-church-bg-secondary rounded-lg p-5 md:p-6 border border-church-border-hover
-                  hover:border-church-accent-hover/50 transition-all cursor-pointer group shadow-none"
+                className="group cursor-pointer rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-church-bg-darker/15 md:p-6"
               >
                 <div className="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-6">
-                  <div className="w-16 h-16 bg-church-bg border border-church-border-hover rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-church-bg text-church-accent-hover shadow-sm transition-transform group-hover:scale-105">
                     <Icon className="w-8 h-8 text-church-accent-hover" />
                   </div>
                   <div className="flex-1">
@@ -137,7 +118,7 @@ export function BreviarioPage() {
                       e.stopPropagation();
                       navigate(`/breviario/${hora.id}`);
                     }}
-                    className="bg-church-bg hover:bg-church-bg-darker text-church-accent border border-church-border-hover px-5 py-2 rounded-lg transition-colors w-full lg:w-auto"
+                    className="w-full rounded-full bg-church-bg px-5 py-2 text-church-accent shadow-sm transition-colors hover:bg-church-bg-darker lg:w-auto"
                   >
                     Rezar
                   </button>
@@ -147,42 +128,42 @@ export function BreviarioPage() {
           })}
         </div>
 
-        <div className="mt-12 bg-church-bg-secondary rounded-lg p-8 border border-church-border-hover">
+        <div className="mt-12 rounded-[1.5rem] bg-church-bg-secondary p-6 shadow-md shadow-church-bg-darker/10 md:p-8">
           <h3 className="text-xl font-serif text-church-accent mb-6">Estrutura de cada Hora</h3>
           <ul className="space-y-4 text-church-text/80">
-            <li className="pl-4 border-l-2 border-church-accent-hover">
+            <li className="rounded-2xl bg-church-bg p-4">
               <div className="font-semibold text-church-accent-hover mb-1">
                 Invocação inicial e Hino
               </div>
               "Vinde, ó Deus, em meu auxílio. Socorrei-me sem demora." Seguido de um hino apropriado
               para o momento do dia.
             </li>
-            <li className="pl-4 border-l-2 border-church-accent-hover">
+            <li className="rounded-2xl bg-church-bg p-4">
               <div className="font-semibold text-church-accent-hover mb-1">Salmodia</div>
               Dois a três salmos com suas respectivas antífonas, muitas vezes concluídos com o
               "Glória ao Pai".
             </li>
-            <li className="pl-4 border-l-2 border-church-accent-hover">
+            <li className="rounded-2xl bg-church-bg p-4">
               <div className="font-semibold text-church-accent-hover mb-1">
                 Leitura bíblica ou patrística
               </div>
               Uma passagem curta das Escrituras ou dos Padres da Igreja.
             </li>
-            <li className="pl-4 border-l-2 border-church-accent-hover">
+            <li className="rounded-2xl bg-church-bg p-4">
               <div className="font-semibold text-church-accent-hover mb-1">Responsório</div>
               Um cântico curto ou verso em resposta à leitura.
             </li>
-            <li className="pl-4 border-l-2 border-church-accent-hover">
+            <li className="rounded-2xl bg-church-bg p-4">
               <div className="font-semibold text-church-accent-hover mb-1">Cântico Evangélico</div>
               Cântico de Zacarias (Benedictus) nas Laudes, Cântico de Maria (Magnificat) nas
               Vésperas, ou Cântico de Simeão nas Completas.
             </li>
-            <li className="pl-4 border-l-2 border-church-accent-hover">
+            <li className="rounded-2xl bg-church-bg p-4">
               <div className="font-semibold text-church-accent-hover mb-1">Preces e Pai Nosso</div>
               Preces de intercessão pela Igreja e pelo mundo, concluídas com a oração que Jesus nos
               ensinou.
             </li>
-            <li className="pl-4 border-l-2 border-church-accent-hover">
+            <li className="rounded-2xl bg-church-bg p-4">
               <div className="font-semibold text-church-accent-hover mb-1">
                 Oração conclusiva e bênção
               </div>

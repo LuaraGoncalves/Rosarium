@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router';
-import { ArrowLeft } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { useBreviario, BreviarioHoraSection } from '../hooks/useBreviario';
+import { FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 
 export function BreviarioHoraPage() {
   const navigate = useNavigate();
@@ -50,25 +51,14 @@ export function BreviarioHoraPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans pb-24">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
-        <div className="max-w-3xl mx-auto px-4">
-          <div className="mb-4">
-            <button
-              onClick={() => navigate('/breviario')}
-              className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Voltar ao Breviário
-            </button>
-          </div>
-          <div className="text-center">
-            <h1 className="text-2xl md:text-3xl font-serif text-church-accent">{tituloHora}</h1>
-            <p className="text-church-text/60 mt-2">
-              {breviario.data} • {breviario.tempo}
-            </p>
-          </div>
-        </div>
-      </header>
+      <FeaturePageHeader
+        icon={Clock}
+        title={tituloHora}
+        subtitle={`${breviario.data} • ${breviario.tempo}`}
+        backLabel="Voltar ao Breviário"
+        onBack={() => navigate('/breviario')}
+        maxWidthClassName="max-w-3xl"
+      />
 
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-6 md:space-y-8 text-base md:text-lg leading-relaxed text-church-text/90">
         {!horaData ? (
@@ -81,7 +71,7 @@ export function BreviarioHoraPage() {
           <>
             {/* Introdução */}
             {horaData.introducao && (
-              <div className="bg-church-bg-secondary p-5 md:p-6 rounded-lg border border-church-border-hover">
+              <div className="rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 md:p-6">
                 <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm">
                   Introdução
                 </h3>
@@ -91,7 +81,7 @@ export function BreviarioHoraPage() {
 
             {/* Invocação */}
             {horaData.invitatorio && (
-              <div className="bg-church-bg-secondary p-5 md:p-6 rounded-lg border border-church-border-hover">
+              <div className="rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 md:p-6">
                 <h3 className="text-church-accent-hover font-serif mb-2 uppercase text-sm">
                   Invitatório
                 </h3>
@@ -120,7 +110,7 @@ export function BreviarioHoraPage() {
                 {horaData.salmodia.map((salmo: string, index: number) => (
                   <div
                     key={index}
-                    className="bg-church-bg-secondary p-5 md:p-6 rounded-lg border border-church-border-hover"
+                    className="rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 md:p-6"
                   >
                     <p className="whitespace-pre-line">{salmo}</p>
                   </div>
@@ -143,7 +133,7 @@ export function BreviarioHoraPage() {
                 <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm text-center border-b border-church-border-hover pb-2">
                   {usaLeituraBreve ? 'Leitura Breve' : 'Leitura'}
                 </h3>
-                <div className="bg-church-bg p-5 md:p-6 rounded-lg border border-church-border-hover">
+                <div className="rounded-[1.5rem] bg-church-bg p-5 shadow-inner md:p-6">
                   <p className="whitespace-pre-line">{horaData.leitura1 || horaData.leitura}</p>
                 </div>
               </div>
@@ -154,7 +144,7 @@ export function BreviarioHoraPage() {
                 <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm text-center border-b border-church-border-hover pb-2">
                   Segunda Leitura
                 </h3>
-                <div className="bg-church-bg p-5 md:p-6 rounded-lg border border-church-border-hover">
+                <div className="rounded-[1.5rem] bg-church-bg p-5 shadow-inner md:p-6">
                   <p className="whitespace-pre-line">{horaData.leitura2}</p>
                 </div>
               </div>
@@ -174,7 +164,7 @@ export function BreviarioHoraPage() {
                 <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm text-center border-b border-church-border-hover pb-2">
                   {hora === 'oficio' ? 'Responsório' : 'Responsório Breve'}
                 </h3>
-                <div className="bg-church-bg-secondary p-5 md:p-6 rounded-lg border border-church-border-hover">
+                <div className="rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 md:p-6">
                   <p className="whitespace-pre-line italic">{horaData.responsorioBreve}</p>
                 </div>
               </div>
@@ -216,7 +206,7 @@ export function BreviarioHoraPage() {
                 </h3>
                 <ul className="space-y-3">
                   {horaData.preces.map((prece: string, index: number) => (
-                    <li key={index} className="pl-4 border-l-2 border-church-accent-hover">
+                <li key={index} className="rounded-2xl bg-church-bg-secondary px-4 py-3">
                       {prece}
                     </li>
                   ))}
@@ -225,7 +215,7 @@ export function BreviarioHoraPage() {
             )}
 
             {horaData.paiNosso && (
-              <div className="my-8 text-center bg-church-bg p-5 md:p-6 rounded-lg border border-church-border-hover">
+              <div className="my-8 rounded-[1.5rem] bg-church-bg p-5 text-center shadow-inner md:p-6">
                 <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm">
                   Pai-Nosso
                 </h3>
@@ -235,7 +225,7 @@ export function BreviarioHoraPage() {
 
             {/* Oração Conclusiva */}
             {horaData.oracao && (
-              <div className="mt-12 text-center bg-church-bg-secondary p-6 md:p-8 rounded-lg border border-church-border-hover">
+              <div className="mt-12 rounded-[1.5rem] bg-church-bg-secondary p-6 text-center shadow-md shadow-church-bg-darker/10 md:p-8">
                 <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm">
                   Oração Final
                 </h3>
@@ -253,7 +243,7 @@ export function BreviarioHoraPage() {
             )}
 
             {horaData.antifonaMariana && (
-              <div className="my-8 text-center bg-church-bg p-5 md:p-6 rounded-lg border border-church-border-hover">
+              <div className="my-8 rounded-[1.5rem] bg-church-bg p-5 text-center shadow-inner md:p-6">
                 <h3 className="text-church-accent-hover font-serif mb-4 uppercase text-sm">
                   Antífona Mariana
                 </h3>

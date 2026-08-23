@@ -1,15 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import {
-  Book,
-  Cross,
-  Heart,
-  Clock,
-  Users,
-  Church,
-  Menu,
-  X,
-} from 'lucide-react';
+import { Book, Cross, Heart, Clock, Users, Church, Menu, X } from 'lucide-react';
 import { AuthModalControl } from '../../../shared/components/AuthModalControl';
 import { ThemeToggle } from '../../../shared/components/ThemeToggle';
 
@@ -98,18 +89,12 @@ export function ChurchHome() {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="absolute right-4 top-[calc(100%+0.75rem)] z-50 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-3xl bg-church-bg-secondary shadow-2xl shadow-church-bg-darker/20">
+          <div className="fixed left-3 right-3 top-16 z-50 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain rounded-3xl bg-church-bg-secondary shadow-2xl shadow-church-bg-darker/20 sm:left-auto sm:right-6 sm:w-[22rem]">
             <div className="border-b border-church-border bg-church-bg px-5 py-4">
-              <p className="font-serif text-xl text-church-accent">Explorar Rosarium</p>
-              <p className="text-sm text-church-text-muted">
-                Atalhos tranquilos para continuar sua oração.
-              </p>
+              <p className="font-serif text-xl text-church-accent"> Rosarium</p>
             </div>
 
             <div className="border-b border-church-border p-3">
-              <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-church-text-muted">
-                Ambiente
-              </p>
               <div className="grid grid-cols-2 gap-2">
                 <div className="flex items-center gap-3 rounded-2xl bg-church-bg px-3 py-3">
                   <AuthModalControl />
@@ -146,9 +131,6 @@ export function ChurchHome() {
                     </span>
                     <span>
                       <span className="block text-church-text">{section.title}</span>
-                      <span className="block text-xs text-church-text-muted">
-                        {section.description}
-                      </span>
                     </span>
                   </button>
                 );
@@ -194,8 +176,7 @@ export function ChurchHome() {
             </h2>
 
             <p className="mx-auto mb-7 max-w-2xl text-base font-light leading-relaxed text-church-text-secondary sm:text-lg md:mx-0">
-              Rosários, novenas, orações e liturgia reunidos em uma experiência simples, clara e
-              recolhida para acompanhar sua vida de fé.
+             Rosários, orações e liturgia para acompanhar sua vida de fé.
             </p>
 
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row md:justify-start">
@@ -226,9 +207,7 @@ export function ChurchHome() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-church-bg/85 via-transparent to-transparent"></div>
                 <div className="absolute bottom-0 left-0 right-0 p-5 text-left">
-                  <p className="font-serif text-xl italic text-church-accent">
-                    “Orai sem cessar”
-                  </p>
+                  <p className="font-serif text-xl italic text-church-accent">“Orai sem cessar”</p>
                   <p className="text-sm text-church-text-secondary">1 Tessalonicenses 5,17</p>
                 </div>
               </div>
@@ -245,9 +224,6 @@ export function ChurchHome() {
             <h3 className="mb-3 font-serif text-2xl text-church-accent md:text-3xl">
               Devoções principais
             </h3>
-            <p className="text-sm text-church-text-secondary">
-              Escolha uma prática para começar agora, sem distrações e com passos simples.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
@@ -312,7 +288,6 @@ export function ChurchHome() {
             <h3 className="mb-3 font-serif text-2xl text-church-accent md:text-3xl">
               Recursos diários
             </h3>
-            <p className="text-sm text-church-text-secondary">Acompanhe a Igreja em sua liturgia</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">

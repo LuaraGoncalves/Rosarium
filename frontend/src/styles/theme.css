@@ -240,6 +240,16 @@
   --linen-texture: none;
 }
 
+.app-floating-controls {
+  right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .app-floating-controls {
+    right: max(1.5rem, calc((100vw - 72rem) / 2 + 1.5rem));
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

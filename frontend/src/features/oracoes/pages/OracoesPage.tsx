@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { ArrowLeft, Book, Sun, Moon, Heart, X, Cross } from 'lucide-react';
+import { Book, Sun, Moon, Heart, X, Cross } from 'lucide-react';
+import { FeatureIntroCard, FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 
 const oracoesDatabase: Record<string, string> = {
   'Oferta do Dia':
@@ -95,57 +96,39 @@ export function OracoesPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-4">
-            <button
-              onClick={() => navigate('/igreja')}
-              className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Voltar
-            </button>
-          </div>
-          <div className="flex items-center justify-center gap-3">
-            <Book className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-3xl md:text-4xl text-center font-serif text-church-accent">
-              Orações
-            </h1>
-          </div>
-        </div>
-      </header>
+      <FeaturePageHeader
+        icon={Book}
+        title="Orações"
+        subtitle="Um acervo simples para rezar de manhã, à noite e nos momentos de necessidade."
+        onBack={() => navigate('/igreja')}
+      />
 
-      <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-lg">
-            <img
-              src="https://images.unsplash.com/photo-1616428882609-7443facdbe81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiaWJsZSUyMG9wZW4lMjBib29rJTIwY2h1cmNofGVufDF8fHx8MTc3MzQwOTg2Mnww&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Bíblia Aberta"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="mb-8">
-            <p className="text-church-text/80 text-lg leading-relaxed text-center font-serif italic">
-              &quot;Orai sem cessar&quot; - 1 Tessalonicenses 5:17
+      <FeatureIntroCard
+        imageSrc="https://images.unsplash.com/photo-1616428882609-7443facdbe81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiaWJsZSUyMG9wZW4lMjBib29rJTIwY2h1cmNofGVufDF8fHx8MTc3MzQwOTg2Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+        imageAlt="Bíblia Aberta"
+        title="Orai sem cessar"
+        maxWidthClassName="max-w-6xl"
+      >
+            <p className="font-serif text-lg italic text-church-text/85">
+              &quot;Orai sem cessar&quot; - 1 Tessalonicenses 5,17
             </p>
-            <p className="text-church-text/60 mt-4 leading-relaxed text-center">
+            <p>
               A oração é a elevação da alma a Deus. É através dela que nos comunicamos com nosso
               Criador, agradecemos Suas bênçãos, pedimos Sua ajuda e nos unimos a Ele em amor.
             </p>
-          </div>
-        </div>
+      </FeatureIntroCard>
 
+      <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {categorias.map((categoria, index) => {
             const Icon = categoria.icon;
             return (
               <div
                 key={index}
-                className="bg-church-bg-secondary rounded-lg p-6 md:p-8 border border-church-border-hover shadow-none"
+                className="rounded-[1.5rem] bg-church-bg-secondary p-6 shadow-md shadow-church-bg-darker/10 md:p-8"
               >
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-14 h-14 rounded-full flex items-center justify-center bg-church-bg border border-church-border-hover">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-church-bg text-church-accent-hover shadow-sm">
                     <Icon className="w-7 h-7 text-church-accent-hover" />
                   </div>
                   <h2 className="text-2xl font-serif text-church-accent">{categoria.titulo}</h2>
@@ -179,20 +162,24 @@ export function OracoesPage() {
 
       {/* Modal de Oração */}
       {oracaoAberta && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setOracaoAberta(null)}
+        >
           <div
-            className="bg-church-bg-secondary w-full max-w-2xl max-h-[85vh] rounded-lg shadow-2xl flex flex-col border border-church-border animate-in zoom-in-95 duration-200"
+            className="flex max-h-[85vh] w-full max-w-2xl flex-col rounded-[1.75rem] bg-church-bg-secondary shadow-2xl shadow-black/25 animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header do Modal */}
-            <div className="flex items-center justify-between p-5 md:p-6 border-b border-church-border-hover shrink-0">
+            <div className="flex shrink-0 items-center justify-between border-b border-church-border px-5 py-5 md:px-6">
               <h3 className="text-xl md:text-2xl font-serif text-church-accent flex items-center gap-3">
                 <Book className="w-5 h-5" />
                 {oracaoAberta.titulo}
               </h3>
               <button
                 onClick={() => setOracaoAberta(null)}
-                className="p-2 rounded-full hover:bg-church-bg transition-colors text-church-text/60 hover:text-church-accent-hover"
+                className="rounded-full p-2 text-church-text/60 transition-colors hover:bg-church-bg hover:text-church-accent-hover"
+                aria-label="Fechar oração"
               >
                 <X className="w-6 h-6" />
               </button>

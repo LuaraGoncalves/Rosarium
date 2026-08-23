@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router';
-import { ArrowLeft, CalendarDays, MapPin, Tag, Shield, Clock, BookHeart } from 'lucide-react';
+import { CalendarDays, MapPin, Tag, Shield, Clock, BookHeart } from 'lucide-react';
 import { useSanto } from '../hooks/useSanto';
+import { FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 
 export function SantoDetalhePage() {
   const navigate = useNavigate();
@@ -45,21 +46,17 @@ export function SantoDetalhePage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans pb-24">
-      <header className="bg-church-bg/95 border-b border-church-border sticky top-0 z-50 py-4 backdrop-blur-sm">
-        <div className="max-w-5xl mx-auto px-4">
-          <button
-            onClick={() => navigate('/santos')}
-            className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors font-medium"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Voltar aos Santos
-          </button>
-        </div>
-      </header>
+      <FeaturePageHeader
+        icon={BookHeart}
+        title={santo.nome}
+        subtitle={santo.descricaoCurta || 'História e testemunho de fé.'}
+        backLabel="Voltar aos Santos"
+        onBack={() => navigate('/santos')}
+      />
 
       <main className="max-w-5xl mx-auto px-4 py-8 md:py-10">
         {/* Header Content with Image and Title */}
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 mb-8 md:mb-10 bg-church-bg-secondary p-6 md:p-10 rounded-lg border border-church-border shadow-sm">
+        <div className="mb-8 flex flex-col items-center gap-6 rounded-[1.75rem] bg-church-bg-secondary p-6 shadow-xl shadow-church-bg-darker/10 md:mb-10 md:flex-row md:items-start md:gap-8 md:p-10">
           {/* Image - Smaller & Circular */}
           <div className="shrink-0">
             {santo.imagemUrl ? (
@@ -99,7 +96,7 @@ export function SantoDetalhePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
           {/* Sidebar - Ficha */}
           <div className="lg:col-span-4">
-            <div className="bg-church-bg-secondary rounded-lg p-5 md:p-8 border border-church-border shadow-sm lg:sticky lg:top-24">
+            <div className="rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 md:p-8 lg:sticky lg:top-24">
               <h3 className="text-xs md:text-sm uppercase text-church-accent font-semibold mb-6 flex items-center gap-2 pb-4 border-b border-church-border/70">
                 Ficha do Santo
               </h3>
@@ -195,7 +192,7 @@ export function SantoDetalhePage() {
 
           {/* Main Content - History */}
           <div className="lg:col-span-8">
-            <div className="min-h-full rounded-lg border border-church-border bg-church-bg-secondary p-4 shadow-sm md:p-10">
+            <div className="min-h-full rounded-[1.5rem] bg-church-bg-secondary p-4 shadow-md shadow-church-bg-darker/10 md:p-10">
               <h2 className="mb-3 flex items-center gap-4 font-serif text-2xl text-church-accent md:text-3xl">
                 História
                 <div className="h-px bg-church-border/60 flex-1 mt-1"></div>

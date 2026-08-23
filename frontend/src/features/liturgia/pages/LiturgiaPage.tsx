@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { ArrowLeft, Church, BookOpen, Calendar, ChevronDown } from 'lucide-react';
+import { Church, BookOpen, Calendar, ChevronDown } from 'lucide-react';
+import { FeatureIntroCard, FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 
 export function LiturgiaPage() {
   const navigate = useNavigate();
@@ -8,48 +9,29 @@ export function LiturgiaPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-4">
-            <button
-              onClick={() => navigate('/igreja')}
-              className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Voltar
-            </button>
-          </div>
-          <div className="flex items-center justify-center gap-3">
-            <Church className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-3xl md:text-4xl text-center font-serif text-church-accent">
-              Liturgia das Horas
-            </h1>
-          </div>
-        </div>
-      </header>
+      <FeaturePageHeader
+        icon={Church}
+        title="Liturgia"
+        subtitle="Leituras do dia, calendário e tempos litúrgicos em uma navegação mais serena."
+        onBack={() => navigate('/igreja')}
+      />
 
-      <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-lg">
-            <img
-              src="https://images.unsplash.com/photo-1696261803446-e9847baf4a6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXRob2xpYyUyMGNodXJjaCUyMGFsdGFyJTIwc3RhdHVlfGVufDF8fHx8MTc3MzQwOTg2MHww&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Interior da Igreja"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <h2 className="text-2xl font-serif text-church-accent-hover mb-4">
-            A Oração Oficial da Igreja
-          </h2>
-          <p className="text-church-text/80 leading-relaxed mb-4">
+      <FeatureIntroCard
+        imageSrc="https://images.unsplash.com/photo-1696261803446-e9847baf4a6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXRob2xpYyUyMGNodXJjaCUyMGFsdGFyJTIwc3RhdHVlfGVufDF8fHx8MTc3MzQwOTg2MHww&ixlib=rb-4.1.0&q=80&w=1080"
+        imageAlt="Interior da Igreja"
+        title="A oração oficial da Igreja"
+      >
+          <p>
             A Liturgia das Horas é a oração pública e comum do Povo de Deus. Nela, Cristo mesmo
             &quot;continua a exercer sua função sacerdotal&quot;, reunindo a Igreja em louvor a Deus
             e intercessão pelo mundo.
           </p>
-        </div>
+      </FeatureIntroCard>
 
+      <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-12">
-          <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 border border-church-border-hover shadow-none">
-            <div className="w-14 h-14 bg-church-bg border border-church-border-hover rounded-full flex items-center justify-center mb-6">
+          <div className="rounded-[1.5rem] bg-church-bg-secondary p-6 shadow-md shadow-church-bg-darker/10 md:p-8">
+            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-church-bg text-church-accent-hover shadow-sm">
               <BookOpen className="w-7 h-7 text-church-accent-hover" />
             </div>
             <h3 className="text-xl font-serif text-church-accent mb-3">Liturgia Hoje</h3>
@@ -59,14 +41,14 @@ export function LiturgiaPage() {
             </p>
             <button
               onClick={() => navigate('/liturgia/hoje')}
-              className="w-full bg-church-bg hover:bg-church-bg-darker text-church-accent border border-church-border-hover py-3 rounded-lg transition-colors font-medium"
+              className="w-full rounded-full bg-church-bg py-3 font-medium text-church-accent shadow-sm transition-colors hover:bg-church-bg-darker"
             >
               Ver Liturgia de Hoje
             </button>
           </div>
 
-          <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 border border-church-border-hover shadow-none">
-            <div className="w-14 h-14 bg-church-bg border border-church-border-hover rounded-full flex items-center justify-center mb-6">
+          <div className="rounded-[1.5rem] bg-church-bg-secondary p-6 shadow-md shadow-church-bg-darker/10 md:p-8">
+            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-church-bg text-church-accent-hover shadow-sm">
               <Calendar className="w-7 h-7 text-church-accent-hover" />
             </div>
             <h3 className="text-xl font-serif text-church-accent mb-3">Calendário Litúrgico</h3>
@@ -75,14 +57,14 @@ export function LiturgiaPage() {
             </p>
             <button
               onClick={() => navigate('/liturgia/calendario')}
-              className="w-full bg-church-bg hover:bg-church-bg-darker text-church-accent border border-church-border-hover py-3 rounded-lg transition-colors font-medium"
+              className="w-full rounded-full bg-church-bg py-3 font-medium text-church-accent shadow-sm transition-colors hover:bg-church-bg-darker"
             >
               Ver Calendário
             </button>
           </div>
         </div>
 
-        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 border border-church-border-hover">
+        <div className="rounded-[1.5rem] bg-church-bg-secondary p-6 shadow-md shadow-church-bg-darker/10 md:p-8">
           <h3 className="text-2xl font-serif text-church-accent mb-8">Tempos Litúrgicos</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {[
@@ -125,7 +107,7 @@ export function LiturgiaPage() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="bg-church-bg rounded-lg p-6 border border-church-border-hover transition-all hover:border-church-accent-hover/50"
+                className="rounded-2xl bg-church-bg p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md md:p-6"
               >
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <h4 className="text-xl font-serif text-church-accent-hover">{item.tempo}</h4>
