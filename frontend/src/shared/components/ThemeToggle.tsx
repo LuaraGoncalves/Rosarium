@@ -1,7 +1,7 @@
 import { Moon, Sun } from 'lucide-react';
 import { Theme, useTheme } from '../../app/providers/ThemeProvider';
 
-const themes: Array<{
+export const themes: Array<{
   value: Theme;
   label: string;
   swatchClassName: string;
@@ -21,11 +21,19 @@ const themes: Array<{
   },
 ];
 
+export function getThemeOption(theme: Theme) {
+  return themes.find((option) => option.value === theme) ?? themes[0];
+}
+
+export function getNextThemeOption(theme: Theme) {
+  const currentIndex = themes.findIndex((option) => option.value === theme);
+  return themes[((currentIndex === -1 ? 0 : currentIndex) + 1) % themes.length] ?? themes[0];
+}
+
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const currentIndex = themes.findIndex((option) => option.value === theme);
-  const currentTheme = themes[currentIndex] ?? themes[0];
-  const nextTheme = themes[(currentIndex + 1) % themes.length] ?? themes[0];
+  const currentTheme = getThemeOption(theme);
+  const nextTheme = getNextThemeOption(theme);
   const Icon = currentTheme.icon;
 
   return (

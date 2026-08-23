@@ -20,6 +20,7 @@ export function LiturgiaPage() {
         imageSrc="https://images.unsplash.com/photo-1696261803446-e9847baf4a6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXRob2xpYyUyMGNodXJjaCUyMGFsdGFyJTIwc3RhdHVlfGVufDF8fHx8MTc3MzQwOTg2MHww&ixlib=rb-4.1.0&q=80&w=1080"
         imageAlt="Interior da Igreja"
         title="A oração oficial da Igreja"
+        compact
       >
         <p>
           A Liturgia das Horas é a oração pública e comum do Povo de Deus. Nela, Cristo mesmo

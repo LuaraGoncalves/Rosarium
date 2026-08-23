@@ -58,6 +58,7 @@ export function BreviarioPage() {
         imageSrc="https://images.unsplash.com/photo-1709541658608-dfe38af68925?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdGFpbmVkJTIwZ2xhc3MlMjBjaHVyY2glMjB3aW5kb3d8ZW58MXx8fHwxNzczMzI2MDI0fDA&ixlib=rb-4.1.0&q=80&w=1080"
         imageAlt="Vitral de Igreja"
         title="A Liturgia das Horas"
+        compact
       >
         <p>
           O Breviário, também conhecido como Liturgia das Horas, é a oração oficial da Igreja que

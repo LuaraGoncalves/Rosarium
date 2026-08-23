@@ -51,6 +51,7 @@ export function SantosPage() {
         imageAlt="Estátua de Santo"
         title="Testemunhas da Fé"
         maxWidthClassName="max-w-6xl"
+        compact
       >
         <p className="text-church-text/80 leading-relaxed mb-4">
           Os santos são homens e mulheres que viveram a fé cristã de maneira heroica. Suas vidas nos

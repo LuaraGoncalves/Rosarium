@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Book, Cross, Heart, Clock, Users, Church, Menu, X } from 'lucide-react';
+import { useTheme } from '../../../app/providers/ThemeProvider';
 import { AuthModalControl } from '../../../shared/components/AuthModalControl';
-import { ThemeToggle } from '../../../shared/components/ThemeToggle';
+import { getNextThemeOption, getThemeOption, ThemeToggle } from '../../../shared/components/ThemeToggle';
 
 const actionButtonBase =
   'flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg sm:w-auto';
@@ -11,7 +12,10 @@ const sectionShell = 'relative overflow-hidden px-4 sm:px-6';
 
 export function ChurchHome() {
   const navigate = useNavigate();
+  const { theme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const currentTheme = getThemeOption(theme);
+  const nextTheme = getNextThemeOption(theme);
 
   const mainSections = [
     {
@@ -89,62 +93,72 @@ export function ChurchHome() {
         </div>
 
         {isMobileMenuOpen && (
-          <button
-            type="button"
-            className="fixed inset-0 z-[55] cursor-default bg-transparent"
+          <div
+            className="fixed inset-0 z-[60]"
+            role="presentation"
             aria-label="Fechar menu"
             onClick={() => setIsMobileMenuOpen(false)}
-          />
-        )}
+          >
+            <div
+              className="absolute left-1/2 top-16 w-[min(calc(100vw-1.5rem),21rem)] max-h-[min(calc(100dvh-5rem),32rem)] -translate-x-1/2 overflow-hidden rounded-[1.35rem] border border-church-border bg-church-bg-secondary shadow-2xl shadow-church-bg-darker/20 sm:left-auto sm:right-6 sm:w-[22rem] sm:translate-x-0"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Menu principal"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="max-h-[inherit] overflow-y-auto overscroll-contain">
+                <div className="border-b border-church-border bg-church-bg px-4 py-3">
+                  <p className="font-serif text-lg text-church-accent">Rosarium</p>
+                </div>
 
-        {isMobileMenuOpen && (
-          <div className="fixed left-3 right-3 top-16 z-[60] max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain rounded-3xl bg-church-bg-secondary shadow-2xl shadow-church-bg-darker/20 sm:left-auto sm:right-6 sm:w-[22rem]">
-            <div className="border-b border-church-border bg-church-bg px-5 py-4">
-              <p className="font-serif text-xl text-church-accent"> Rosarium</p>
-            </div>
-
-            <div className="border-b border-church-border p-3">
-              <div className="grid grid-cols-2 gap-2">
-                <div className="flex items-center gap-3 rounded-2xl bg-church-bg px-3 py-3">
-                  <AuthModalControl />
-                  <div>
-                    <p className="text-sm font-semibold text-church-text">Conta</p>
-                    <p className="text-xs text-church-text-muted">Entrar</p>
+                <div className="border-b border-church-border p-2.5">
+                  <div className="grid grid-cols-1 gap-2 min-[380px]:grid-cols-2 sm:grid-cols-2">
+                    <div className="flex items-center gap-3 rounded-2xl bg-church-bg px-3 py-2.5">
+                      <AuthModalControl />
+                      <div>
+                        <p className="text-sm font-semibold text-church-text">Conta</p>
+                        <p className="text-xs text-church-text-muted">Entrar</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 rounded-2xl bg-church-bg px-3 py-2.5">
+                      <ThemeToggle />
+                      <div>
+                        <p className="text-sm font-semibold text-church-text">
+                          Tema: {currentTheme.label}
+                        </p>
+                        <p className="text-xs text-church-text-muted">
+                          Toque para {nextTheme.label}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 rounded-2xl bg-church-bg px-3 py-3">
-                  <ThemeToggle />
-                  <div>
-                    <p className="text-sm font-semibold text-church-text">Tema</p>
-                    <p className="text-xs text-church-text-muted">Cores</p>
-                  </div>
-                </div>
+
+                <nav className="grid gap-1.5 p-2.5 text-sm font-medium text-church-text-secondary">
+                  {menuSections.map((section) => {
+                    const Icon = section.icon;
+
+                    return (
+                      <button
+                        key={section.path}
+                        onClick={() => {
+                          navigate(section.path);
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition-colors hover:bg-church-bg hover:text-church-accent"
+                      >
+                        <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-church-bg text-church-accent-hover">
+                          <Icon className="h-4 w-4 stroke-[1.5]" />
+                        </span>
+                        <span>
+                          <span className="block text-church-text">{section.title}</span>
+                        </span>
+                      </button>
+                    );
+                  })}
+                </nav>
               </div>
             </div>
-
-            <nav className="grid gap-2 p-3 text-sm font-medium text-church-text-secondary">
-              {menuSections.map((section) => {
-                const Icon = section.icon;
-
-                return (
-                  <button
-                    key={section.path}
-                    onClick={() => {
-                      navigate(section.path);
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="flex items-center gap-3 rounded-2xl px-3 py-3 text-left transition-colors hover:bg-church-bg hover:text-church-accent"
-                  >
-                    <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-church-bg text-church-accent-hover">
-                      <Icon className="h-4 w-4 stroke-[1.5]" />
-                    </span>
-                    <span>
-                      <span className="block text-church-text">{section.title}</span>
-                    </span>
-                  </button>
-                );
-              })}
-            </nav>
           </div>
         )}
       </header>
