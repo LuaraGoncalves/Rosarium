@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
-import { ArrowLeft, Users, Star, Calendar, Book, Search, X } from 'lucide-react';
+import { Users, Star, Calendar, Book, Search, X } from 'lucide-react';
 import { useSantos } from '../hooks/useSantos';
+import { FeatureIntroCard, FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 
 export function SantosPage() {
   const navigate = useNavigate();
@@ -37,43 +38,28 @@ export function SantosPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-4">
-            <button
-              onClick={() => navigate('/igreja')}
-              className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Voltar
-            </button>
-          </div>
-          <div className="flex items-center justify-center gap-3">
-            <Users className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-3xl md:text-4xl text-center font-serif text-church-accent">
-              História dos Santos
-            </h1>
-          </div>
-        </div>
-      </header>
+      <FeaturePageHeader
+        icon={Users}
+        title="História dos Santos"
+        subtitle="Vidas, intercessões e testemunhos para inspirar a oração."
+        onBack={() => navigate('/igreja')}
+        maxWidthClassName="max-w-6xl"
+      />
+
+      <FeatureIntroCard
+        imageSrc="https://images.unsplash.com/photo-1637331664385-17bbf6be1d93?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXRob2xpYyUyMHNhaW50JTIwc3RhdHVlfGVufDF8fHx8MTc3MzQwOTg2Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+        imageAlt="Estátua de Santo"
+        title="Testemunhas da Fé"
+        maxWidthClassName="max-w-6xl"
+      >
+        <p className="text-church-text/80 leading-relaxed mb-4">
+          Os santos são homens e mulheres que viveram a fé cristã de maneira heroica. Suas vidas nos
+          inspiram e suas intercessões nos ajudam em nosso caminho de santidade. Eles são exemplos
+          vivos de como seguir Cristo em todas as circunstâncias.
+        </p>
+      </FeatureIntroCard>
 
       <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-lg">
-            <img
-              src="https://images.unsplash.com/photo-1637331664385-17bbf6be1d93?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXRob2xpYyUyMHNhaW50JTIwc3RhdHVlfGVufDF8fHx8MTc3MzQwOTg2Mnww&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Estátua de Santo"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <h2 className="text-2xl font-serif text-church-accent-hover mb-4">Testemunhas da Fé</h2>
-          <p className="text-church-text/80 leading-relaxed mb-4">
-            Os santos são homens e mulheres que viveram a fé cristã de maneira heroica. Suas vidas
-            nos inspiram e suas intercessões nos ajudam em nosso caminho de santidade. Eles são
-            exemplos vivos de como seguir Cristo em todas as circunstâncias.
-          </p>
-        </div>
-
         {santoDoDia && (
           <div className="mb-16">
             <h2 className="text-2xl font-serif text-church-accent-hover mb-6 flex items-center gap-2">
@@ -81,7 +67,7 @@ export function SantosPage() {
             </h2>
             <div
               onClick={() => navigate(`/santos/${santoDoDia.id}`)}
-              className="bg-church-bg-secondary rounded-lg overflow-hidden border border-church-accent-hover/30 transition-all hover:border-church-accent-hover/70 cursor-pointer shadow-none group"
+              className="group cursor-pointer overflow-hidden rounded-[1.75rem] bg-church-bg-secondary shadow-xl shadow-church-bg-darker/10 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-church-bg-darker/15"
             >
               <div className="grid md:grid-cols-2">
                 <div className="h-56 md:h-auto overflow-hidden relative bg-church-bg-tertiary flex items-center justify-center">
@@ -126,7 +112,7 @@ export function SantosPage() {
                       </div>
                     )}
                   </div>
-                  <button className="self-start bg-church-bg hover:bg-church-bg-darker text-church-accent border border-church-border-hover px-6 py-2 rounded-lg transition-colors flex items-center gap-2">
+                  <button className="self-start flex items-center gap-2 rounded-full bg-church-bg px-6 py-2 text-church-accent shadow-sm transition-colors hover:bg-church-bg-darker">
                     <Book className="w-4 h-4" />
                     Ler História Completa
                   </button>
@@ -145,7 +131,7 @@ export function SantosPage() {
                 <button
                   type="button"
                   onClick={() => setIsSearchOpen(true)}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg border border-church-border-hover bg-church-bg-secondary px-4 py-2 text-sm text-church-accent transition-colors hover:border-church-accent-hover hover:text-church-accent-hover md:w-auto"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-church-bg-secondary px-4 py-2 text-sm text-church-accent shadow-sm transition-colors hover:text-church-accent-hover md:w-auto"
                   aria-label="Pesquisar santos"
                 >
                   <Search className="h-4 w-4" />
@@ -160,7 +146,7 @@ export function SantosPage() {
                     onChange={(event) => setSearchTerm(event.target.value)}
                     autoFocus
                     placeholder="Buscar por nome, data ou devoção..."
-                    className="w-full rounded-lg border border-church-border-hover bg-church-bg-secondary py-2 pl-10 pr-10 text-sm text-church-text outline-none transition-colors placeholder:text-church-text-muted focus:border-church-accent-hover"
+                    className="w-full rounded-full border border-church-border bg-church-bg-secondary py-2 pl-10 pr-10 text-sm text-church-text outline-none transition-colors placeholder:text-church-text-muted focus:border-church-accent-hover"
                   />
                   <button
                     type="button"
@@ -172,7 +158,7 @@ export function SantosPage() {
                   </button>
 
                   {recomendacoes.length > 0 && (
-                    <div className="absolute right-0 z-30 mt-2 w-full overflow-hidden rounded-lg border border-church-border-hover bg-church-bg-secondary shadow-lg">
+                    <div className="absolute right-0 z-30 mt-2 w-full overflow-hidden rounded-2xl bg-church-bg-secondary shadow-xl shadow-church-bg-darker/15">
                       {recomendacoes.map((santo) => (
                         <button
                           key={santo.id}
@@ -209,7 +195,7 @@ export function SantosPage() {
               <div
                 key={santo.id}
                 onClick={() => navigate(`/santos/${santo.id}`)}
-                className="bg-church-bg-secondary rounded-lg overflow-hidden border border-church-border-hover transition-all hover:border-church-accent-hover/50 group cursor-pointer shadow-none flex flex-col"
+                className="group flex cursor-pointer flex-col overflow-hidden rounded-[1.5rem] bg-church-bg-secondary shadow-md shadow-church-bg-darker/10 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-church-bg-darker/15"
               >
                 <div className="h-44 md:h-48 overflow-hidden relative shrink-0 bg-church-bg-tertiary flex items-center justify-center">
                   {santo.imagemUrl ? (

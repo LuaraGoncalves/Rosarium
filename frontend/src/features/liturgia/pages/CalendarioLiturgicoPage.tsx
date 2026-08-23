@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router';
-import { ArrowLeft, Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import { generateLiturgicalCalendar } from '../utils/liturgia-calculator';
+import { FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 
 export function CalendarioLiturgicoPage() {
   const navigate = useNavigate();
@@ -38,34 +39,20 @@ export function CalendarioLiturgicoPage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans pb-24">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="mb-4">
-            <button
-              onClick={() => navigate('/liturgia')}
-              className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Voltar à Liturgia
-            </button>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-3">
-            <CalendarIcon className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-2xl md:text-3xl text-center font-serif text-church-accent">
-              Calendário Litúrgico
-            </h1>
-            <p className="text-church-text/60 mt-1">
-              Solenidades, Festas e Memórias do Ano Litúrgico
-            </p>
-          </div>
-        </div>
-      </header>
+      <FeaturePageHeader
+        icon={CalendarIcon}
+        title="Calendário Litúrgico"
+        subtitle="Solenidades, festas e memórias do ano litúrgico."
+        backLabel="Voltar à Liturgia"
+        onBack={() => navigate('/liturgia')}
+        maxWidthClassName="max-w-4xl"
+      />
 
       <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
-        <div className="flex items-center justify-between gap-3 mb-8 bg-church-bg-secondary p-4 rounded-lg border border-church-border-hover">
+        <div className="mb-8 flex items-center justify-between gap-3 rounded-[1.5rem] bg-church-bg-secondary p-4 shadow-md shadow-church-bg-darker/10">
           <button
             onClick={handlePrevMonth}
-            className="p-2 text-church-accent hover:bg-church-bg rounded-full transition-colors"
+            className="rounded-full p-2 text-church-accent transition-colors hover:bg-church-bg"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
@@ -74,14 +61,14 @@ export function CalendarioLiturgicoPage() {
           </h2>
           <button
             onClick={handleNextMonth}
-            className="p-2 text-church-accent hover:bg-church-bg rounded-full transition-colors"
+            className="rounded-full p-2 text-church-accent transition-colors hover:bg-church-bg"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
         </div>
 
         {currentMonthData.length === 0 ? (
-          <div className="text-center py-16 bg-church-bg-secondary rounded-lg border border-church-border-hover">
+          <div className="rounded-[1.5rem] bg-church-bg-secondary py-16 text-center shadow-md shadow-church-bg-darker/10">
             <CalendarIcon className="w-12 h-12 text-church-text/20 mx-auto mb-4" />
             <p className="text-church-text/60 italic font-serif">
               Nenhuma solenidade ou festa principal registrada para este mês.
@@ -92,7 +79,7 @@ export function CalendarioLiturgicoPage() {
             {currentMonthData.map((dia, index) => (
               <div
                 key={index}
-                className="bg-church-bg-secondary p-5 md:p-6 rounded-lg border border-church-border-hover flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 transition-colors hover:border-church-accent-hover/50"
+                className="flex flex-col items-start gap-4 rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-church-bg-darker/15 md:flex-row md:items-center md:gap-6 md:p-6"
               >
                 <div className="flex-shrink-0 w-20 h-20 bg-church-bg border border-church-border-hover rounded-full flex flex-col items-center justify-center shadow-inner">
                   <span className="text-2xl font-serif text-church-accent">{dia.dia}</span>

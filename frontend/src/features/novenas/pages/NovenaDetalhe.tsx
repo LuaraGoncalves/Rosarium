@@ -1,9 +1,10 @@
 import { useParams, useNavigate } from 'react-router';
-import { ArrowLeft, CheckCircle, Circle } from 'lucide-react';
+import { ArrowLeft, Heart, CheckCircle, Circle } from 'lucide-react';
 import { novenasData } from '../data/novenas';
 import { useNovenaProgress } from '../hooks/useNovenaProgress';
 import { useAuth } from '../../auth/hooks/useAuth';
 import { getNovenaProgressStatus } from '../utils/progressStatus';
+import { FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 
 export function NovenaDetalhe() {
   const { id } = useParams();
@@ -34,23 +35,17 @@ export function NovenaDetalhe() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
-        <div className="max-w-3xl mx-auto px-4">
-          <div className="mb-4">
-            <button
-              onClick={() => navigate('/novenas')}
-              className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Voltar
-            </button>
-          </div>
-          <h1 className="text-2xl md:text-3xl font-serif text-church-accent-hover">
-            {novena.titulo}
-          </h1>
-          <p className="mt-2 text-church-text/70">{novena.descricao}</p>
+      <FeaturePageHeader
+        icon={Heart}
+        title={novena.titulo}
+        subtitle={novena.descricao}
+        onBack={() => navigate('/novenas')}
+        maxWidthClassName="max-w-3xl"
+      />
 
-          <div className="mt-6 flex items-center justify-between text-sm">
+      <div className="mx-auto max-w-3xl px-4 pt-8">
+        <div className="rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10">
+          <div className="flex items-center justify-between text-sm">
             <span className="text-church-accent/80">Progresso</span>
             <span className="text-church-accent-hover font-medium">
               {percentage}% ({completedDays.length}/{novena.duracao})
@@ -66,7 +61,7 @@ export function NovenaDetalhe() {
             {progressStatus.text}
           </p>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-3xl mx-auto px-4 py-8">
         <div className="grid gap-4">
@@ -77,11 +72,11 @@ export function NovenaDetalhe() {
               <div
                 key={diaInfo.dia}
                 onClick={() => navigate(`/novenas/${novena.id}/dia/${diaInfo.dia}`)}
-                className={`p-4 md:p-5 rounded-lg border transition-all cursor-pointer flex items-center gap-4 shadow-sm
+                className={`flex cursor-pointer items-center gap-4 rounded-[1.25rem] p-4 shadow-sm transition-all md:p-5
                   ${
                     isCompleted
-                      ? 'bg-church-bg-darker border-church-border opacity-40 hover:opacity-70'
-                      : 'bg-church-bg-secondary border-church-border-hover hover:border-church-accent-hover/50'
+                      ? 'bg-church-bg-darker opacity-55 hover:opacity-75'
+                      : 'bg-church-bg-secondary hover:-translate-y-0.5 hover:shadow-md hover:shadow-church-bg-darker/10'
                   }`}
               >
                 <div className="flex-shrink-0">
