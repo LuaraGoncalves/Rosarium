@@ -60,120 +60,65 @@
 }
 
 .brown {
-  /* Modo Marrom (Contemplativo) */
-  --church-bg-primary: #201512;
-  --church-bg-secondary: #2B1C18;
-  --church-bg-tertiary: #170E0C;
-  --church-bg-darker: #100907;
+  /* Modo Contemplativo */
+  --church-bg-primary: #51352C;
+  --church-bg-secondary: #624239;
+  --church-bg-tertiary: #765146;
+  --church-bg-darker: #38241E;
   
-  --church-text-primary: #F8EBDD;
-  --church-text-secondary: rgba(248, 235, 221, 0.78);
-  --church-text-muted: rgba(248, 235, 221, 0.56);
+  --church-text-primary: #FFF4E6;
+  --church-text-secondary: rgba(255, 244, 230, 0.84);
+  --church-text-muted: rgba(255, 244, 230, 0.66);
   
-  --church-accent: #C69A4A;
-  --church-accent-hover: #9E3B4A;
+  --church-accent: #E0B45A;
+  --church-accent-hover: #F0C879;
   
-  --church-border: #412A23;
-  --church-border-hover: #5D3C30;
+  --church-border: #856255;
+  --church-border-hover: #AA7564;
   
-  --church-header-bg: rgba(32, 21, 18, 0.94);
+  --church-header-bg: rgba(81, 53, 44, 0.94);
 
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
+  --background: #51352C;
+  --foreground: #FFF4E6;
+  --card: #624239;
+  --card-foreground: #FFF4E6;
+  --popover: #624239;
+  --popover-foreground: #FFF4E6;
+  --primary: #E0B45A;
+  --primary-foreground: #38241E;
+  --secondary: #765146;
+  --secondary-foreground: #FFF4E6;
+  --muted: #765146;
+  --muted-foreground: rgba(255, 244, 230, 0.66);
+  --accent: #7A4A3F;
+  --accent-foreground: #FFF4E6;
+  --destructive: #D96A6A;
+  --destructive-foreground: #FFF4E6;
+  --border: #856255;
+  --input: #765146;
+  --input-background: #765146;
+  --switch-background: #856255;
+  --ring: #E0B45A;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
-}
-
-.wine {
-  /* Modo Vinho */
-  --church-bg-primary: #2A1017;
-  --church-bg-secondary: #3A1721;
-  --church-bg-tertiary: #1E0B11;
-  --church-bg-darker: #14070B;
-
-  --church-text-primary: #FFF2E6;
-  --church-text-secondary: rgba(255, 242, 230, 0.8);
-  --church-text-muted: rgba(255, 242, 230, 0.58);
-
-  --church-accent: #D2A34A;
-  --church-accent-hover: #B96A3A;
-
-  --church-border: #5A2531;
-  --church-border-hover: #7A3545;
-
-  --church-header-bg: rgba(42, 16, 23, 0.94);
-
-  --background: #2A1017;
-  --foreground: #FFF2E6;
-  --card: #3A1721;
-  --card-foreground: #FFF2E6;
-  --popover: #3A1721;
-  --popover-foreground: #FFF2E6;
-  --primary: #D2A34A;
-  --primary-foreground: #2A1017;
-  --secondary: #4A1D2A;
-  --secondary-foreground: #FFF2E6;
-  --muted: #4A1D2A;
-  --muted-foreground: rgba(255, 242, 230, 0.62);
-  --accent: #5A2531;
-  --accent-foreground: #FFF2E6;
-  --destructive: #D74E62;
-  --destructive-foreground: #FFF2E6;
-  --border: #5A2531;
-  --input: #4A1D2A;
-  --input-background: #4A1D2A;
-  --switch-background: #7A3545;
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --ring: #D2A34A;
-  --chart-1: #D2A34A;
-  --chart-2: #B96A3A;
-  --chart-3: #7A3545;
-  --chart-4: #E8C986;
-  --chart-5: #F3A1A5;
-  --sidebar: #1E0B11;
-  --sidebar-foreground: #FFF2E6;
-  --sidebar-primary: #D2A34A;
-  --sidebar-primary-foreground: #2A1017;
-  --sidebar-accent: #4A1D2A;
-  --sidebar-accent-foreground: #FFF2E6;
-  --sidebar-border: #5A2531;
-  --sidebar-ring: #D2A34A;
+  --chart-1: #E0B45A;
+  --chart-2: #C68458;
+  --chart-3: #7A4A3F;
+  --chart-4: #F0C879;
+  --chart-5: #B97866;
+  --sidebar: #442D26;
+  --sidebar-foreground: #FFF4E6;
+  --sidebar-primary: #E0B45A;
+  --sidebar-primary-foreground: #2F1918;
+  --sidebar-accent: #765146;
+  --sidebar-accent-foreground: #FFF4E6;
+  --sidebar-border: #856255;
+  --sidebar-ring: #E0B45A;
 }
 
 @theme inline {
-  --font-sans: 'Source Sans 3', sans-serif;
-  --font-serif: 'Literata', serif;
+  --font-sans: 'Alegreya Sans', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
 
   --color-church-bg: var(--church-bg-primary);
   --color-church-bg-secondary: var(--church-bg-secondary);
@@ -235,8 +180,7 @@
 .linen-bg, body {
   background-image: var(--linen-texture, url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E"));
 }
-.brown .linen-bg, .brown body,
-.wine .linen-bg, .wine body {
+.brown .linen-bg, .brown body {
   --linen-texture: none;
 }
 
@@ -257,8 +201,9 @@
 
   body {
     @apply bg-church-bg text-church-text antialiased;
-    font-family: 'Source Sans 3', sans-serif;
+    font-family: 'Alegreya Sans', sans-serif;
     text-rendering: optimizeLegibility;
+    font-feature-settings: 'kern' 1, 'liga' 1;
   }
   
   html {
@@ -267,24 +212,27 @@
 
   h1 {
     font-size: var(--text-2xl);
-    font-weight: var(--font-weight-medium);
+    font-weight: 600;
     line-height: 1.18;
+    letter-spacing: -0.015em;
     color: var(--church-text-primary);
-    font-family: 'Literata', serif;
+    font-family: 'Cormorant Garamond', serif;
   }
 
   h2 {
     font-size: var(--text-xl);
-    font-weight: var(--font-weight-medium);
+    font-weight: 600;
     line-height: 1.24;
+    letter-spacing: -0.012em;
     color: var(--church-text-primary);
-    font-family: 'Literata', serif;
+    font-family: 'Cormorant Garamond', serif;
   }
 
   h3 {
     font-size: var(--text-lg);
-    font-weight: var(--font-weight-medium);
+    font-weight: 600;
     line-height: 1.3;
+    letter-spacing: -0.006em;
     color: var(--church-text-primary);
   }
 

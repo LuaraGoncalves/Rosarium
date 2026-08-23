@@ -1,4 +1,4 @@
-import { Moon, Palette, Sun } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 import { Theme, useTheme } from '../../app/providers/ThemeProvider';
 
 const themes: Array<{
@@ -15,15 +15,9 @@ const themes: Array<{
   },
   {
     value: 'brown',
-    label: 'Marrom',
-    swatchClassName: 'bg-[#2B1C18]',
+    label: 'Contemplativo',
+    swatchClassName: 'bg-[#624239]',
     icon: Moon,
-  },
-  {
-    value: 'wine',
-    label: 'Vinho',
-    swatchClassName: 'bg-[#7A1F35]',
-    icon: Palette,
   },
 ];
 

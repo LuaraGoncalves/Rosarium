@@ -4,6 +4,7 @@ import { logger } from '@/infra/logger/logger';
 import { AppError } from '@/shared/errors/AppError';
 
 const LITURGIA_API_URL = 'https://liturgia.up.railway.app/';
+const LITURGIA_CACHE_RETENTION_DAYS = 1;
 
 const normalizeParam = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value[0] : value;
@@ -51,55 +52,55 @@ const hasStructuredBreviario = (liturgia: unknown) => {
 
   const oficioTemConteudo = Boolean(
     typeof liturgia.oficio.hino === 'string' &&
-      Array.isArray(liturgia.oficio.salmodia) &&
-      liturgia.oficio.salmodia.length >= 3 &&
-      typeof liturgia.oficio.versiculo === 'string' &&
-      typeof liturgia.oficio.leitura1 === 'string' &&
-      typeof liturgia.oficio.leitura2 === 'string' &&
-      typeof liturgia.oficio.responsorioBreve === 'string'
+    Array.isArray(liturgia.oficio.salmodia) &&
+    liturgia.oficio.salmodia.length >= 3 &&
+    typeof liturgia.oficio.versiculo === 'string' &&
+    typeof liturgia.oficio.leitura1 === 'string' &&
+    typeof liturgia.oficio.leitura2 === 'string' &&
+    typeof liturgia.oficio.responsorioBreve === 'string'
   );
 
   const laudesTemConteudo = Boolean(
     typeof liturgia.laudes.introducao === 'string' &&
-      Array.isArray(liturgia.laudes.salmodia) &&
-      liturgia.laudes.salmodia.length >= 3 &&
-      typeof liturgia.laudes.responsorioBreve === 'string' &&
-      typeof liturgia.laudes.benedictus === 'string' &&
-      typeof liturgia.laudes.paiNosso === 'string' &&
-      typeof liturgia.laudes.bencao === 'string'
+    Array.isArray(liturgia.laudes.salmodia) &&
+    liturgia.laudes.salmodia.length >= 3 &&
+    typeof liturgia.laudes.responsorioBreve === 'string' &&
+    typeof liturgia.laudes.benedictus === 'string' &&
+    typeof liturgia.laudes.paiNosso === 'string' &&
+    typeof liturgia.laudes.bencao === 'string'
   );
 
   const horaMediaTemConteudo = Boolean(
     typeof liturgia.hora_media.introducao === 'string' &&
-      typeof liturgia.hora_media.hino === 'string' &&
-      Array.isArray(liturgia.hora_media.salmodia) &&
-      liturgia.hora_media.salmodia.length >= 3 &&
-      typeof liturgia.hora_media.leitura === 'string' &&
-      typeof liturgia.hora_media.versiculo === 'string' &&
-      typeof liturgia.hora_media.oracao === 'string'
+    typeof liturgia.hora_media.hino === 'string' &&
+    Array.isArray(liturgia.hora_media.salmodia) &&
+    liturgia.hora_media.salmodia.length >= 3 &&
+    typeof liturgia.hora_media.leitura === 'string' &&
+    typeof liturgia.hora_media.versiculo === 'string' &&
+    typeof liturgia.hora_media.oracao === 'string'
   );
 
   const completasTemConteudo = Boolean(
     typeof liturgia.completas.introducao === 'string' &&
-      typeof liturgia.completas.hino === 'string' &&
-      Array.isArray(liturgia.completas.salmodia) &&
-      liturgia.completas.salmodia.length > 0 &&
-      typeof liturgia.completas.leitura === 'string' &&
-      typeof liturgia.completas.responsorioBreve === 'string' &&
-      typeof liturgia.completas.nunc_dimittis === 'string' &&
-      typeof liturgia.completas.bencao === 'string'
+    typeof liturgia.completas.hino === 'string' &&
+    Array.isArray(liturgia.completas.salmodia) &&
+    liturgia.completas.salmodia.length > 0 &&
+    typeof liturgia.completas.leitura === 'string' &&
+    typeof liturgia.completas.responsorioBreve === 'string' &&
+    typeof liturgia.completas.nunc_dimittis === 'string' &&
+    typeof liturgia.completas.bencao === 'string'
   );
 
   const vesperasTemConteudo = Boolean(
     typeof liturgia.vesperas.introducao === 'string' &&
-      typeof liturgia.vesperas.hino === 'string' &&
-      Array.isArray(liturgia.vesperas.salmodia) &&
-      liturgia.vesperas.salmodia.length >= 3 &&
-      typeof liturgia.vesperas.leitura === 'string' &&
-      typeof liturgia.vesperas.responsorioBreve === 'string' &&
-      typeof liturgia.vesperas.magnificat === 'string' &&
-      typeof liturgia.vesperas.paiNosso === 'string' &&
-      typeof liturgia.vesperas.bencao === 'string'
+    typeof liturgia.vesperas.hino === 'string' &&
+    Array.isArray(liturgia.vesperas.salmodia) &&
+    liturgia.vesperas.salmodia.length >= 3 &&
+    typeof liturgia.vesperas.leitura === 'string' &&
+    typeof liturgia.vesperas.responsorioBreve === 'string' &&
+    typeof liturgia.vesperas.magnificat === 'string' &&
+    typeof liturgia.vesperas.paiNosso === 'string' &&
+    typeof liturgia.vesperas.bencao === 'string'
   );
 
   return (
@@ -110,6 +111,23 @@ const hasStructuredBreviario = (liturgia: unknown) => {
     completasTemConteudo
   );
 };
+
+async function cleanupOldLiturgiaCache(todayZeroed: Date) {
+  const retentionStart = new Date(todayZeroed);
+  retentionStart.setDate(retentionStart.getDate() - LITURGIA_CACHE_RETENTION_DAYS);
+
+  const result = await prisma.liturgia.deleteMany({
+    where: {
+      data: {
+        lt: retentionStart,
+      },
+    },
+  });
+
+  if (result.count > 0) {
+    logger.info({ removed: result.count }, 'old liturgia cache entries removed');
+  }
+}
 
 export const getLiturgiaDiaria = async (_req: Request, res: Response, next: NextFunction) => {
   try {
@@ -124,6 +142,7 @@ export const getLiturgiaDiaria = async (_req: Request, res: Response, next: Next
       const liturgiaEmCache = JSON.parse(liturgiaNoBanco.conteudo);
 
       if (hasStructuredBreviario(liturgiaEmCache)) {
+        await cleanupOldLiturgiaCache(todayZeroed);
         return res.json(liturgiaEmCache);
       }
 
@@ -158,8 +177,7 @@ export const getLiturgiaDiaria = async (_req: Request, res: Response, next: Next
               'Ofício das Leituras - Estrutura Tradicional Simplificada\n\nV. Vinde, ó Deus, em meu auxílio.\nR. Senhor, apressai-vos em me socorrer.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém. Aleluia.',
             invitatorio:
               'Quando o Ofício das Leituras for a primeira oração do dia, pode-se iniciar com o Invitatório:\n\nV. Abri, Senhor, os meus lábios.\nR. E minha boca anunciará vosso louvor.',
-            hino:
-              'Senhor, que sois a luz eterna,\niluminai nossa oração.\nAbri nossos ouvidos à vossa Palavra\ne firmai nosso coração na esperança.\n\nNa vigília da fé vos procuramos,\ncom a Igreja inteira em oração;\nconduzi-nos pelo mistério de Cristo\naté a claridade sem fim.',
+            hino: 'Senhor, que sois a luz eterna,\niluminai nossa oração.\nAbri nossos ouvidos à vossa Palavra\ne firmai nosso coração na esperança.\n\nNa vigília da fé vos procuramos,\ncom a Igreja inteira em oração;\nconduzi-nos pelo mistério de Cristo\naté a claridade sem fim.',
             salmodia: [
               `Antífona 1\n\nVinde, adoremos o Senhor, fonte de vida e salvação.\n\nSalmo 94 (95)\n\nVinde, exultemos de alegria no Senhor,\naclamemos o Rochedo que nos salva.\n\nAo seu encontro caminhemos com louvores,\ne com cantos de alegria o celebremos.\n\nPorque o Senhor é o Deus imenso,\no grande Rei acima de todos os deuses.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém.`,
               `Antífona 2\n\nNo silêncio da noite, minha alma espera no Senhor.\n\nSalmo 62 (63)\n\nÓ Deus, vós sois o meu Deus, por vós suspiro;\na minha alma tem sede de vós.\n\nA minha carne vos deseja com ardor,\ncomo terra deserta, seca e sem água.\n\nPara vos contemplar no vosso santuário,\ne ver o vosso poder e a vossa glória.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém.`,
@@ -180,8 +198,7 @@ export const getLiturgiaDiaria = async (_req: Request, res: Response, next: Next
           laudes: {
             introducao:
               'Oração da Manhã (Laudes) - Estrutura Tradicional Simplificada\n\nV. Vinde, ó Deus, em meu auxílio.\nR. Senhor, apressai-vos em me socorrer.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém. Aleluia.',
-            hino:
-              'O dia claro já nasceu.\nA Deus oremos com fervor.\nQue nos defenda do pecado\ne nos afaste de todo o mal.\n\nGuarde a nossa língua e a nossa mente,\npara que hoje vivamos na paz.',
+            hino: 'O dia claro já nasceu.\nA Deus oremos com fervor.\nQue nos defenda do pecado\ne nos afaste de todo o mal.\n\nGuarde a nossa língua e a nossa mente,\npara que hoje vivamos na paz.',
             salmodia: [
               `Antífona 1\n\nÓ Deus, vós sois o meu Deus; desde a aurora vos busco.\n\nSalmo 62 (63)\n\nÓ Deus, vós sois o meu Deus, por vós suspiro.\nA minha alma tem sede de vós.\n\nA minha carne vos deseja com ardor,\ncomo terra deserta, seca e sem água.\n\nPara vos contemplar no vosso santuário,\npara ver o vosso poder e a vossa glória.\n\nA vossa graça vale mais que a vida;\npor isso os meus lábios vos louvarão.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém.`,
               `Antífona 2\n\nBendizei o Senhor, todas as suas obras.\n\nCântico do Antigo Testamento\n\nObras do Senhor, bendizei o Senhor,\nlouvai-o e exaltai-o para sempre.\n\nCéus do Senhor, bendizei o Senhor;\nanjos do Senhor, bendizei o Senhor.\n\nSol e lua, bendizei o Senhor;\nastros e estrelas, bendizei o Senhor.\n\nBendizemos o Pai, o Filho e o Espírito Santo;\nlouvemo-lo e exaltemo-lo para sempre.`,
@@ -217,17 +234,15 @@ export const getLiturgiaDiaria = async (_req: Request, res: Response, next: Next
           hora_media: {
             introducao:
               'Hora Média - Estrutura Tradicional Simplificada\n\nV. Vinde, ó Deus, em meu auxílio.\nR. Senhor, apressai-vos em me socorrer.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém. Aleluia.',
-            hino:
-              'No meio deste dia,\nSenhor, buscamo-vos em oração.\nSustentai nosso trabalho,\nnossa mente e nosso coração.\n\nQue vossa graça nos acompanhe,\nque vossa paz nos fortaleça,\ne que tudo o que fizermos\nseja unido ao vosso amor.',
+            hino: 'No meio deste dia,\nSenhor, buscamo-vos em oração.\nSustentai nosso trabalho,\nnossa mente e nosso coração.\n\nQue vossa graça nos acompanhe,\nque vossa paz nos fortaleça,\ne que tudo o que fizermos\nseja unido ao vosso amor.',
             salmodia: [
               `Antífona 1\n\nGuiai meus passos, Senhor, segundo a vossa Palavra.\n\nSalmo 118 (119)\n\nComo amo, Senhor, a vossa lei!\nPermanece em minha mente o dia inteiro.\n\nVossos mandamentos me tornam sábio,\nporque estão sempre comigo.\n\nVossa palavra é uma luz para os meus passos,\ne uma lâmpada luzente em meu caminho.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém.`,
               `Antífona 2\n\nO Senhor guarda os que nele confiam.\n\nSalmo 120 (121)\n\nEu levanto os meus olhos para os montes:\nde onde pode vir o meu socorro?\n\nDo Senhor é que me vem o meu socorro,\ndo Senhor que fez o céu e fez a terra.\n\nEle não deixa tropeçarem os meus pés,\ne não dorme quem te guarda e te vigia.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém.`,
               `Antífona 3\n\nA paz esteja sobre o povo do Senhor.\n\nSalmo 122 (123)\n\nEu levanto os meus olhos para vós,\nque habitais nos altos céus.\n\nComo os olhos dos servos estão fitos\nnas mãos do seu senhor,\nassim nossos olhos estão voltados\npara o Senhor, nosso Deus.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém.`,
             ],
-            leitura:
-              rawData.evangelho?.texto
-                ? `Leitura Breve\n\n${rawData.evangelho.texto}`
-                : 'Leitura Breve\n\nTudo o que fizerdes, fazei-o de coração, como para o Senhor. Permanecei firmes no bem e na esperança.',
+            leitura: rawData.evangelho?.texto
+              ? `Leitura Breve\n\n${rawData.evangelho.texto}`
+              : 'Leitura Breve\n\nTudo o que fizerdes, fazei-o de coração, como para o Senhor. Permanecei firmes no bem e na esperança.',
             versiculo:
               'V. O Senhor guiará os nossos passos.\nR. E nos conduzirá no caminho da paz.',
             oracao:
@@ -237,17 +252,15 @@ export const getLiturgiaDiaria = async (_req: Request, res: Response, next: Next
           vesperas: {
             introducao:
               'Oração da Tarde (Vésperas) - Estrutura Tradicional Simplificada\n\nV. Vinde, ó Deus, em meu auxílio.\nR. Senhor, apressai-vos em me socorrer.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém. Aleluia.',
-            hino:
-              'Ao cair da tarde,\nSenhor, nós vos louvamos.\nRecebei nossa gratidão\npelo dia que termina.\n\nFazei brilhar em nós a vossa luz,\nquando a noite se aproxima,\ne conduzi nossos passos\nno caminho da paz.',
+            hino: 'Ao cair da tarde,\nSenhor, nós vos louvamos.\nRecebei nossa gratidão\npelo dia que termina.\n\nFazei brilhar em nós a vossa luz,\nquando a noite se aproxima,\ne conduzi nossos passos\nno caminho da paz.',
             salmodia: [
               `Antífona 1\n\nSuba a minha oração como incenso à vossa presença.\n\nSalmo 140 (141)\n\nSenhor, eu clamo por vós, socorrei-me;\nescutai a minha voz quando vos invoco.\n\nSuba a minha oração como incenso em vossa presença,\ne minhas mãos erguidas como oferta vespertina.\n\nPonde uma guarda, Senhor, em minha boca,\ne vigias às portas dos meus lábios.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém.`,
               `Antífona 2\n\nO Senhor é minha luz e salvação; de quem eu terei medo?\n\nSalmo 26 (27)\n\nO Senhor é minha luz e salvação;\nde quem eu terei medo?\n\nO Senhor é a proteção da minha vida;\nperante quem eu tremerei?\n\nAo Senhor eu peço apenas uma coisa,\ne é só isto que eu desejo:\nhabitar no santuário do Senhor\npor toda a minha vida.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém.`,
               `Antífona 3\n\nCristo é imagem do Deus invisível, primogênito de toda criatura.\n\nCântico do Novo Testamento\n\nCristo Jesus é a imagem do Deus invisível,\no primogênito de toda criatura.\n\nNele foram criadas todas as coisas,\nno céu e na terra, visíveis e invisíveis.\n\nTudo foi criado por ele e para ele,\ne nele tudo subsiste.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém.`,
             ],
-            leitura:
-              rawData.segundaLeitura?.texto
-                ? `Leitura Breve\n\n${rawData.segundaLeitura.texto}`
-                : 'Leitura Breve\n\nQue a palavra de Cristo habite em vós com abundância. Cantai a Deus, em vossos corações, salmos, hinos e cânticos espirituais, com gratidão.',
+            leitura: rawData.segundaLeitura?.texto
+              ? `Leitura Breve\n\n${rawData.segundaLeitura.texto}`
+              : 'Leitura Breve\n\nQue a palavra de Cristo habite em vós com abundância. Cantai a Deus, em vossos corações, salmos, hinos e cânticos espirituais, com gratidão.',
             responsorioBreve:
               'V. Suba até vós, Senhor, a minha oração.\nR. Suba até vós, Senhor, a minha oração.\n\nV. Como incenso na vossa presença.\nR. A minha oração.',
             magnificat:
@@ -273,8 +286,7 @@ export const getLiturgiaDiaria = async (_req: Request, res: Response, next: Next
               'Oração da Noite (Completas) - Estrutura Tradicional Simplificada\n\nV. Vinde, ó Deus, em meu auxílio.\nR. Senhor, apressai-vos em me socorrer.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém. Aleluia.',
             invitatorio:
               'Exame de consciência\n\nEm silêncio, entregue a Deus o dia que passou. Peça perdão pelas faltas cometidas e confie ao Senhor o seu descanso.',
-            hino:
-              'Antes que o dia termine,\nSenhor, nós vos pedimos:\nficai conosco esta noite\ne guardai-nos em vossa paz.\n\nAfastai os maus pensamentos,\nprotegei nosso coração,\ne fazei que despertemos alegres\npara louvar o vosso nome.',
+            hino: 'Antes que o dia termine,\nSenhor, nós vos pedimos:\nficai conosco esta noite\ne guardai-nos em vossa paz.\n\nAfastai os maus pensamentos,\nprotegei nosso coração,\ne fazei que despertemos alegres\npara louvar o vosso nome.',
             salmodia: [
               `Antífona\n\nÀ sombra de vossas asas, Senhor, eu descanso em paz.\n\nSalmo 90 (91)\n\nQuem habita ao abrigo do Altíssimo\ne vive à sombra do Senhor onipotente,\ndiz ao Senhor: sois meu refúgio e proteção,\nsois o meu Deus, no qual confio inteiramente.\n\nNenhum mal há de chegar perto de ti,\nnem a desgraça baterá à tua porta;\npois o Senhor deu uma ordem a seus anjos\npara em todos os caminhos te guardarem.\n\nTodos:\nGlória ao Pai, ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre. Amém.`,
             ],
@@ -301,6 +313,8 @@ export const getLiturgiaDiaria = async (_req: Request, res: Response, next: Next
             conteudo: JSON.stringify(normalizedData),
           },
         });
+
+        await cleanupOldLiturgiaCache(todayZeroed);
 
         return res.json(normalizedData);
       }
