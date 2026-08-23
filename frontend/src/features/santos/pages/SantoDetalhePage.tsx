@@ -88,7 +88,7 @@ export function SantoDetalhePage() {
               </p>
             )}
             {santo.fraseMarcante && (
-              <blockquote className="text-lg font-serif italic text-church-text/90 border-l-4 border-church-accent-hover/60 pl-5 py-2 mt-2 bg-church-bg/30 rounded-r-lg">
+              <blockquote className="mt-2 rounded-lg border border-church-border/70 bg-church-bg/40 px-5 py-3 font-serif text-lg italic text-church-text/90 shadow-sm">
                 "{santo.fraseMarcante}"
               </blockquote>
             )}

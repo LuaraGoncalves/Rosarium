@@ -267,13 +267,13 @@ export function ChurchHome() {
           <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
             <button
               onClick={() => navigate('/rosario')}
-              className="px-6 py-3 rounded-sm font-medium transition-all shadow-sm flex items-center justify-center gap-2 text-sm bg-church-bg-secondary border-b-2 border-r-2 border-church-bg-darker hover:bg-church-border text-church-text w-full sm:w-auto"
+              className="flex w-full items-center justify-center gap-2 rounded-sm border border-church-border bg-church-bg-secondary px-6 py-3 text-sm font-medium text-church-text shadow-sm transition-all hover:-translate-y-0.5 hover:border-church-border-hover hover:bg-church-border hover:shadow-md sm:w-auto"
             >
               <Cross className="w-4 h-4 text-church-accent" /> Rezar o Rosário
             </button>
             <button
               onClick={() => navigate('/oracoes')}
-              className="px-6 py-3 rounded-sm font-medium transition-all shadow-sm flex items-center justify-center gap-2 text-sm bg-church-bg border-b-2 border-r-2 border-church-bg-darker hover:bg-church-bg-secondary text-church-accent w-full sm:w-auto"
+              className="flex w-full items-center justify-center gap-2 rounded-sm border border-church-border bg-church-bg px-6 py-3 text-sm font-medium text-church-accent shadow-sm transition-all hover:-translate-y-0.5 hover:border-church-border-hover hover:bg-church-bg-secondary hover:shadow-md sm:w-auto"
             >
               <Book className="w-4 h-4 text-church-accent-hover" /> Ver Orações
             </button>
@@ -359,7 +359,7 @@ export function ChurchHome() {
                 <div
                   key={index}
                   onClick={() => navigate(section.path)}
-                  className="rounded-sm p-4 sm:p-5 border cursor-pointer transition-all group flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-church-bg border-l-4 border-y border-r border-church-border border-l-church-accent-hover hover:bg-church-bg-secondary hover:border-church-border-hover hover:border-l-church-accent"
+                  className="group flex cursor-pointer flex-col items-start gap-4 rounded-sm border border-church-border bg-church-bg p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-church-border-hover hover:bg-church-bg-secondary hover:shadow-md sm:flex-row sm:items-center sm:p-5"
                 >
                   <div className="w-10 h-10 rounded-none flex items-center justify-center flex-shrink-0 shadow-sm border transition-colors duration-300 bg-church-bg-secondary text-church-accent-hover border-church-border-hover group-hover:text-church-accent">
                     <Icon className="w-5 h-5 stroke-[1.5]" />
