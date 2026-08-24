@@ -115,12 +115,8 @@ export function ChurchHome() {
                   <div className="flex items-center gap-3 rounded-2xl bg-church-bg px-3 py-2.5">
                     <ThemeToggle />
                     <div>
-                      <p className="text-sm font-semibold text-church-text">
-                        Tema
-                      </p>
-                      <p className="text-xs text-church-text-muted">
-                        Cores
-                      </p>
+                      <p className="text-sm font-semibold text-church-text">Tema</p>
+                      <p className="text-xs text-church-text-muted">Cores</p>
                     </div>
                   </div>
                 </div>
