@@ -7,6 +7,10 @@ const themeMetaColors: Record<Theme, string> = {
   brown: '#51352C',
 };
 
+function isTheme(value: string | null): value is Theme {
+  return value === 'light' || value === 'brown';
+}
+
 type ThemeProviderProps = {
   children: React.ReactNode;
   defaultTheme?: Theme;
@@ -34,15 +38,11 @@ export function ThemeProvider({
   const [theme, setTheme] = useState<Theme>(() => {
     const storedTheme = localStorage.getItem(storageKey);
 
-    if (storedTheme === 'dark' || storedTheme === 'wine') {
-      localStorage.setItem(storageKey, 'brown');
-      return 'brown';
-    }
-
-    if (storedTheme === 'light' || storedTheme === 'brown') {
+    if (isTheme(storedTheme)) {
       return storedTheme;
     }
 
+    localStorage.setItem(storageKey, defaultTheme);
     return defaultTheme;
   });
 
@@ -55,6 +55,8 @@ export function ThemeProvider({
     if (theme !== 'light') {
       root.classList.add('dark');
     }
+
+    root.style.colorScheme = theme === 'light' ? 'light' : 'dark';
 
     const themeColorMeta = window.document.querySelector('meta[name="theme-color"]');
     themeColorMeta?.setAttribute('content', themeMetaColors[theme]);

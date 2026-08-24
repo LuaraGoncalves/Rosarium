@@ -1,6 +1,8 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  color-scheme: light;
+
   /* Modo Oficial (Claro) */
   --church-bg-primary: #F7EFE5;
   --church-bg-secondary: #FFF9F1;
@@ -60,6 +62,8 @@
 }
 
 .brown {
+  color-scheme: dark;
+
   /* Modo Contemplativo */
   --church-bg-primary: #51352C;
   --church-bg-secondary: #624239;
