@@ -1,13 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Book, Cross, Heart, Clock, Users, Church, Menu, X } from 'lucide-react';
-import { useTheme } from '../../../app/providers/ThemeProvider';
 import { AuthModalControl } from '../../../shared/components/AuthModalControl';
-import {
-  getNextThemeOption,
-  getThemeOption,
-  ThemeToggle,
-} from '../../../shared/components/ThemeToggle';
+import { ThemeToggle } from '../../../shared/components/ThemeToggle';
 
 const actionButtonBase =
   'flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg sm:w-auto';
@@ -16,7 +11,6 @@ const sectionShell = 'relative overflow-hidden px-4 sm:px-6';
 
 export function ChurchHome() {
   const navigate = useNavigate();
-  const { theme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mainSections = [
     {
