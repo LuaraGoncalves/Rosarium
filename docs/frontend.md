@@ -50,7 +50,7 @@ A arquitetura do nosso frontend é **Feature-Based** e dividida em três diretó
 
 ## 5. Organização Atual
 
-- As rotas estão divididas por feature em arquivos como `features/auth/routes.ts`, `features/novenas/routes.ts` e `features/liturgia/routes.ts`.
+- As rotas estão divididas por feature em arquivos como `features/novenas/routes.ts`, `features/liturgia/routes.ts`, `features/santos/routes.ts` e `features/breviario/routes.ts`.
 - A configuração da API central fica em `shared/services/api.ts`, usando `config/env.ts` para ler a URL do backend.
 
 ---
