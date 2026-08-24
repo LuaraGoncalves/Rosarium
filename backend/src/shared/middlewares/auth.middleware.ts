@@ -12,7 +12,7 @@ interface TokenPayload {
   exp: number;
 }
 
-type AuthenticatedRequest = Request & {
+export type AuthenticatedRequest = Request & {
   user?: {
     id: string;
   };
