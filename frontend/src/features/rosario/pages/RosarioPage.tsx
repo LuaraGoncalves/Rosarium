@@ -105,19 +105,20 @@ export function RosarioPage() {
         imageSrc="https://images.unsplash.com/photo-1624147210060-4c159a6c70d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyb3NhcnklMjBiZWFkcyUyMHByYXllcnxlbnwxfHx8fDE3NzMzMDQ3NTR8MA&ixlib=rb-4.1.0&q=80&w=1080"
         imageAlt="Rosário"
         title="Reze com serenidade"
+        compact
       >
-        <p className="max-w-2xl font-serif text-xl italic leading-relaxed text-church-text/85">
+        <p className="max-w-xl font-serif text-lg italic leading-relaxed text-church-text/85">
           O Rosário fica mais simples quando a tela acompanha a oração: escolha o mistério,
           contemple uma passagem e siga o roteiro no seu ritmo.
         </p>
 
-        <div className="flex flex-col gap-2 sm:flex-row">
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
           {preparationSteps.map((step, index) => (
             <div
               key={step}
-              className="flex items-center gap-3 rounded-full bg-church-bg px-4 py-2.5 text-sm text-church-text shadow-sm"
+              className="flex items-center gap-2.5 rounded-full bg-church-bg px-3.5 py-2 text-sm text-church-text shadow-sm"
             >
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-church-bg-secondary font-serif text-base font-semibold text-church-accent">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-church-bg-secondary font-serif text-sm font-semibold text-church-accent">
                 {index + 1}
               </span>
               <span className="font-medium leading-snug">{step}</span>

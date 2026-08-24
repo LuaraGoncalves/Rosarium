@@ -108,6 +108,7 @@ export function OracoesPage() {
         imageAlt="Bíblia Aberta"
         title="Orai sem cessar"
         maxWidthClassName="max-w-6xl"
+        compact
       >
         <p className="font-serif text-lg italic text-church-text/85">
           &quot;Orai sem cessar&quot; - 1 Tessalonicenses 5,17
