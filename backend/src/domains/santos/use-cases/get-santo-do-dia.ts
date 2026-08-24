@@ -28,27 +28,27 @@ function formatDiaFesta(date: Date) {
 async function archiveSantoDoDia(santoDoDia: SantoDoDia) {
   const diaFesta = formatDiaFesta(santoDoDia.data);
 
-  const santoJaArquivado = await prisma.santo.findFirst({
+  const santoArquivado = {
+    nome: santoDoDia.nome,
+    historia: santoDoDia.historiaCompleta || santoDoDia.historiaResumo,
+    diaFesta,
+    descricaoCurta: santoDoDia.historiaResumo || 'Santo do Dia',
+    imagemUrl: santoDoDia.imagemUrl,
+    padroeiroDe: santoDoDia.padroeiroDe,
+    intercessao: santoDoDia.intercessao,
+    categoria: santoDoDia.categoria,
+    fraseMarcante: santoDoDia.fraseMarcante,
+  };
+
+  await prisma.santo.upsert({
     where: {
-      nome: santoDoDia.nome,
-      diaFesta,
+      nome_diaFesta: {
+        nome: santoDoDia.nome,
+        diaFesta,
+      },
     },
-  });
-
-  if (santoJaArquivado) return;
-
-  await prisma.santo.create({
-    data: {
-      nome: santoDoDia.nome,
-      historia: santoDoDia.historiaCompleta || santoDoDia.historiaResumo,
-      diaFesta,
-      descricaoCurta: santoDoDia.historiaResumo || 'Santo do Dia',
-      imagemUrl: santoDoDia.imagemUrl,
-      padroeiroDe: santoDoDia.padroeiroDe,
-      intercessao: santoDoDia.intercessao,
-      categoria: santoDoDia.categoria,
-      fraseMarcante: santoDoDia.fraseMarcante,
-    },
+    update: santoArquivado,
+    create: santoArquivado,
   });
 }
 
