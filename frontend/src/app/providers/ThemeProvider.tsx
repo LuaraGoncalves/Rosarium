@@ -2,6 +2,11 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 export type Theme = 'light' | 'brown';
 
+const themeMetaColors: Record<Theme, string> = {
+  light: '#F7EFE5',
+  brown: '#51352C',
+};
+
 type ThemeProviderProps = {
   children: React.ReactNode;
   defaultTheme?: Theme;
@@ -50,6 +55,9 @@ export function ThemeProvider({
     if (theme !== 'light') {
       root.classList.add('dark');
     }
+
+    const themeColorMeta = window.document.querySelector('meta[name="theme-color"]');
+    themeColorMeta?.setAttribute('content', themeMetaColors[theme]);
   }, [theme]);
 
   const value = {
