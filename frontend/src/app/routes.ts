@@ -46,8 +46,7 @@ function RouteErrorFallback() {
       createElement(
         'p',
         {
-          className:
-            'mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-church-text-muted',
+          className: 'mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-church-text-muted',
         },
         'Rosarium'
       ),

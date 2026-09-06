@@ -125,7 +125,11 @@ export function useNovenaProgress(novenaId: string) {
               syncError.response?.status === 409
             ) {
               const serverData = syncError.response.data;
-              const mergedDays = mergeCompletedDays(localDays, pendingSync.completedDays, serverData.completedDays);
+              const mergedDays = mergeCompletedDays(
+                localDays,
+                pendingSync.completedDays,
+                serverData.completedDays
+              );
               localStorage.removeItem(pendingSyncKey);
 
               setCompletedDays(mergedDays);
