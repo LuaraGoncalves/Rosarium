@@ -25,6 +25,8 @@ const envSchema = z.object({
   ADMIN_EMAILS: z.string().optional().default(''),
   JWT_SECRET: z.string().min(12, 'JWT_SECRET deve ter pelo menos 12 caracteres.'),
   JWT_EXPIRES_IN: z.string().default('7d'),
+  SAINTS_API_URL: z.string().url().default('https://livesofthesaintscalendar.com/api/v1'),
+  SAINTS_API_KEY: z.string().optional(),
 });
 
 export const env = envSchema.parse(process.env);

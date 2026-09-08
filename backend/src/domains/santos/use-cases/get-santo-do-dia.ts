@@ -5,6 +5,7 @@ import { parseSantoHtml } from '../services/santo.parser';
 import { SantoFormatter } from '../services/santo.formatter';
 import { SantoDoDia } from '@prisma/client';
 import { logger } from '@/infra/logger/logger';
+import { SaintsCalendarService } from '../services/saints-calendar.service';
 
 const meses = [
   'Janeiro',
@@ -71,7 +72,11 @@ export async function getSantoDoDia(): Promise<Result<SantoDoDia>> {
         if (fetchResult.success && fetchResult.data) {
           const parseResult = parseSantoHtml(fetchResult.data);
           if (parseResult.success && parseResult.data) {
-            const data = SantoFormatter.formatar(parseResult.data);
+            const apiIntercessao = await SaintsCalendarService.findIntercessao(parseResult.data.nome);
+            const enrichedData = apiIntercessao.success
+              ? { ...parseResult.data, intercessao: apiIntercessao.data }
+              : parseResult.data;
+            const data = SantoFormatter.formatar(enrichedData);
 
             santoDoDia = await prisma.santoDoDia.upsert({
               where: { id: 'santo-do-dia' },
