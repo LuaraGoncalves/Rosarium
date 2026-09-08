@@ -26,7 +26,9 @@ describe('santo.parser', () => {
         'Dedicou sua vida ao cuidado dos enfermos e dos doentes no hospital.'
       );
 
-      expect(result).toBe('Enfermos, profissionais da saúde, cuidado com os doentes e esperança na cura');
+      expect(result).toBe(
+        'Enfermos, profissionais da saúde, cuidado com os doentes e esperança na cura'
+      );
     });
 
     it('deve manter a intercessao padrao quando nao encontra pistas especificas', () => {
@@ -44,7 +46,9 @@ describe('santo.parser', () => {
     it('nao deve usar outro santo citado na historia', () => {
       const result = detectIntercessao('Santa Luzia', 'Era devota de São José.');
 
-      expect(result).toBe('Saúde dos olhos, visão, luz espiritual e fidelidade em meio às provações');
+      expect(result).toBe(
+        'Saúde dos olhos, visão, luz espiritual e fidelidade em meio às provações'
+      );
     });
 
     it('deve reconhecer temas sem confundir partes de palavras', () => {

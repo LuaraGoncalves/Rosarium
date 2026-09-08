@@ -72,7 +72,9 @@ export async function getSantoDoDia(): Promise<Result<SantoDoDia>> {
         if (fetchResult.success && fetchResult.data) {
           const parseResult = parseSantoHtml(fetchResult.data);
           if (parseResult.success && parseResult.data) {
-            const apiIntercessao = await SaintsCalendarService.findIntercessao(parseResult.data.nome);
+            const apiIntercessao = await SaintsCalendarService.findIntercessao(
+              parseResult.data.nome
+            );
             const enrichedData = apiIntercessao.success
               ? { ...parseResult.data, intercessao: apiIntercessao.data }
               : parseResult.data;
