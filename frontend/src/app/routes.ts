@@ -23,11 +23,14 @@ function ScrollToTop() {
 }
 
 function RootRoute() {
+  const { pathname } = useLocation();
+  const isHome = pathname === '/' || pathname === '/igreja';
+
   return createElement(
     Fragment,
     null,
     createElement(ScrollToTop),
-    createElement(AppFloatingControls),
+    isHome ? null : createElement(AppFloatingControls),
     createElement(Outlet)
   );
 }

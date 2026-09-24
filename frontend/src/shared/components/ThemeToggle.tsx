@@ -40,13 +40,13 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(nextTheme.value)}
-      className="relative flex min-h-11 min-w-11 items-center justify-center rounded-md border border-church-border bg-church-bg-secondary p-2 text-church-text-muted shadow-sm transition-colors hover:border-church-border-hover hover:text-church-accent"
+      className="relative flex min-h-11 min-w-11 items-center justify-center rounded-md border border-white/30 bg-black/20 p-2 text-white shadow-sm transition-colors hover:border-[#e5bd68] hover:bg-black/35 hover:text-[#f0cf83]"
       title={`Tema atual: ${currentTheme.label}. Clique para mudar para ${nextTheme.label}.`}
       aria-label={`Tema atual: ${currentTheme.label}. Clique para mudar para ${nextTheme.label}.`}
     >
       <Icon className="h-5 w-5" aria-hidden="true" />
       <span
-        className={`absolute -right-1 -top-1 h-3.5 w-3.5 rounded-full border border-church-bg-secondary shadow-sm ${currentTheme.swatchClassName}`}
+        className={`absolute -right-1 -top-1 h-3.5 w-3.5 rounded-full border border-[#24140d] shadow-sm ${currentTheme.swatchClassName}`}
         aria-hidden="true"
       />
     </button>

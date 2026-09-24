@@ -1,17 +1,14 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { Book, Cross, Heart, Clock, Users, Church, Menu, X } from 'lucide-react';
+import { Book, Cross, Heart, Clock, Users, Church, Sparkles } from 'lucide-react';
 import { AuthModalControl } from '../../../shared/components/AuthModalControl';
-import { ThemeToggle } from '../../../shared/components/ThemeToggle';
+import { PrayerMusicPlayer } from '../../../shared/components/PrayerMusicPlayer';
+import { SiteSettingsControl } from '../../../shared/components/SiteSettingsControl';
 
 const actionButtonBase =
-  'flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg sm:w-auto';
-
-const sectionShell = 'relative overflow-hidden px-4 sm:px-6';
+  'flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5bd68] sm:w-auto';
 
 export function ChurchHome() {
   const navigate = useNavigate();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mainSections = [
     {
       title: 'Santo Rosário',
@@ -58,266 +55,113 @@ export function ChurchHome() {
       icon: Users,
       path: '/santos',
     },
+    {
+      title: 'Curiosidades',
+      description: 'Histórias e símbolos da fé católica',
+      icon: Sparkles,
+      path: '/curiosidades',
+    },
   ];
 
-  const menuSections = [...mainSections, ...secondarySections];
-
   return (
-    <div className="min-h-screen bg-church-bg linen-bg text-church-text font-sans">
-      {/* Navbar Suave */}
-      <header className="bg-church-header border-b border-church-border backdrop-blur-md sticky top-0 z-50 transition-all">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 pr-20 sm:px-6 sm:pr-24">
-          <div className="flex items-center gap-2.5 text-church-accent hover:text-church-accent-hover transition-colors cursor-pointer">
-            <Cross className="w-5 h-5 stroke-[1.5]" />
-            <h1 className="text-xl font-serif">Rosarium</h1>
+    <div className="relative min-h-screen overflow-hidden bg-transparent text-church-text font-sans">
+      <img src="/images/rosarium-church.jpg" alt="" aria-hidden="true" className="fixed inset-0 z-[-2] h-full w-full object-cover object-center" />
+      <div className="fixed inset-0 z-[-1] bg-[rgba(34,18,11,.32)]" aria-hidden="true" />
+      {/* Identidade da página */}
+      <header className="absolute inset-x-0 top-0 z-50 bg-transparent transition-all">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6 md:py-5">
+          <div className="flex cursor-pointer items-center gap-3 text-[#f0cf83] transition-colors hover:text-white">
+            <Cross className="h-7 w-7 stroke-[1.5] drop-shadow-md" />
+            <h1 className="font-serif text-2xl font-semibold tracking-wide text-white drop-shadow-md md:text-3xl">Rosarium</h1>
           </div>
-
-          <button
-            type="button"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="relative z-[70] flex min-h-11 min-w-11 items-center justify-center rounded-md border border-church-border bg-church-bg-secondary/90 p-2 text-church-accent shadow-sm transition-colors hover:border-church-border-hover hover:bg-church-bg-secondary hover:text-church-accent-hover"
-            aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
-            aria-expanded={isMobileMenuOpen}
-          >
-            {isMobileMenuOpen ? (
-              <X className="h-5 w-5 stroke-2" />
-            ) : (
-              <Menu className="h-5 w-5 stroke-2" />
-            )}
-          </button>
+          <div className="flex items-center gap-2">
+            <AuthModalControl />
+            <SiteSettingsControl />
+          </div>
         </div>
-
-        {isMobileMenuOpen && (
-          <button
-            type="button"
-            className="fixed inset-0 z-[55] cursor-default bg-transparent"
-            aria-label="Fechar menu"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-        )}
-
-        {isMobileMenuOpen && (
-          <div className="fixed left-1/2 top-16 z-[60] w-[min(calc(100vw-1.5rem),21rem)] max-h-[min(calc(100dvh-5rem),32rem)] -translate-x-1/2 overflow-hidden rounded-[1.35rem] border border-church-border bg-church-bg-secondary shadow-2xl shadow-church-bg-darker/20 sm:left-auto sm:right-6 sm:w-[22rem] sm:translate-x-0">
-            <div className="max-h-[inherit] overflow-y-auto overscroll-contain">
-              <div className="border-b border-church-border bg-church-bg px-4 py-3">
-                <p className="font-serif text-lg text-church-accent">Rosarium</p>
-              </div>
-
-              <div className="border-b border-church-border p-2.5">
-                <div className="grid grid-cols-1 gap-2 min-[380px]:grid-cols-2 sm:grid-cols-2">
-                  <div className="flex items-center gap-3 rounded-2xl bg-church-bg px-3 py-2.5">
-                    <AuthModalControl />
-                    <div>
-                      <p className="text-sm font-semibold text-church-text">Conta</p>
-                      <p className="text-xs text-church-text-muted">Entrar</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 rounded-2xl bg-church-bg px-3 py-2.5">
-                    <ThemeToggle />
-                    <div>
-                      <p className="text-sm font-semibold text-church-text">Tema</p>
-                      <p className="text-xs text-church-text-muted">Cores</p>
-                    </div>
-                  </div>
-                </div>
-
-                <nav className="grid gap-1.5 p-2.5 text-sm font-medium text-church-text-secondary">
-                  {menuSections.map((section) => {
-                    const Icon = section.icon;
-
-                    return (
-                      <button
-                        key={section.path}
-                        onClick={() => {
-                          navigate(section.path);
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition-colors hover:bg-church-bg hover:text-church-accent"
-                      >
-                        <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-church-bg text-church-accent-hover">
-                          <Icon className="h-4 w-4 stroke-[1.5]" />
-                        </span>
-                        <span>
-                          <span className="block text-church-text">{section.title}</span>
-                        </span>
-                      </button>
-                    );
-                  })}
-                </nav>
-              </div>
-            </div>
-          </div>
-        )}
       </header>
 
-      {/* Hero Section Minimalista e Claro com Imagem de Fundo */}
-      <section
-        className={`${sectionShell} isolate border-b border-church-border bg-church-bg py-8 sm:py-10 md:py-14`}
-      >
-        <div className="absolute inset-0 -z-20 bg-church-bg">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Sagrados_corazones_de_Jes%C3%BAs_y_Mar%C3%ADa_%28Sacred_Hearts_of_Jesus_and_Mary%29%2C_workshop_of_Vicente_L%C3%B3pez_Porta%C3%B1a.jpg"
-            alt="Sagrado Coração de Jesus e Maria"
-            className="h-full w-full object-cover opacity-20"
-            style={{ objectPosition: 'center 25%' }}
-          />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,var(--church-bg-secondary)_0%,transparent_34%),linear-gradient(115deg,var(--church-bg-primary)_0%,rgba(247,239,229,0.88)_46%,var(--church-bg-primary)_100%)]"></div>
+      <section className="relative isolate flex min-h-[clamp(26rem,58vh,40rem)] items-end overflow-hidden bg-[#2d180f]/20">
+        <img src="/images/rosarium-church.jpg" alt="Interior de uma igreja com vitrais e altar" className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(30,15,9,.7)_0%,rgba(30,15,9,.28)_38%,transparent_72%)]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgba(30,15,9,.76)_0%,transparent_58%)]" />
+        <div className="mx-auto w-full max-w-6xl px-5 pb-12 pt-24 sm:px-6 md:pb-16">
+          <div className="max-w-[30rem] text-white">
+            <h2 className="font-serif text-5xl leading-[.95] text-white sm:text-6xl md:text-7xl">Rosarium</h2>
+          </div>
         </div>
+      </section>
 
-        <div className="mx-auto grid max-w-6xl items-center gap-8 md:grid-cols-[1.05fr_0.95fr]">
-          <div className="relative z-10 text-center md:text-left">
-            <div className="mb-5 flex justify-center md:justify-start">
-              <span className="rounded-full border border-church-border bg-church-bg-secondary/85 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-church-accent-hover shadow-sm backdrop-blur-sm">
-                Refúgio espiritual
-              </span>
+      <section aria-labelledby="start-heading" className="relative border-t border-white/15 bg-[rgba(30,15,9,.86)] py-10 text-white sm:py-14">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-12">
+            <div className="max-w-2xl">
+              <h3 id="start-heading" className="mb-3 font-serif text-3xl text-white md:text-4xl">Comece por aqui</h3>
+              <p className="max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">Reze o terço, acompanhe a liturgia e encontre palavras para o seu momento de oração.</p>
             </div>
-
-            <h2 className="mx-auto mb-4 max-w-3xl font-serif text-4xl leading-[1.08] text-church-accent sm:text-5xl md:mx-0 md:text-6xl">
-              Encontre um ritmo sereno para rezar todos os dias
-            </h2>
-
-            <p className="mx-auto mb-7 max-w-2xl text-base font-light leading-relaxed text-church-text-secondary sm:text-lg md:mx-0">
-              Rosários, orações e liturgia para acompanhar sua vida de fé.
-            </p>
-
-            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row md:justify-start">
-              <button
-                onClick={() => navigate('/rosario')}
-                className={`${actionButtonBase} bg-church-accent text-church-bg-secondary hover:bg-church-accent-hover`}
-              >
-                <Cross className="h-4 w-4" /> Rezar o Rosário
-              </button>
-              <button
-                onClick={() => navigate('/oracoes')}
-                className={`${actionButtonBase} border border-church-border bg-church-bg-secondary/90 text-church-accent hover:border-church-border-hover hover:bg-church-bg`}
-              >
-                <Book className="h-4 w-4" /> Ver Orações
-              </button>
+            <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
+              <button onClick={() => navigate('/rosario')} className={`${actionButtonBase} bg-[#c99b43] text-[#24150e] hover:bg-[#e2bd6d]`}><Cross className="h-4 w-4" />Começar o Rosário</button>
+              <button onClick={() => navigate('/santos/9999')} className={`${actionButtonBase} border border-white/45 bg-black/15 text-white backdrop-blur-sm hover:border-white/70 hover:bg-black/30`}><Users className="h-4 w-4" />Ver o Santo do Dia</button>
             </div>
           </div>
-
-          <div className="relative mx-auto w-full max-w-md md:max-w-none">
-            <div className="absolute -inset-4 -z-10 rounded-[2rem] bg-church-accent/10 blur-2xl"></div>
-            <div className="overflow-hidden rounded-[1.75rem] border border-church-border bg-church-bg-secondary shadow-2xl shadow-church-bg-darker/20">
-              <div className="relative aspect-[4/3]">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Sagrados_corazones_de_Jes%C3%BAs_y_Mar%C3%ADa_%28Sacred_Hearts_of_Jesus_and_Mary%29%2C_workshop_of_Vicente_L%C3%B3pez_Porta%C3%B1a.jpg"
-                  alt="Sagrado Coração de Jesus e Maria"
-                  className="h-full w-full object-cover"
-                  style={{ objectPosition: 'center 25%' }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-church-bg/85 via-transparent to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-5 text-left">
-                  <p className="font-serif text-xl italic text-church-accent">“Orai sem cessar”</p>
-                  <p className="text-sm text-church-text-secondary">1 Tessalonicenses 5,17</p>
-                </div>
-              </div>
+          <div className="mt-8 flex items-center gap-4 border-t border-white/15 pt-6">
+            <PrayerMusicPlayer />
+            <div>
+              <p className="mb-1 text-sm font-semibold text-[#f0cf83]">Som para oração</p>
+              <p className="max-w-xl text-sm leading-relaxed text-white/70 sm:text-base">Toque uma música contemplativa enquanto você reza ou permanece em silêncio.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Devotions - Cards Minimalistas */}
-      <div className="relative border-y border-church-border bg-church-bg-tertiary py-10 sm:py-12 md:py-14">
-        <div className="absolute inset-0 linen-bg pointer-events-none"></div>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="mx-auto mb-8 max-w-2xl text-center">
-            <h3 className="mb-3 font-serif text-2xl text-church-accent md:text-3xl">
-              Devoções principais
-            </h3>
+      <section aria-labelledby="explore-heading" className="relative border-t border-white/20 bg-[rgba(16,8,5,.9)] py-12 text-white sm:py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mb-10 max-w-2xl text-white">
+            <h3 id="explore-heading" className="font-serif text-3xl text-white md:text-4xl">Explore o Rosarium</h3>
+            <p className="mt-3 max-w-2xl text-base leading-relaxed text-white/70">Escolha um caminho para continuar sua oração, acompanhar a Igreja ou conhecer melhor a fé.</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-            {mainSections.map((section, index) => {
-              const Icon = section.icon;
-              return (
-                <div
-                  key={index}
-                  onClick={() => navigate(section.path)}
-                  className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl bg-church-bg shadow-md shadow-church-bg-darker/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-church-bg-darker/20"
-                >
-                  <div className="relative h-36 overflow-hidden bg-church-bg-secondary sm:h-40 md:h-44">
-                    <img
-                      src={section.image}
-                      alt={section.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 ease-out"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-church-bg via-church-bg/10 to-transparent"></div>
-                  </div>
-                  <div className="relative z-10 flex flex-grow flex-col items-start p-5 text-left">
-                    <div className="-mt-10 mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-church-bg-secondary text-church-accent-hover shadow-lg shadow-church-bg-darker/15 transition-colors group-hover:text-church-accent">
-                      <Icon className="h-5 w-5 stroke-[1.5]" />
-                    </div>
-                    <h4 className="mb-2 font-serif text-xl text-church-text group-hover:text-church-accent-hover">
-                      {section.title}
-                    </h4>
-                    <p className="flex-grow text-sm leading-relaxed text-church-text-muted">
-                      {section.description}
-                    </p>
-                    <span className="mt-5 text-xs font-semibold uppercase tracking-[0.2em] text-church-accent-hover">
-                      Abrir
-                    </span>
-                  </div>
+          <div className="space-y-10">
+            {[
+              { title: 'Quero rezar', description: 'Encontre uma oração guiada para permanecer em presença.', items: mainSections.slice(0, 3) },
+              { title: 'Quero acompanhar a liturgia', description: 'Veja as leituras e a oração das horas para viver o dia com a Igreja.', items: secondarySections.slice(0, 2) },
+              { title: 'Quero conhecer a fé', description: 'Descubra vidas, símbolos e histórias que atravessam a tradição católica.', items: secondarySections.slice(2) },
+            ].map((group) => (
+              <div key={group.title} className="border-t border-white/15 pt-8 first:border-t-0 first:pt-0">
+                <div className="mb-4 flex flex-col gap-1 text-white sm:flex-row sm:items-baseline sm:gap-4">
+                  <h4 className="font-serif text-2xl">{group.title}</h4>
+                  <p className="text-sm text-white/70">{group.description}</p>
                 </div>
-              );
-            })}
+                <div className={`grid gap-x-8 gap-y-2 ${group.items.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
+                  {group.items.map((section) => {
+                    const Icon = section.icon;
+                    return <button key={section.path} type="button" onClick={() => navigate(section.path)} className="group flex min-h-20 items-center gap-4 border-t border-white/15 py-4 text-left text-white transition-colors hover:border-[#e5bd68]/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5bd68] focus-visible:ring-offset-2 focus-visible:ring-offset-[#24140d]">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[#c99b43]/20 text-[#e5bd68] transition-colors group-hover:bg-[#c99b43]/30"><Icon className="h-5 w-5" /></span>
+                      <span><span className="block font-serif text-lg group-hover:text-[#f0cf83]">{section.title}</span><span className="mt-1 block text-sm leading-relaxed text-white/70">{section.description}</span></span>
+                    </button>;
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Seção de Citação / Inspiração Limpa */}
-      <div className="relative overflow-hidden border-y border-church-border bg-church-bg py-10 sm:py-12">
-        <div className="absolute inset-0 linen-bg pointer-events-none"></div>
+      {/* Footer Minimalista e Elegante */}
+      <div className="relative overflow-hidden bg-transparent py-12 sm:py-16">
         <div className="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <div className="mx-auto mb-5 flex h-11 w-11 items-center justify-center rounded-full bg-church-bg-secondary text-church-accent shadow-sm">
-            <Cross className="h-5 w-5 opacity-75" />
+          <div className="mx-auto mb-5 flex h-11 w-11 items-center justify-center rounded-full bg-[#c99b43]/15 text-[#e5bd68]">
+            <Cross className="h-5 w-5 opacity-80" />
           </div>
-          <h2 className="mb-5 font-serif text-2xl italic leading-snug text-church-accent-hover md:text-3xl">
+          <h2 className="mb-5 font-serif text-2xl italic leading-snug text-[#f0cf83] md:text-3xl">
             {'"A oração é a elevação da alma a Deus ou o pedido a Deus dos bens convenientes."'}
           </h2>
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-church-text-muted">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/60">
             — Santa Teresinha do Menino Jesus
           </p>
         </div>
       </div>
 
-      {/* Secondary Resources - Ícones Sutis */}
-      <div className="py-10 sm:py-12 md:py-14 bg-church-bg-tertiary relative">
-        <div className="absolute inset-0 linen-bg pointer-events-none"></div>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="mx-auto mb-8 max-w-2xl text-center">
-            <h3 className="mb-3 font-serif text-2xl text-church-accent md:text-3xl">
-              Recursos diários
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-            {secondarySections.map((section, index) => {
-              const Icon = section.icon;
-              return (
-                <div
-                  key={index}
-                  onClick={() => navigate(section.path)}
-                  className="group flex cursor-pointer flex-col items-start gap-4 rounded-2xl bg-church-bg p-5 shadow-sm shadow-church-bg-darker/10 transition-all hover:-translate-y-0.5 hover:bg-church-bg-secondary hover:shadow-lg hover:shadow-church-bg-darker/15 sm:flex-row sm:items-center"
-                >
-                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-church-bg-secondary text-church-accent-hover shadow-sm transition-colors duration-300 group-hover:text-church-accent">
-                    <Icon className="w-5 h-5 stroke-[1.5]" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-serif mb-1 text-church-text group-hover:text-church-accent-hover">
-                      {section.title}
-                    </h4>
-                    <p className="text-sm text-church-text-muted">{section.description}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* Footer Minimalista e Elegante */}
-      <footer className="py-8 bg-church-bg relative">
+      <footer className="relative bg-[#24140d]/80 py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col items-center justify-center gap-4 relative z-10">
           <div className="flex items-center gap-2 opacity-60 text-church-accent-hover">
             <Cross className="w-4 h-4 stroke-[1.5]" />
