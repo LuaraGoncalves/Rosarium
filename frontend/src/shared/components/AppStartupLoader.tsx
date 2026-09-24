@@ -24,7 +24,7 @@ export function AppStartupLoader({ children }: AppStartupLoaderProps) {
     let timer: number | undefined;
     const startedAt = performance.now();
 
-    Promise.all([preloadImage(brandImage), document.fonts?.ready ?? Promise.resolve()]).then(() => {
+    preloadImage(brandImage).then(() => {
       const elapsed = performance.now() - startedAt;
       const remaining = Math.max(0, 650 - elapsed);
       timer = window.setTimeout(() => {
@@ -58,7 +58,7 @@ export function AppStartupLoader({ children }: AppStartupLoaderProps) {
             strokeWidth={1.4}
           />
         </div>
-        <p className="mt-7 font-serif text-3xl tracking-wide text-[#f0cf83]">Rosarium</p>
+        <p className="font-liturgical mt-7 text-2xl tracking-wide text-[#f0cf83]">Rosarium</p>
         <p className="mt-3 max-w-xs text-sm leading-6 text-white/65">
           Prepare o coração. Sua oração está começando.
         </p>
