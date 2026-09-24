@@ -1,5 +1,11 @@
 import { Router } from 'express';
-import { createCuriosidade, deleteCuriosidade, listCuriosidades, listCuriosidadesAdmin, updateCuriosidade } from '@/domains/curiosidades/curiosidades.controller';
+import {
+  createCuriosidade,
+  deleteCuriosidade,
+  listCuriosidades,
+  listCuriosidadesAdmin,
+  updateCuriosidade,
+} from '@/domains/curiosidades/curiosidades.controller';
 import { curiosidadeSchema } from '@/domains/curiosidades/curiosidades.schema';
 import { authMiddleware } from '@/shared/middlewares/auth.middleware';
 import { adminMiddleware } from '@/shared/middlewares/admin.middleware';
