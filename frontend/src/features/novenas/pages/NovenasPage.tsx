@@ -110,7 +110,7 @@ export function NovenasPage() {
               <Heart className="h-5 w-5" aria-hidden="true" />
             </span>
             <div className="min-w-0">
-              <h1 className="truncate font-serif text-2xl text-white">Novenas</h1>
+              <h1 className="font-liturgical truncate text-xl text-white">Novenas</h1>
               <p className="hidden text-sm text-white/60 sm:block">
                 Nove dias de oração e perseverança
               </p>
@@ -124,7 +124,7 @@ export function NovenasPage() {
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-[#e5bd68]">
             Perseverar na oração
           </p>
-          <h2 className="font-serif text-4xl leading-tight text-white sm:text-5xl">
+          <h2 className="font-liturgical text-3xl leading-tight text-white sm:text-4xl">
             Caminhe um dia de cada vez.
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
@@ -136,7 +136,7 @@ export function NovenasPage() {
         <section aria-labelledby="novenas-heading" className="py-10 sm:py-14">
           <div className="mb-8 flex items-end justify-between gap-4">
             <div>
-              <h2 id="novenas-heading" className="font-serif text-3xl text-white sm:text-4xl">
+              <h2 id="novenas-heading" className="font-liturgical text-2xl text-white sm:text-3xl">
                 Escolha uma novena
               </h2>
               <p className="mt-2 text-sm text-white/60">

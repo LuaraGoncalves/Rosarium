@@ -77,7 +77,7 @@ export function LiturgiaPage() {
               </p>
               <h2
                 id="liturgia-intro"
-                className="font-serif text-3xl leading-tight text-white md:text-5xl"
+                className="font-liturgical text-3xl leading-tight text-white md:text-5xl"
               >
                 Rezar com a Igreja, todos os dias.
               </h2>
@@ -97,7 +97,7 @@ export function LiturgiaPage() {
             <div>
               <h2
                 id="liturgia-acessos"
-                className="font-serif text-3xl text-church-text md:text-4xl"
+                className="font-liturgical text-3xl text-church-text md:text-4xl"
               >
                 Comece pelo dia de hoje
               </h2>
@@ -121,7 +121,9 @@ export function LiturgiaPage() {
                 <BookOpen className="h-6 w-6" aria-hidden="true" />
               </span>
               <span>
-                <span className="mt-8 block font-serif text-2xl md:text-3xl">Liturgia de hoje</span>
+                <span className="mt-8 block font-liturgical text-xl md:text-2xl">
+                  Liturgia de hoje
+                </span>
                 <span className="mt-2 block max-w-md text-sm leading-6 text-[#38241e]/75">
                   Leituras, salmo e Evangelho para acompanhar este dia em oração.
                 </span>
@@ -141,7 +143,7 @@ export function LiturgiaPage() {
                 <CalendarDays className="h-6 w-6" aria-hidden="true" />
               </span>
               <span>
-                <span className="mt-8 block font-serif text-2xl text-church-text">
+                <span className="mt-8 block font-liturgical text-xl text-church-text md:text-2xl">
                   Calendário litúrgico
                 </span>
                 <span className="mt-2 block text-sm leading-6 text-church-text-muted">
@@ -165,7 +167,7 @@ export function LiturgiaPage() {
               <div>
                 <h2
                   id="tempos-liturgicos"
-                  className="font-serif text-3xl text-church-text md:text-4xl"
+                  className="font-liturgical text-3xl text-church-text md:text-4xl"
                 >
                   Tempos litúrgicos
                 </h2>

@@ -43,7 +43,9 @@ export function FeaturePageHeader({
             <Icon className="h-5 w-5 stroke-[1.5]" />
           </span>
           <div>
-            <h1 className="font-serif text-2xl leading-tight text-white md:text-3xl">{title}</h1>
+            <h1 className="font-liturgical text-2xl leading-tight text-white md:text-3xl">
+              {title}
+            </h1>
             {subtitle && <p className="mt-1 text-sm text-white/60">{subtitle}</p>}
           </div>
         </div>
@@ -88,7 +90,7 @@ export function FeatureIntroCard({
           <div className={`flex flex-col justify-center ${compact ? 'p-4 md:p-5' : 'p-6 md:p-8'}`}>
             {title && (
               <h2
-                className={`font-serif text-[#f0cf83] ${
+                className={`font-liturgical text-[#f0cf83] ${
                   compact ? 'mb-3 text-2xl' : 'mb-4 text-2xl md:text-3xl'
                 }`}
               >

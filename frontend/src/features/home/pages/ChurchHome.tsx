@@ -77,7 +77,7 @@ export function ChurchHome() {
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6 md:py-5">
           <div className="flex cursor-pointer items-center gap-3 text-[#f0cf83] transition-colors hover:text-white">
             <Cross className="h-7 w-7 stroke-[1.5] drop-shadow-md" />
-            <h1 className="font-serif text-2xl font-semibold tracking-wide text-white drop-shadow-md md:text-3xl">
+            <h1 className="font-liturgical text-2xl font-semibold tracking-wide text-white drop-shadow-md md:text-3xl">
               Rosarium
             </h1>
           </div>
@@ -98,7 +98,7 @@ export function ChurchHome() {
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgba(30,15,9,.76)_0%,transparent_58%)]" />
         <div className="mx-auto w-full max-w-6xl px-5 pb-12 pt-24 sm:px-6 md:pb-16">
           <div className="max-w-[30rem] text-white">
-            <h2 className="font-serif text-5xl leading-[.95] text-white sm:text-6xl md:text-7xl">
+            <h2 className="font-liturgical text-4xl leading-[.98] text-white sm:text-5xl md:text-6xl">
               Rosarium
             </h2>
           </div>
@@ -112,7 +112,10 @@ export function ChurchHome() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-12">
             <div className="max-w-2xl">
-              <h3 id="start-heading" className="mb-3 font-serif text-3xl text-white md:text-4xl">
+              <h3
+                id="start-heading"
+                className="mb-3 font-liturgical text-2xl text-white md:text-3xl"
+              >
                 Comece por aqui
               </h3>
               <p className="max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">
@@ -154,7 +157,7 @@ export function ChurchHome() {
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-10 max-w-2xl text-white">
-            <h3 id="explore-heading" className="font-serif text-3xl text-white md:text-4xl">
+            <h3 id="explore-heading" className="font-liturgical text-2xl text-white md:text-3xl">
               Explore o Rosarium
             </h3>
             <p className="mt-3 max-w-2xl text-base leading-relaxed text-white/70">
@@ -186,7 +189,7 @@ export function ChurchHome() {
                 className="border-t border-white/15 pt-8 first:border-t-0 first:pt-0"
               >
                 <div className="mb-4 flex flex-col gap-1 text-white sm:flex-row sm:items-baseline sm:gap-4">
-                  <h4 className="font-serif text-2xl">{group.title}</h4>
+                  <h4 className="font-liturgical text-xl">{group.title}</h4>
                   <p className="text-sm text-white/70">{group.description}</p>
                 </div>
                 <div
@@ -205,7 +208,7 @@ export function ChurchHome() {
                           <Icon className="h-5 w-5" />
                         </span>
                         <span>
-                          <span className="block font-serif text-lg group-hover:text-[#f0cf83]">
+                          <span className="block font-liturgical text-base group-hover:text-[#f0cf83]">
                             {section.title}
                           </span>
                           <span className="mt-1 block text-sm leading-relaxed text-white/70">
