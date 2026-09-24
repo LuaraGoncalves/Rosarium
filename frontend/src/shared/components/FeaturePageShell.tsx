@@ -43,9 +43,7 @@ export function FeaturePageHeader({
             <Icon className="h-5 w-5 stroke-[1.5]" />
           </span>
           <div>
-            <h1 className="font-serif text-2xl leading-tight text-white md:text-3xl">
-              {title}
-            </h1>
+            <h1 className="font-serif text-2xl leading-tight text-white md:text-3xl">{title}</h1>
             {subtitle && <p className="mt-1 text-sm text-white/60">{subtitle}</p>}
           </div>
         </div>
@@ -77,9 +75,7 @@ export function FeatureIntroCard({
           }`}
         >
           <div
-            className={`relative overflow-hidden bg-[#765146] ${
-              compact ? '' : 'min-h-56'
-            }`}
+            className={`relative overflow-hidden bg-[#765146] ${compact ? '' : 'min-h-56'}`}
             style={compact ? { height: 'clamp(19rem, 30vw, 24rem)' } : undefined}
           >
             <img
@@ -99,9 +95,7 @@ export function FeatureIntroCard({
                 {title}
               </h2>
             )}
-            <div
-              className={`${compact ? 'space-y-3' : 'space-y-4'} leading-relaxed text-white/75`}
-            >
+            <div className={`${compact ? 'space-y-3' : 'space-y-4'} leading-relaxed text-white/75`}>
               {children}
             </div>
           </div>

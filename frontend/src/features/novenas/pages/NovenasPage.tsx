@@ -34,11 +34,20 @@ function NovenaCard({
           <Heart className="h-5 w-5" aria-hidden="true" />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="mb-1 block text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Nove dias</span>
-          <span className="block font-serif text-xl leading-tight text-white transition-colors group-hover:text-[#f0cf83]">{novena.titulo}</span>
-          <span className="mt-2 block text-sm leading-relaxed text-white/65">{novena.descricao}</span>
+          <span className="mb-1 block text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
+            Nove dias
+          </span>
+          <span className="block font-serif text-xl leading-tight text-white transition-colors group-hover:text-[#f0cf83]">
+            {novena.titulo}
+          </span>
+          <span className="mt-2 block text-sm leading-relaxed text-white/65">
+            {novena.descricao}
+          </span>
         </span>
-        <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-white/45 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#f0cf83]" aria-hidden="true" />
+        <ArrowUpRight
+          className="mt-1 h-5 w-5 shrink-0 text-white/45 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#f0cf83]"
+          aria-hidden="true"
+        />
       </div>
 
       <span className="mt-5 flex flex-wrap items-center gap-4 text-sm text-white/55">
@@ -54,10 +63,18 @@ function NovenaCard({
         )}
       </span>
 
-      <span className="mt-4 block h-2 w-full overflow-hidden rounded-full bg-black/30" aria-label={`${percentage}% concluído`}>
-        <span className="block h-full bg-[#c99b43] transition-all duration-500" style={{ width: `${percentage}%` }} />
+      <span
+        className="mt-4 block h-2 w-full overflow-hidden rounded-full bg-black/30"
+        aria-label={`${percentage}% concluído`}
+      >
+        <span
+          className="block h-full bg-[#c99b43] transition-all duration-500"
+          style={{ width: `${percentage}%` }}
+        />
       </span>
-      <span className={`mt-4 block rounded-lg border px-3 py-2 text-xs leading-relaxed ${statusClassName}`}>
+      <span
+        className={`mt-4 block rounded-lg border px-3 py-2 text-xs leading-relaxed ${statusClassName}`}
+      >
         {progressStatus.text}
       </span>
     </button>
@@ -70,7 +87,12 @@ export function NovenasPage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#24140d] font-sans text-white">
-      <img src="/images/rosarium-church.jpg" alt="" aria-hidden="true" className="fixed inset-0 z-[-2] h-full w-full object-cover object-center" />
+      <img
+        src="/images/rosarium-church.jpg"
+        alt=""
+        aria-hidden="true"
+        className="fixed inset-0 z-[-2] h-full w-full object-cover object-center"
+      />
       <div className="fixed inset-0 z-[-1] bg-[rgba(34,18,11,.62)]" aria-hidden="true" />
 
       <header className="sticky top-0 z-50 border-b border-white/15 bg-[rgba(24,12,7,.84)] backdrop-blur-md">
@@ -89,7 +111,9 @@ export function NovenasPage() {
             </span>
             <div className="min-w-0">
               <h1 className="truncate font-serif text-2xl text-white">Novenas</h1>
-              <p className="hidden text-sm text-white/60 sm:block">Nove dias de oração e perseverança</p>
+              <p className="hidden text-sm text-white/60 sm:block">
+                Nove dias de oração e perseverança
+              </p>
             </div>
           </div>
         </div>
@@ -97,20 +121,31 @@ export function NovenasPage() {
 
       <main className="relative z-10 mx-auto max-w-6xl px-4 pb-16 sm:px-6">
         <section className="max-w-3xl border-b border-white/15 py-12 sm:py-16">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-[#e5bd68]">Perseverar na oração</p>
-          <h2 className="font-serif text-4xl leading-tight text-white sm:text-5xl">Caminhe um dia de cada vez.</h2>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-[#e5bd68]">
+            Perseverar na oração
+          </p>
+          <h2 className="font-serif text-4xl leading-tight text-white sm:text-5xl">
+            Caminhe um dia de cada vez.
+          </h2>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
-            Escolha uma intenção e permaneça em oração durante nove dias. Seu progresso fica salvo neste dispositivo e pode ser sincronizado com sua conta.
+            Escolha uma intenção e permaneça em oração durante nove dias. Seu progresso fica salvo
+            neste dispositivo e pode ser sincronizado com sua conta.
           </p>
         </section>
 
         <section aria-labelledby="novenas-heading" className="py-10 sm:py-14">
           <div className="mb-8 flex items-end justify-between gap-4">
             <div>
-              <h2 id="novenas-heading" className="font-serif text-3xl text-white sm:text-4xl">Escolha uma novena</h2>
-              <p className="mt-2 text-sm text-white/60">Encontre a oração que acompanha este momento.</p>
+              <h2 id="novenas-heading" className="font-serif text-3xl text-white sm:text-4xl">
+                Escolha uma novena
+              </h2>
+              <p className="mt-2 text-sm text-white/60">
+                Encontre a oração que acompanha este momento.
+              </p>
             </div>
-            <span className="hidden text-sm text-white/55 sm:block">{novenasData.length} opções</span>
+            <span className="hidden text-sm text-white/55 sm:block">
+              {novenasData.length} opções
+            </span>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 md:gap-5">

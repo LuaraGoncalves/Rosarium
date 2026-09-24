@@ -126,9 +126,7 @@ export function AuthModalControl() {
 
                 {isRegister && (
                   <div>
-                    <label className="mb-1.5 block text-sm font-medium text-white/75">
-                      Nome
-                    </label>
+                    <label className="mb-1.5 block text-sm font-medium text-white/75">Nome</label>
                     <input
                       type="text"
                       required
@@ -141,9 +139,7 @@ export function AuthModalControl() {
                 )}
 
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-white/75">
-                    E-mail
-                  </label>
+                  <label className="mb-1.5 block text-sm font-medium text-white/75">E-mail</label>
                   <input
                     type="email"
                     required
@@ -155,9 +151,7 @@ export function AuthModalControl() {
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-white/75">
-                    Senha
-                  </label>
+                  <label className="mb-1.5 block text-sm font-medium text-white/75">Senha</label>
                   <div className="relative">
                     <input
                       type={showPassword ? 'text' : 'password'}

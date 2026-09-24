@@ -1,13 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import {
-  ArrowRight,
-  BookOpen,
-  CalendarDays,
-  ChevronDown,
-  Church,
-  Clock3,
-} from 'lucide-react';
+import { ArrowRight, BookOpen, CalendarDays, ChevronDown, Church, Clock3 } from 'lucide-react';
 import { FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 
 const liturgicalTimes = [
@@ -82,7 +75,10 @@ export function LiturgiaPage() {
                 <span className="h-px w-8 bg-[#e5bd68]" aria-hidden="true" />
                 Um ritmo para cada tempo
               </p>
-              <h2 id="liturgia-intro" className="font-serif text-3xl leading-tight text-white md:text-5xl">
+              <h2
+                id="liturgia-intro"
+                className="font-serif text-3xl leading-tight text-white md:text-5xl"
+              >
                 Rezar com a Igreja, todos os dias.
               </h2>
               <p className="mt-4 max-w-xl text-sm leading-6 text-white/75 md:text-base">
@@ -93,17 +89,26 @@ export function LiturgiaPage() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-5xl px-4 pt-10 md:pt-14" aria-labelledby="liturgia-acessos">
+        <section
+          className="mx-auto max-w-5xl px-4 pt-10 md:pt-14"
+          aria-labelledby="liturgia-acessos"
+        >
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
-              <h2 id="liturgia-acessos" className="font-serif text-3xl text-church-text md:text-4xl">
+              <h2
+                id="liturgia-acessos"
+                className="font-serif text-3xl text-church-text md:text-4xl"
+              >
                 Comece pelo dia de hoje
               </h2>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-church-text-muted md:text-base">
                 Dois caminhos simples para acompanhar a oração e a vida da Igreja.
               </p>
             </div>
-            <Clock3 className="hidden h-7 w-7 shrink-0 text-church-accent md:block" aria-hidden="true" />
+            <Clock3
+              className="hidden h-7 w-7 shrink-0 text-church-accent md:block"
+              aria-hidden="true"
+            />
           </div>
 
           <div className="grid gap-4 md:grid-cols-[1.15fr_.85fr] md:gap-5">
@@ -121,7 +126,8 @@ export function LiturgiaPage() {
                   Leituras, salmo e Evangelho para acompanhar este dia em oração.
                 </span>
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold">
-                  Abrir leituras <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  Abrir leituras{' '}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </span>
             </button>
@@ -135,23 +141,32 @@ export function LiturgiaPage() {
                 <CalendarDays className="h-6 w-6" aria-hidden="true" />
               </span>
               <span>
-                <span className="mt-8 block font-serif text-2xl text-church-text">Calendário litúrgico</span>
+                <span className="mt-8 block font-serif text-2xl text-church-text">
+                  Calendário litúrgico
+                </span>
                 <span className="mt-2 block text-sm leading-6 text-church-text-muted">
                   Festas, solenidades e tempos que acompanham o ano da Igreja.
                 </span>
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-church-accent">
-                  Ver calendário <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  Ver calendário{' '}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </span>
             </button>
           </div>
         </section>
 
-        <section className="mx-auto max-w-5xl px-4 pt-12 md:pt-16" aria-labelledby="tempos-liturgicos">
+        <section
+          className="mx-auto max-w-5xl px-4 pt-12 md:pt-16"
+          aria-labelledby="tempos-liturgicos"
+        >
           <div className="border-t border-church-border pt-8">
             <div className="mb-6 flex items-end justify-between gap-4">
               <div>
-                <h2 id="tempos-liturgicos" className="font-serif text-3xl text-church-text md:text-4xl">
+                <h2
+                  id="tempos-liturgicos"
+                  className="font-serif text-3xl text-church-text md:text-4xl"
+                >
                   Tempos litúrgicos
                 </h2>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-church-text-muted md:text-base">
@@ -166,7 +181,10 @@ export function LiturgiaPage() {
                 const isOpen = tempoAberto === item.tempo;
 
                 return (
-                  <div key={item.tempo} className={index > 0 ? 'border-t border-church-border' : ''}>
+                  <div
+                    key={item.tempo}
+                    className={index > 0 ? 'border-t border-church-border' : ''}
+                  >
                     <button
                       type="button"
                       onClick={() => setTempoAberto(isOpen ? null : item.tempo)}
@@ -175,15 +193,24 @@ export function LiturgiaPage() {
                       aria-controls={`periodo-${item.tempo}`}
                     >
                       <span className="h-3 w-3 shrink-0 rounded-full bg-church-bg ring-4 ring-church-bg">
-                        <span className={`block h-3 w-3 rounded-full ${item.swatch}`} aria-hidden="true" />
+                        <span
+                          className={`block h-3 w-3 rounded-full ${item.swatch}`}
+                          aria-hidden="true"
+                        />
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block font-serif text-xl text-church-text">{item.tempo}</span>
-                        <span className="mt-0.5 block text-sm text-church-text-muted">{item.desc}</span>
+                        <span className="block font-serif text-xl text-church-text">
+                          {item.tempo}
+                        </span>
+                        <span className="mt-0.5 block text-sm text-church-text-muted">
+                          {item.desc}
+                        </span>
                       </span>
                       <span className="hidden text-right text-xs text-church-text-muted sm:block">
                         Cor litúrgica
-                        <span className="mt-1 block font-medium text-church-accent">{item.cor}</span>
+                        <span className="mt-1 block font-medium text-church-accent">
+                          {item.cor}
+                        </span>
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 shrink-0 text-church-accent transition-transform ${isOpen ? 'rotate-180' : ''}`}
@@ -191,7 +218,10 @@ export function LiturgiaPage() {
                       />
                     </button>
                     {isOpen && (
-                      <div id={`periodo-${item.tempo}`} className="px-4 pb-5 pl-11 md:px-6 md:pb-6 md:pl-16">
+                      <div
+                        id={`periodo-${item.tempo}`}
+                        className="px-4 pb-5 pl-11 md:px-6 md:pb-6 md:pl-16"
+                      >
                         <p className="border-l border-church-accent/60 pl-4 text-sm leading-6 text-church-text-muted">
                           {item.periodo}
                         </p>

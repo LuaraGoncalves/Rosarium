@@ -20,7 +20,9 @@ export function SiteSettingsControl() {
       {isOpen && (
         <div className="absolute right-0 top-14 z-[70] w-64 rounded-xl border border-white/20 bg-[rgba(36,20,13,.96)] p-4 text-white shadow-2xl shadow-black/40 backdrop-blur-xl">
           <div className="mb-3 border-b border-white/15 pb-3">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#e5bd68]">Preferências</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#e5bd68]">
+              Preferências
+            </p>
             <p className="mt-1 font-serif text-lg text-white">Configurações</p>
           </div>
 
@@ -28,7 +30,9 @@ export function SiteSettingsControl() {
             <ThemeToggle />
             <div>
               <p className="text-sm font-semibold text-white">Tema</p>
-              <p className="text-xs leading-relaxed text-white/60">Alterne entre claro e contemplativo.</p>
+              <p className="text-xs leading-relaxed text-white/60">
+                Alterne entre claro e contemplativo.
+              </p>
             </div>
           </div>
         </div>
