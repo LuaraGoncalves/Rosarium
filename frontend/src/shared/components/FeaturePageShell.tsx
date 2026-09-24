@@ -43,7 +43,9 @@ export function FeaturePageHeader({
             <Icon className="h-5 w-5 stroke-[1.5]" />
           </span>
           <div>
-            <h1 className="font-liturgical text-2xl leading-tight text-white md:text-3xl">{title}</h1>
+            <h1 className="font-liturgical text-2xl leading-tight text-white md:text-3xl">
+              {title}
+            </h1>
             {subtitle && <p className="mt-1 text-sm text-white/60">{subtitle}</p>}
           </div>
         </div>

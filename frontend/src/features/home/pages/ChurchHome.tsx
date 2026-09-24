@@ -112,7 +112,10 @@ export function ChurchHome() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-12">
             <div className="max-w-2xl">
-              <h3 id="start-heading" className="mb-3 font-liturgical text-2xl text-white md:text-3xl">
+              <h3
+                id="start-heading"
+                className="mb-3 font-liturgical text-2xl text-white md:text-3xl"
+              >
                 Comece por aqui
               </h3>
               <p className="max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">

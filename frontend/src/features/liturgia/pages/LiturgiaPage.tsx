@@ -121,7 +121,9 @@ export function LiturgiaPage() {
                 <BookOpen className="h-6 w-6" aria-hidden="true" />
               </span>
               <span>
-                <span className="mt-8 block font-liturgical text-xl md:text-2xl">Liturgia de hoje</span>
+                <span className="mt-8 block font-liturgical text-xl md:text-2xl">
+                  Liturgia de hoje
+                </span>
                 <span className="mt-2 block max-w-md text-sm leading-6 text-[#38241e]/75">
                   Leituras, salmo e Evangelho para acompanhar este dia em oração.
                 </span>
