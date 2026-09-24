@@ -1,4 +1,4 @@
-import { Music, Pause } from 'lucide-react';
+import { Pause, Play } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 export function PrayerMusicPlayer() {
@@ -34,26 +34,31 @@ export function PrayerMusicPlayer() {
       <button
         type="button"
         onClick={toggleMusic}
-        className="relative flex min-h-11 min-w-11 items-center justify-center overflow-hidden rounded-full border border-church-border bg-church-bg-secondary/95 p-2 text-church-text-muted shadow-sm backdrop-blur transition-colors hover:border-church-border-hover hover:text-church-accent"
+        className="group relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-[#d6ad61]/70 bg-[#080808] p-0 text-church-text-muted shadow-lg shadow-black/25 transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5bd68]"
         aria-pressed={isPlaying}
         title="Som ambiente"
         aria-label={isPlaying ? 'Pausar musica contemplativa' : 'Tocar musica contemplativa'}
       >
-        {isPlaying ? (
-          <>
-            <span
-              className="absolute h-9 w-9 animate-spin rounded-full border border-church-accent/35 bg-[conic-gradient(from_120deg,var(--church-accent)_0deg,var(--church-accent-hover)_58deg,transparent_60deg,transparent_118deg,var(--church-accent)_120deg,var(--church-accent-hover)_178deg,transparent_180deg,transparent_238deg,var(--church-accent)_240deg,var(--church-accent-hover)_298deg,transparent_300deg)] opacity-80 shadow-inner"
-              aria-hidden="true"
-            />
-            <span
-              className="absolute h-5 w-5 rounded-full bg-church-bg-secondary/95 shadow-sm"
-              aria-hidden="true"
-            />
-            <Pause className="relative h-3.5 w-3.5 text-church-accent" aria-hidden="true" />
-          </>
-        ) : (
-          <Music className="h-5 w-5" aria-hidden="true" />
-        )}
+        <span
+          className={`absolute inset-0 overflow-hidden rounded-full border border-[#3b3b3b] bg-[#090909] shadow-[inset_0_0_7px_#000,0_1px_3px_rgba(0,0,0,.5)] ${isPlaying ? 'animate-spin [animation-duration:3.5s]' : ''}`}
+          aria-hidden="true"
+        >
+          <img
+            src="/images/vinyl-record-realistic.png"
+            alt=""
+            className="h-full w-full object-cover"
+          />
+        </span>
+        <span
+          className="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 transition-opacity group-hover:opacity-100"
+          aria-hidden="true"
+        >
+          {isPlaying ? (
+            <Pause className="h-5 w-5 text-white drop-shadow" />
+          ) : (
+            <Play className="h-5 w-5 text-white drop-shadow" />
+          )}
+        </span>
       </button>
     </>
   );

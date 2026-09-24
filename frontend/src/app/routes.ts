@@ -7,6 +7,8 @@ import { oracoesRoutes } from '../features/oracoes/routes';
 import { breviarioRoutes } from '../features/breviario/routes';
 import { liturgiaRoutes } from '../features/liturgia/routes';
 import { santosRoutes } from '../features/santos/routes';
+import { CuriosidadesPage } from '../features/curiosidades/pages/CuriosidadesPage';
+import { CuriosidadesAdminPage } from '../features/curiosidades/pages/CuriosidadesAdminPage';
 import { errorRoutes } from '../features/erros/routes';
 import { AppFloatingControls } from '../shared/components/AppFloatingControls';
 
@@ -21,11 +23,14 @@ function ScrollToTop() {
 }
 
 function RootRoute() {
+  const { pathname } = useLocation();
+  const isHome = pathname === '/' || pathname === '/igreja';
+
   return createElement(
     Fragment,
     null,
     createElement(ScrollToTop),
-    createElement(AppFloatingControls),
+    isHome ? null : createElement(AppFloatingControls),
     createElement(Outlet)
   );
 }
@@ -107,6 +112,8 @@ export const router = createBrowserRouter([
       ...breviarioRoutes,
       ...liturgiaRoutes,
       ...santosRoutes,
+      { path: '/curiosidades', Component: CuriosidadesPage },
+      { path: '/curiosidades/admin', Component: CuriosidadesAdminPage },
       ...errorRoutes,
     ],
   },

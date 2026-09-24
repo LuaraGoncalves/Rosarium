@@ -60,11 +60,29 @@ model Santo {
   origem            String?
   categoria         String?
   fraseMarcante     String?
+  curiosidades      Curiosidade[]
 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
   @@unique([nome, diaFesta])
+}
+
+model Curiosidade {
+  id          Int      @id @default(autoincrement())
+  titulo      String
+  conteudo    String
+  fonte       String
+  fonteUrl    String
+  imagemUrl   String?
+  santoId     Int?
+  santo       Santo?  @relation(fields: [santoId], references: [id], onDelete: SetNull)
+  publicado   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([santoId])
+  @@map("curiosidades")
 }
 
 model SantoDoDia {
