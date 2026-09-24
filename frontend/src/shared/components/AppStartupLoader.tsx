@@ -49,14 +49,23 @@ export function AppStartupLoader({ children }: AppStartupLoaderProps) {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(126,83,46,.28),transparent_48%)]" />
       <div className="relative flex flex-col items-center px-6 text-center">
         <div className="rosarium-loading-mark relative flex h-24 w-24 items-center justify-center rounded-full border border-[#e5bd68]/40 bg-[#6d452d]/45 shadow-[0_0_45px_rgba(229,189,104,.16)]">
-          <div className="absolute inset-3 rounded-full border border-[#e5bd68]/20" aria-hidden="true" />
-          <Cross className="h-10 w-10 text-[#f0cf83] drop-shadow-[0_0_12px_rgba(240,207,131,.38)]" strokeWidth={1.4} />
+          <div
+            className="absolute inset-3 rounded-full border border-[#e5bd68]/20"
+            aria-hidden="true"
+          />
+          <Cross
+            className="h-10 w-10 text-[#f0cf83] drop-shadow-[0_0_12px_rgba(240,207,131,.38)]"
+            strokeWidth={1.4}
+          />
         </div>
         <p className="mt-7 font-serif text-3xl tracking-wide text-[#f0cf83]">Rosarium</p>
         <p className="mt-3 max-w-xs text-sm leading-6 text-white/65">
           Prepare o coração. Sua oração está começando.
         </p>
-        <span className="mt-7 h-1 w-1 rounded-full bg-[#f0cf83] shadow-[0_0_0_5px_rgba(240,207,131,.12)]" aria-hidden="true" />
+        <span
+          className="mt-7 h-1 w-1 rounded-full bg-[#f0cf83] shadow-[0_0_0_5px_rgba(240,207,131,.12)]"
+          aria-hidden="true"
+        />
       </div>
     </main>
   );
