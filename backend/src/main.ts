@@ -9,13 +9,22 @@ import { swaggerSpec } from './config/swagger';
 import { setupCronJobs } from './config/cron';
 
 const app = express();
+const developmentOrigins =
+  env.NODE_ENV === 'production'
+    ? []
+    : [
+        'http://localhost:3000',
+        'http://localhost:5173',
+        'http://127.0.0.1:3000',
+        'http://127.0.0.1:5173',
+      ];
 const allowedOrigins = new Set(
   [
     env.FRONTEND_URL,
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'http://127.0.0.1:3000',
-    'http://127.0.0.1:5173',
+    ...env.FRONTEND_ALLOWED_ORIGINS.split(',')
+      .map((origin) => origin.trim())
+      .filter(Boolean),
+    ...developmentOrigins,
   ].filter(Boolean)
 );
 
@@ -32,9 +41,8 @@ app.use(
       }
 
       try {
-        const url = new URL(origin);
-        const isVercelPreview = url.hostname.endsWith('.vercel.app');
-        if (allowedOrigins.has(origin) || isVercelPreview) {
+        new URL(origin);
+        if (allowedOrigins.has(origin)) {
           callback(null, true);
           return;
         }

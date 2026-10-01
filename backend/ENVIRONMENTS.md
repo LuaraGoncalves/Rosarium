@@ -32,6 +32,7 @@ Variaveis recomendadas:
 - `JWT_SECRET`
 - `JWT_EXPIRES_IN`
 - `FRONTEND_URL`
+- `FRONTEND_ALLOWED_ORIGINS`
 - `ADMIN_EMAILS`
 
 `ADMIN_EMAILS` deve receber uma lista de e-mails separados por virgula. Esses e-mails podem acessar rotas administrativas de escrita, como criacao/edicao de santos e liturgia.
