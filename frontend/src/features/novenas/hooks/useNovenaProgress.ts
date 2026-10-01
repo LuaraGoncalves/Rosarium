@@ -128,8 +128,7 @@ export function useNovenaProgress(novenaId: string) {
             setCompletedDays(syncedDays);
             serverDaysRef.current = syncedDays;
             localStorage.setItem(progressKey, JSON.stringify(syncedDays));
-            if (data.updatedAt)
-              localStorage.setItem(updatedAtKey, data.updatedAt);
+            if (data.updatedAt) localStorage.setItem(updatedAtKey, data.updatedAt);
             setSyncStatus('saved');
             setTimeout(() => setSyncStatus('idle'), 3000);
             return;
@@ -154,8 +153,7 @@ export function useNovenaProgress(novenaId: string) {
               setCompletedDays(mergedDays);
               serverDaysRef.current = serverData.completedDays;
               localStorage.setItem(progressKey, JSON.stringify(mergedDays));
-              if (serverData.updatedAt)
-                localStorage.setItem(updatedAtKey, serverData.updatedAt);
+              if (serverData.updatedAt) localStorage.setItem(updatedAtKey, serverData.updatedAt);
               setSyncStatus('saved');
               setTimeout(() => setSyncStatus('idle'), 3000);
               return;
@@ -236,8 +234,7 @@ export function useNovenaProgress(novenaId: string) {
         });
 
         serverDaysRef.current = data.completedDays;
-        if (data.updatedAt)
-          localStorage.setItem(updatedAtKey, data.updatedAt);
+        if (data.updatedAt) localStorage.setItem(updatedAtKey, data.updatedAt);
         localStorage.removeItem(pendingSyncKey);
 
         setSyncStatus('saved');
@@ -249,8 +246,7 @@ export function useNovenaProgress(novenaId: string) {
           setCompletedDays(mergedDays);
           serverDaysRef.current = serverData.completedDays;
           localStorage.setItem(progressKey, JSON.stringify(mergedDays));
-          if (serverData.updatedAt)
-            localStorage.setItem(updatedAtKey, serverData.updatedAt);
+          if (serverData.updatedAt) localStorage.setItem(updatedAtKey, serverData.updatedAt);
           localStorage.removeItem(pendingSyncKey);
           setSyncStatus('saved');
           setTimeout(() => setSyncStatus('idle'), 3000);
