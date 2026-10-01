@@ -43,6 +43,11 @@ interface PrismaWithNovena {
 
 const db = prisma as unknown as PrismaWithNovena;
 
+export const novenaProgressBodySchema = z.object({
+  completedDays: z.array(z.number().int().min(1).max(9)).max(9),
+  localUpdatedAt: z.string().datetime().optional(),
+});
+
 const normalizeParam = (value: string | string[] | undefined) => {
   if (Array.isArray(value)) {
     return value[0];
@@ -57,6 +62,9 @@ export class NovenasController {
       const novenaId = normalizeParam(req.params.novenaId);
       if (!novenaId) {
         throw new AppError('novenaId é obrigatório.', 400);
+      }
+      if (novenaId.length > 100) {
+        throw new AppError('novenaId inválido.', 400);
       }
 
       const userId = (req as Request & { user?: { id: string } }).user?.id;
@@ -89,18 +97,16 @@ export class NovenasController {
       if (!novenaId) {
         throw new AppError('novenaId é obrigatório.', 400);
       }
+      if (novenaId.length > 100) {
+        throw new AppError('novenaId inválido.', 400);
+      }
       const userId = (req as Request & { user?: { id: string } }).user?.id;
 
       if (!userId) {
         throw new AppError('Não autorizado.', 401);
       }
 
-      const bodySchema = z.object({
-        completedDays: z.array(z.number()),
-        localUpdatedAt: z.string().datetime().optional(),
-      });
-
-      const { completedDays, localUpdatedAt } = bodySchema.parse(req.body);
+      const { completedDays, localUpdatedAt } = novenaProgressBodySchema.parse(req.body);
 
       const currentProgress = await db.novenaProgress.findUnique({
         where: {
