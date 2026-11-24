@@ -1,4 +1,4 @@
-import { Disc3, Minus, Music, Pause, Plus } from 'lucide-react';
+import { Minus, Pause, Plus, Play } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 export function PrayerMusicPlayer() {
@@ -59,16 +59,26 @@ export function PrayerMusicPlayer() {
           title={isPlaying ? 'Pausar e controlar volume' : 'Tocar e controlar volume'}
           aria-label={isPlaying ? 'Pausar e controlar volume' : 'Tocar e controlar volume'}
         >
-          {isPlaying ? (
-            <Disc3 className="h-9 w-9 animate-spin text-church-accent/65" aria-hidden="true" />
-          ) : (
-            <Music className="h-5 w-5" aria-hidden="true" />
-          )}
-          {isPlaying && (
-            <span className="absolute inset-0 flex items-center justify-center">
-              <Pause className="h-4 w-4 text-church-accent" aria-hidden="true" />
-            </span>
-          )}
+          <span
+            className={`absolute inset-0 overflow-hidden rounded-md border border-[#3b3b3b] bg-[#090909] shadow-[inset_0_0_7px_#000,0_1px_3px_rgba(0,0,0,.5)] ${isPlaying ? 'animate-spin [animation-duration:3.5s]' : ''}`}
+            aria-hidden="true"
+          >
+            <img
+              src="/images/vinyl-record-realistic.png"
+              alt=""
+              className="h-full w-full object-cover"
+            />
+          </span>
+          <span
+            className="absolute inset-0 flex items-center justify-center bg-black/10"
+            aria-hidden="true"
+          >
+            {isPlaying ? (
+              <Pause className="h-4 w-4 text-white drop-shadow" />
+            ) : (
+              <Play className="h-4 w-4 text-white drop-shadow" />
+            )}
+          </span>
         </button>
 
         {isVolumeOpen && (
