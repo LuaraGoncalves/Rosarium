@@ -1,17 +1,80 @@
+import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { ArrowLeft, CalendarDays, MapPin, Tag, Shield, Clock, BookHeart } from 'lucide-react';
+import {
+  CalendarDays,
+  MapPin,
+  Tag,
+  Shield,
+  Clock,
+  BookHeart,
+  ChevronDown,
+  ChevronUp,
+} from 'lucide-react';
 import { useSanto } from '../hooks/useSanto';
+import { FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 
 export function SantoDetalhePage() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
   const { santo, loading, error } = useSanto(id);
+  const [activeParagraphIndex, setActiveParagraphIndex] = useState(0);
+  const paragraphRefs = useRef<Array<HTMLParagraphElement | null>>([]);
   const historiaParagraphs =
     santo?.historia
       ?.split(/\n{2,}|\r?\n/)
       .map((paragraph) => paragraph.trim())
       .filter(Boolean) ?? [];
+  const hasHistoria = historiaParagraphs.length > 0;
+  const activeParagraphLabel = hasHistoria
+    ? `Trecho ${activeParagraphIndex + 1} de ${historiaParagraphs.length}`
+    : 'Sem trechos para acompanhar';
+
+  useEffect(() => {
+    setActiveParagraphIndex(0);
+    paragraphRefs.current = [];
+  }, [santo?.id]);
+
+  useEffect(() => {
+    if (!hasHistoria && activeParagraphIndex !== 0) {
+      setActiveParagraphIndex(0);
+      return;
+    }
+
+    if (activeParagraphIndex > historiaParagraphs.length - 1) {
+      setActiveParagraphIndex(Math.max(historiaParagraphs.length - 1, 0));
+    }
+  }, [activeParagraphIndex, hasHistoria, historiaParagraphs.length]);
+
+  const moveActiveParagraph = (direction: 'previous' | 'next') => {
+    if (!hasHistoria) return;
+
+    setActiveParagraphIndex((currentIndex) => {
+      const nextIndex =
+        direction === 'previous'
+          ? Math.max(currentIndex - 1, 0)
+          : Math.min(currentIndex + 1, historiaParagraphs.length - 1);
+
+      paragraphRefs.current[nextIndex]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+
+      return nextIndex;
+    });
+  };
+
+  const handleHistoriaKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      moveActiveParagraph('previous');
+    }
+
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      moveActiveParagraph('next');
+    }
+  };
 
   if (loading) {
     return (
@@ -45,21 +108,17 @@ export function SantoDetalhePage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans pb-24">
-      <header className="bg-church-bg/95 border-b border-church-border sticky top-0 z-50 py-4 backdrop-blur-sm">
-        <div className="max-w-5xl mx-auto px-4">
-          <button
-            onClick={() => navigate('/santos')}
-            className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors font-medium"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Voltar aos Santos
-          </button>
-        </div>
-      </header>
+      <FeaturePageHeader
+        icon={BookHeart}
+        title={santo.nome}
+        subtitle={santo.descricaoCurta || 'História e testemunho de fé.'}
+        backLabel="Voltar aos Santos"
+        onBack={() => navigate('/santos')}
+      />
 
       <main className="max-w-5xl mx-auto px-4 py-8 md:py-10">
         {/* Header Content with Image and Title */}
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 mb-8 md:mb-10 bg-church-bg-secondary p-6 md:p-10 rounded-lg border border-church-border shadow-sm">
+        <div className="mb-8 flex flex-col items-center gap-6 rounded-[1.75rem] bg-church-bg-secondary p-6 shadow-xl shadow-church-bg-darker/10 md:mb-10 md:flex-row md:items-start md:gap-8 md:p-10">
           {/* Image - Smaller & Circular */}
           <div className="shrink-0">
             {santo.imagemUrl ? (
@@ -88,7 +147,7 @@ export function SantoDetalhePage() {
               </p>
             )}
             {santo.fraseMarcante && (
-              <blockquote className="text-lg font-serif italic text-church-text/90 border-l-4 border-church-accent-hover/60 pl-5 py-2 mt-2 bg-church-bg/30 rounded-r-lg">
+              <blockquote className="mt-2 rounded-lg border border-church-border/70 bg-church-bg/40 px-5 py-3 font-serif text-lg italic text-church-text/90 shadow-sm">
                 "{santo.fraseMarcante}"
               </blockquote>
             )}
@@ -99,7 +158,7 @@ export function SantoDetalhePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
           {/* Sidebar - Ficha */}
           <div className="lg:col-span-4">
-            <div className="bg-church-bg-secondary rounded-lg p-5 md:p-8 border border-church-border shadow-sm lg:sticky lg:top-24">
+            <div className="rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 md:p-8 lg:sticky lg:top-24">
               <h3 className="text-xs md:text-sm uppercase text-church-accent font-semibold mb-6 flex items-center gap-2 pb-4 border-b border-church-border/70">
                 Ficha do Santo
               </h3>
@@ -195,11 +254,38 @@ export function SantoDetalhePage() {
 
           {/* Main Content - History */}
           <div className="lg:col-span-8">
-            <div className="min-h-full rounded-lg border border-church-border bg-church-bg-secondary p-4 shadow-sm md:p-10">
-              <h2 className="mb-3 flex items-center gap-4 font-serif text-2xl text-church-accent md:text-3xl">
-                História
-                <div className="h-px bg-church-border/60 flex-1 mt-1"></div>
-              </h2>
+            <div className="min-h-full rounded-[1.5rem] bg-church-bg-secondary p-4 shadow-md shadow-church-bg-darker/10 md:p-10">
+              <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <h2 className="flex items-center gap-4 font-serif text-2xl text-church-accent md:text-3xl">
+                  História
+                  <div className="h-px bg-church-border/60 flex-1 mt-1 md:w-24"></div>
+                </h2>
+                {hasHistoria && (
+                  <div className="flex items-center justify-between gap-3 rounded-full border border-church-border/70 bg-church-bg px-3 py-2 text-sm text-church-text-muted shadow-inner md:justify-end">
+                    <span className="min-w-24 text-center font-medium">{activeParagraphLabel}</span>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => moveActiveParagraph('previous')}
+                        disabled={activeParagraphIndex === 0}
+                        className="rounded-full p-1.5 text-church-accent transition-colors hover:bg-church-bg-secondary disabled:cursor-not-allowed disabled:text-church-text-muted/45"
+                        aria-label="Voltar para o trecho anterior"
+                      >
+                        <ChevronUp className="h-4 w-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => moveActiveParagraph('next')}
+                        disabled={activeParagraphIndex === historiaParagraphs.length - 1}
+                        className="rounded-full p-1.5 text-church-accent transition-colors hover:bg-church-bg-secondary disabled:cursor-not-allowed disabled:text-church-text-muted/45"
+                        aria-label="Avançar para o próximo trecho"
+                      >
+                        <ChevronDown className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
               <div className="mx-auto max-w-[76ch] rounded-sm border border-church-border/70 bg-church-bg/70 px-5 py-7 shadow-[0_18px_45px_rgba(79,45,31,0.08)] md:px-10 md:py-10">
                 <header className="mb-8 border-b border-church-border/70 pb-5 text-center">
                   <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-church-text-muted">
@@ -210,12 +296,26 @@ export function SantoDetalhePage() {
                   </h3>
                 </header>
 
-                <article className="font-serif text-[1.02rem] leading-[1.75] text-church-text/90 [hyphens:auto] md:text-[1.08rem] md:leading-[1.8]">
+                <article
+                  className="font-serif text-[1.02rem] leading-[1.75] text-church-text/90 outline-none [hyphens:auto] focus-visible:ring-2 focus-visible:ring-church-accent/35 md:text-[1.08rem] md:leading-[1.8]"
+                  tabIndex={hasHistoria ? 0 : undefined}
+                  aria-label="História com acompanhamento por trecho. Use as setas para cima e para baixo."
+                  onKeyDown={handleHistoriaKeyDown}
+                >
                   {historiaParagraphs.length > 0 ? (
                     historiaParagraphs.map((paragraph, index) => (
                       <p
                         key={`${paragraph.slice(0, 24)}-${index}`}
-                        className="mb-3 text-justify [text-align-last:auto] [text-indent:1.25cm] last:mb-0"
+                        ref={(element) => {
+                          paragraphRefs.current[index] = element;
+                        }}
+                        onClick={() => setActiveParagraphIndex(index)}
+                        className={`mb-3 cursor-pointer rounded-xl px-3 py-2 text-justify transition-colors [text-align-last:auto] [text-indent:1.25cm] last:mb-0 ${
+                          activeParagraphIndex === index
+                            ? 'bg-church-accent/10 text-church-text shadow-inner ring-1 ring-church-accent/25'
+                            : 'hover:bg-church-bg-secondary/70'
+                        }`}
+                        aria-current={activeParagraphIndex === index ? 'true' : undefined}
                       >
                         {paragraph}
                       </p>

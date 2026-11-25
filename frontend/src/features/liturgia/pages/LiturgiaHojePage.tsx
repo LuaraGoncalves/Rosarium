@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
-import { ArrowLeft, BookOpen } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
 import { useLiturgia } from '../hooks/useLiturgia';
+import { FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 
 export function LiturgiaHojePage() {
   const navigate = useNavigate();
@@ -30,36 +31,19 @@ export function LiturgiaHojePage() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans pb-24">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
-        <div className="max-w-3xl mx-auto px-4">
-          <div className="mb-4">
-            <button
-              onClick={() => navigate('/liturgia')}
-              className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Voltar à Liturgia
-            </button>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-3">
-            <BookOpen className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-2xl md:text-3xl text-center font-serif text-church-accent">
-              Liturgia de Hoje
-            </h1>
-            <p className="text-church-text/60 mt-1">
-              {liturgia.data} • {liturgia.liturgia}
-            </p>
-            <span className="inline-block px-3 py-1 mt-2 rounded-full text-xs font-medium border border-church-border-hover bg-church-bg-secondary text-church-text/80">
-              Cor litúrgica: <span className="text-church-accent">{liturgia.cor}</span>
-            </span>
-          </div>
-        </div>
-      </header>
+      <FeaturePageHeader
+        icon={BookOpen}
+        title="Liturgia de Hoje"
+        subtitle={`${liturgia.data} • ${liturgia.liturgia} • Cor litúrgica: ${liturgia.cor}`}
+        backLabel="Voltar à Liturgia"
+        onBack={() => navigate('/liturgia')}
+        maxWidthClassName="max-w-3xl"
+      />
 
       <div className="max-w-3xl mx-auto px-4 py-8 md:py-12 space-y-8 md:space-y-12 text-base md:text-lg leading-relaxed text-church-text/90">
         {/* Primeira Leitura */}
         {liturgia.primeiraLeitura && (
-          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-lg border border-church-border-hover">
+          <div className="rounded-[1.5rem] bg-church-bg-secondary p-6 shadow-md shadow-church-bg-darker/10 md:p-8">
             <h3 className="text-church-accent-hover font-serif mb-2 uppercase text-sm text-center">
               Primeira Leitura
             </h3>
@@ -74,7 +58,7 @@ export function LiturgiaHojePage() {
 
         {/* Salmo */}
         {liturgia.salmo && (
-          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-lg border border-church-border-hover">
+          <div className="rounded-[1.5rem] bg-church-bg-secondary p-6 shadow-md shadow-church-bg-darker/10 md:p-8">
             <h3 className="text-church-accent-hover font-serif mb-2 uppercase text-sm text-center">
               Salmo Responsorial
             </h3>
@@ -90,7 +74,7 @@ export function LiturgiaHojePage() {
 
         {/* Segunda Leitura */}
         {liturgia.segundaLeitura && liturgia.segundaLeitura.texto && (
-          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-lg border border-church-border-hover">
+          <div className="rounded-[1.5rem] bg-church-bg-secondary p-6 shadow-md shadow-church-bg-darker/10 md:p-8">
             <h3 className="text-church-accent-hover font-serif mb-2 uppercase text-sm text-center">
               Segunda Leitura
             </h3>
@@ -105,7 +89,7 @@ export function LiturgiaHojePage() {
 
         {/* Evangelho */}
         {liturgia.evangelho && (
-          <div className="bg-church-bg-secondary p-6 md:p-8 rounded-lg border border-church-accent-hover/30 shadow-[0_0_15px_rgba(200,155,60,0.1)]">
+          <div className="rounded-[1.5rem] bg-church-bg-secondary p-6 shadow-xl shadow-church-bg-darker/15 md:p-8">
             <h3 className="text-church-accent-hover font-serif mb-2 uppercase text-sm text-center">
               Evangelho
             </h3>

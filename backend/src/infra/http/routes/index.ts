@@ -4,6 +4,8 @@ import liturgiaRoutes from '@/infra/http/routes/liturgia.routes';
 import authRoutes from '@/infra/http/routes/auth.routes';
 import { novenasRoutes } from '@/infra/http/routes/novenas.routes';
 import healthRoutes from '@/infra/http/routes/health.routes';
+import rosarioRoutes from '@/infra/http/routes/rosario.routes';
+import curiosidadesRoutes from '@/infra/http/routes/curiosidades.routes';
 
 const router = Router();
 
@@ -12,5 +14,7 @@ router.use('/santos', santosRoutes);
 router.use('/liturgia', liturgiaRoutes);
 router.use('/auth', authRoutes);
 router.use('/novenas', novenasRoutes);
+router.use('/rosario', rosarioRoutes);
+router.use('/curiosidades', curiosidadesRoutes);
 
 export default router;

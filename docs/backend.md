@@ -7,7 +7,7 @@ O Backend do Rosarium adota um padrão de arquitetura modularizado (**Module-Bas
 **Responsabilidade:** Encapsular toda a lógica, validação, serviços e integrações específicas para cada entidade de domínio do sistema (ex: `santos/`, `liturgia/`, `auth/`, `novenas/`).
 **Estrutura de cada Domínio:**
 
-- `[nome].controller.ts`: Orquestra requisições e respostas HTTP. Traduz as chamadas da rota para os serviços adequados. Totalmente agnóstico de lógicas de banco de dados.
+- `[nome].controller.ts`: Orquestra requisições e respostas HTTP. Sempre que possível, traduz as chamadas da rota para services/use-cases, mantendo regras de negócio fora da camada HTTP.
 - `[nome].service.ts`: O "coração" da regra de negócio. Aqui são executadas regras específicas, processamento de dados, comunicação com repositórios e serviços de terceiros.
 - `[nome].routes.ts`: Definições das rotas e injeção de middlewares específicos.
 - `[nome].dto.ts` ou `validators/`: Objeto de Transferência de Dados e esquemas de validação (ex: Zod) para garantir a integridade dos dados da requisição.
@@ -36,7 +36,7 @@ O Backend do Rosarium adota um padrão de arquitetura modularizado (**Module-Bas
 
 Scripts oficiais:
 
-- `pnpm --dir backend santo:update`: atualiza o Santo do Dia no banco e é a mesma rotina usada pelo cron.
+- `pnpm --dir backend santo:update`: atualiza o Santo do Dia usando o use-case oficial, que arquiva o santo anterior antes de trocar o registro do dia quando necessario. O cron chama essa mesma rotina.
 - `pnpm --dir backend santo:test-scraper`: testa o scraper do Santo do Dia sem ficar dentro de `src/`.
 
 Scripts pontuais de correção manual não devem ficar versionados quando deixam de ser necessários.
@@ -53,6 +53,7 @@ Scripts pontuais de correção manual não devem ficar versionados quando deixam
 ## 6. Saúde da API
 
 - `GET /api/health` retorna um JSON simples com `status`, `uptime` e `timestamp`.
+- Rotas publicas de leitura ficam abertas para visitantes. Rotas administrativas de escrita exigem login e e-mail listado em `ADMIN_EMAILS`.
 - O bootstrap da aplicação fica em `src/main.ts` e a execução do servidor em `src/infra/http/server.ts`.
 - As rotas são agregadas em `src/infra/http/routes/index.ts`, mantendo o domínio separado por módulo.
 

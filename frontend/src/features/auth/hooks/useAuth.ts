@@ -1,19 +1,27 @@
 import { useState, useEffect } from 'react';
 import { authApi, type AuthUser } from '../services/auth.api';
 
-export function useAuth() {
-  const [user, setUser] = useState<AuthUser | null>(() => {
-    const storedUser = localStorage.getItem('@Rosarium:user');
-    if (!storedUser) {
-      return null;
-    }
+export const AUTH_CHANGED_EVENT = 'rosarium-auth-changed';
 
-    try {
-      return JSON.parse(storedUser) as AuthUser;
-    } catch {
-      return null;
-    }
-  });
+function getStoredUser() {
+  const storedUser = localStorage.getItem('@Rosarium:user');
+  if (!storedUser) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(storedUser) as AuthUser;
+  } catch {
+    return null;
+  }
+}
+
+export function notifyAuthChanged() {
+  window.dispatchEvent(new Event(AUTH_CHANGED_EVENT));
+}
+
+export function useAuth() {
+  const [user, setUser] = useState<AuthUser | null>(() => getStoredUser());
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -51,6 +59,20 @@ export function useAuth() {
     };
   }, []);
 
+  useEffect(() => {
+    const updateFromStorage = () => {
+      setUser(getStoredUser());
+    };
+
+    window.addEventListener(AUTH_CHANGED_EVENT, updateFromStorage);
+    window.addEventListener('storage', updateFromStorage);
+
+    return () => {
+      window.removeEventListener(AUTH_CHANGED_EVENT, updateFromStorage);
+      window.removeEventListener('storage', updateFromStorage);
+    };
+  }, []);
+
   const logout = async () => {
     try {
       await authApi.logout();
@@ -58,6 +80,7 @@ export function useAuth() {
       localStorage.removeItem('@Rosarium:token');
       localStorage.removeItem('@Rosarium:user');
       setUser(null);
+      notifyAuthChanged();
     }
   };
 

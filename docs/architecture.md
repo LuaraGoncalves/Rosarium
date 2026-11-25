@@ -7,7 +7,7 @@ A arquitetura do Rosarium foi desenvolvida para promover manutenibilidade, escal
 ## 1. Visão Geral do Ecossistema
 
 - **Frontend:** React + Vite, TypeScript. Padrão arquitetural **Feature-Based** e modular.
-- **Backend:** Node.js + Express.js, TypeScript, ORM Prisma. Padrão arquitetural **Module-Based** e **Clean Architecture**.
+- **Backend:** Node.js + Express.js, TypeScript, ORM Prisma. Padrão arquitetural **Module-Based**, com principios de **Clean Architecture** aplicados de forma gradual.
 - **Infraestrutura/Comum:** Monorepo, linting rigoroso (ESLint + Prettier), commitlint e CI/CD.
 
 ---
@@ -45,16 +45,16 @@ Para mais detalhes da implementação do Frontend, consulte [Arquitetura Fronten
 
 ## 3. Princípios de Arquitetura do Backend
 
-O Backend foi estruturado em módulos independentes (`domains/`), com uma camada de infraestrutura compartilhada (`shared/`), utilizando princípios da **Clean Architecture** e **Domain-Driven Design (DDD)** simplificado.
+O Backend foi estruturado em módulos independentes (`domains/`), com uma camada de infraestrutura compartilhada (`shared/`), usando princípios de **Clean Architecture** e **Domain-Driven Design (DDD)** simplificado como direcao de evolucao.
 
 ### `domains/` (Domínios de Negócio)
 
 A divisão principal da lógica da API (ex: `santos/`, `liturgia/`, `auth/`). Cada domínio encapsula suas próprias regras e rotas, mantendo independência de outros domínios:
 
-- **`Controllers`:** Traduzem requisições HTTP e chamam os serviços (Services). Agem apenas na camada de transporte.
-- **`Services`:** A lógica de negócio essencial. Não sabem nada sobre Express e HTTP, dependem de DTOs e Repositórios.
+- **`Controllers`:** Traduzem requisições HTTP e devem concentrar apenas a orquestracao da chamada.
+- **`Services`:** A lógica de negócio essencial. Devem ficar livres de Express/HTTP e, quando possivel, depender de DTOs e Repositórios.
 - **`Routes`:** Declaram os endpoints e injetam os middlewares de validação/autenticação adequados.
-- **`Repositories`:** Ocupam a camada de dados. Isolam a comunicação com o Prisma e o banco de dados.
+- **`Repositories`:** Ocupam a camada de dados quando o dominio ja foi extraido para esse padrao. Isolam a comunicação com o Prisma e o banco de dados.
 
 ### `shared/` (Infraestrutura Global)
 

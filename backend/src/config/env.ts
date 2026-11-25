@@ -22,8 +22,12 @@ const envSchema = z.object({
   PORT: z.string().default('3001'),
   DATABASE_URL: z.string().min(1, 'DATABASE_URL é obrigatória.'),
   FRONTEND_URL: z.string().url().optional(),
+  FRONTEND_ALLOWED_ORIGINS: z.string().default(''),
+  ADMIN_EMAILS: z.string().optional().default(''),
   JWT_SECRET: z.string().min(12, 'JWT_SECRET deve ter pelo menos 12 caracteres.'),
   JWT_EXPIRES_IN: z.string().default('7d'),
+  SAINTS_API_URL: z.string().url().default('https://livesofthesaintscalendar.com/api/v1'),
+  SAINTS_API_KEY: z.string().optional(),
 });
 
 export const env = envSchema.parse(process.env);

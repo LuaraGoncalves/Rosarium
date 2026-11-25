@@ -44,6 +44,114 @@ export function detectCategoria(nome: string, historia: string): CategoriaSanto 
   return CategoriaSanto.MEMORIA;
 }
 
+function normalizeText(text: string): string {
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
+function includesAny(text: string, terms: string[]): boolean {
+  return terms.some((term) => {
+    const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp(`(^|[^a-z])${escapedTerm}(?=$|[^a-z])`).test(text);
+  });
+}
+
+export function detectIntercessao(nome: string, historia: string, padroeiroDe?: string): string {
+  const normalizedName = normalizeText(nome);
+  const thematicText = normalizeText(`${historia} ${padroeiroDe ?? ''}`);
+
+  const specificIntercessions = [
+    {
+      terms: ['santa rita', 'rita de cassia'],
+      intercessao: 'Causas impossíveis, famílias, perdão e reconciliação',
+    },
+    {
+      terms: ['sao jose operario', 'jose operario'],
+      intercessao: 'Trabalho, trabalhadores, dignidade profissional e sustento das famílias',
+    },
+    {
+      terms: ['jose moscati'],
+      intercessao: 'Médicos, enfermos, profissionais da saúde e estudantes de medicina',
+    },
+    {
+      terms: ['sao jose', 'jose esposo'],
+      intercessao: 'Famílias, pais, trabalhadores, proteção da Igreja e boa morte',
+    },
+    {
+      terms: ['frei galvao', 'antonio de santanna galvao', 'santanna galvao'],
+      intercessao: 'Enfermos, gestantes, famílias e profissionais da construção civil',
+    },
+    {
+      terms: ['santo antonio', 'antonio de padua'],
+      intercessao: 'Famílias, pobres, pessoas que buscam matrimônio e objetos perdidos',
+    },
+    {
+      terms: ['sao francisco de assis', 'francisco de assis'],
+      intercessao: 'Paz, simplicidade, pobres, criação e conversão do coração',
+    },
+    {
+      terms: ['santa teresinha', 'teresa do menino jesus', 'teresinha do menino jesus'],
+      intercessao: 'Missionários, vocações, confiança em Deus e pequenas ações feitas com amor',
+    },
+    {
+      terms: ['santo expedito'],
+      intercessao: 'Causas urgentes, decisões difíceis e perseverança na fé',
+    },
+    {
+      terms: ['sao bento'],
+      intercessao: 'Proteção espiritual, vida de oração, estudantes e comunidades religiosas',
+    },
+    {
+      terms: ['santa luzia'],
+      intercessao: 'Saúde dos olhos, visão, luz espiritual e fidelidade em meio às provações',
+    },
+    {
+      terms: ['sao bras', 'sao braz'],
+      intercessao: 'Doenças da garganta, proteção da voz e saúde dos enfermos',
+    },
+  ];
+
+  const matchedIntercession = specificIntercessions.find(({ terms }) =>
+    includesAny(normalizedName, terms)
+  );
+
+  if (matchedIntercession) {
+    return matchedIntercession.intercessao;
+  }
+
+  if (includesAny(thematicText, ['medico', 'hospital', 'enfermo', 'doente', 'cura'])) {
+    return 'Enfermos, profissionais da saúde, cuidado com os doentes e esperança na cura';
+  }
+
+  if (includesAny(thematicText, ['familia', 'matrimonio', 'esposo', 'esposa', 'mae', 'pai'])) {
+    return 'Famílias, matrimônios, pais, mães e reconciliação no lar';
+  }
+
+  if (includesAny(thematicText, ['trabalhador', 'operario', 'carpinteiro', 'oficio'])) {
+    return 'Trabalho, trabalhadores, sustento diário e santificação da vida profissional';
+  }
+
+  if (includesAny(thematicText, ['missionario', 'evangelizacao', 'pregacao', 'evangelho'])) {
+    return 'Missionários, evangelização, anúncio do Evangelho e perseverança apostólica';
+  }
+
+  if (includesAny(thematicText, ['martir', 'martirio', 'perseguicao'])) {
+    return 'Coragem na fé, cristãos perseguidos, perseverança e fidelidade a Cristo';
+  }
+
+  if (includesAny(thematicText, ['bispo', 'papa', 'pastor', 'sacerdote'])) {
+    return 'Pastores da Igreja, sacerdotes, liderança cristã e fidelidade ao serviço de Deus';
+  }
+
+  if (includesAny(thematicText, ['virgem', 'castidade', 'pureza'])) {
+    return 'Pureza, castidade, juventude e consagração a Deus';
+  }
+
+  return 'Intercede por nós junto a Deus';
+}
+
 export function parseSantoHtml(html: string): Result<SantoScrapedData> {
   try {
     const $ = cheerio.load(html);
@@ -75,7 +183,7 @@ export function parseSantoHtml(html: string): Result<SantoScrapedData> {
       paragrafosUnicos.slice(0, 3).join(' ').substring(0, 300).trim() || historiaCompleta;
 
     let padroeiroDe: string | undefined = undefined;
-    const intercessao = 'Intercede por nós junto a Deus';
+    let intercessao = 'Intercede por nós junto a Deus';
     let fraseMarcante: string | undefined = undefined;
 
     const matchPadroeiro = historiaCompleta.match(
@@ -85,6 +193,8 @@ export function parseSantoHtml(html: string): Result<SantoScrapedData> {
       padroeiroDe = matchPadroeiro[1].trim();
       padroeiroDe = padroeiroDe.charAt(0).toUpperCase() + padroeiroDe.slice(1);
     }
+
+    intercessao = detectIntercessao(nomeSanto, historiaCompleta, padroeiroDe);
 
     const matchFrase = historiaCompleta.match(/["'](.*?)["']/);
     if (matchFrase && matchFrase[1] && matchFrase[1].length > 10) {

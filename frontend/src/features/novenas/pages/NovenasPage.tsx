@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { ArrowLeft, Heart, Calendar, CheckCircle } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Calendar, CheckCircle, Heart } from 'lucide-react';
 import { novenasData } from '../data/novenas';
 import { useNovenaProgress } from '../hooks/useNovenaProgress';
 import { useAuth } from '../../auth/hooks/useAuth';
@@ -16,51 +16,68 @@ function NovenaCard({
   const { completedDays, progressPercentage, syncStatus } = useNovenaProgress(novena.id);
   const percentage = progressPercentage(novena.duracao);
   const progressStatus = getNovenaProgressStatus(syncStatus, isAuthenticated);
+  const statusClassName =
+    syncStatus === 'saved'
+      ? 'border-[#c99b43]/35 bg-[#c99b43]/10 text-[#f0cf83]'
+      : syncStatus === 'error'
+        ? 'border-red-300/30 bg-red-950/30 text-red-100'
+        : 'border-white/15 bg-black/15 text-white/65';
 
   return (
-    <div
+    <button
+      type="button"
       onClick={() => navigate(`/novenas/${novena.id}`)}
-      className="bg-church-bg-secondary rounded-lg p-5 sm:p-6 border border-church-border-hover
-        hover:border-church-accent-hover/50 transition-all cursor-pointer
-        hover:-translate-y-1 group shadow-none"
+      className="group flex w-full flex-col rounded-2xl border border-white/15 bg-[rgba(36,20,13,.78)] p-5 text-left text-white shadow-lg shadow-black/15 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#e5bd68]/65 hover:bg-[rgba(46,25,16,.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5bd68] sm:p-6"
     >
-      <div className="flex flex-col sm:flex-row items-start gap-4 mb-4">
-        <div className="w-12 h-12 bg-church-bg border border-church-border-hover rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-          <Heart className="w-6 h-6 text-church-accent-hover" />
-        </div>
-        <div className="flex-1">
-          <h3 className="text-lg sm:text-xl font-serif text-church-accent mb-2 group-hover:text-church-accent-hover transition-colors">
+      <div className="flex items-start gap-4">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#c99b43]/15 text-[#e5bd68] transition-colors group-hover:bg-[#c99b43]/25">
+          <Heart className="h-5 w-5" aria-hidden="true" />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="mb-1 block text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
+            Nove dias
+          </span>
+          <span className="block font-serif text-xl leading-tight text-white transition-colors group-hover:text-[#f0cf83]">
             {novena.titulo}
-          </h3>
-          <p className="text-church-text/60 text-sm mb-3 line-clamp-2">{novena.descricao}</p>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-church-text/40">
-            <div className="flex items-center gap-1">
-              <Calendar className="w-4 h-4" />
-              <span>{novena.duracao} dias</span>
-            </div>
-            {completedDays.length > 0 && (
-              <div className="flex items-center gap-1 text-church-accent font-medium">
-                <CheckCircle className="w-4 h-4" />
-                <span>
-                  {completedDays.length}/{novena.duracao} concluídos
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Barra de progresso minimalista */}
-      <div className="w-full bg-church-bg h-1.5 rounded-full mt-4 overflow-hidden border border-church-border-hover">
-        <div
-          className="bg-church-accent-hover h-full transition-all duration-500 opacity-80"
-          style={{ width: `${percentage}%` }}
+          </span>
+          <span className="mt-2 block text-sm leading-relaxed text-white/65">
+            {novena.descricao}
+          </span>
+        </span>
+        <ArrowUpRight
+          className="mt-1 h-5 w-5 shrink-0 text-white/45 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#f0cf83]"
+          aria-hidden="true"
         />
       </div>
-      <p className={`mt-4 rounded-md border px-3 py-2 text-xs ${progressStatus.className}`}>
+
+      <span className="mt-5 flex flex-wrap items-center gap-4 text-sm text-white/55">
+        <span className="flex items-center gap-1.5">
+          <Calendar className="h-4 w-4" aria-hidden="true" />
+          {novena.duracao} dias
+        </span>
+        {completedDays.length > 0 && (
+          <span className="flex items-center gap-1.5 font-medium text-[#f0cf83]">
+            <CheckCircle className="h-4 w-4" aria-hidden="true" />
+            {completedDays.length}/{novena.duracao} concluídos
+          </span>
+        )}
+      </span>
+
+      <span
+        className="mt-4 block h-2 w-full overflow-hidden rounded-full bg-black/30"
+        aria-label={`${percentage}% concluído`}
+      >
+        <span
+          className="block h-full bg-[#c99b43] transition-all duration-500"
+          style={{ width: `${percentage}%` }}
+        />
+      </span>
+      <span
+        className={`mt-4 block rounded-lg border px-3 py-2 text-xs leading-relaxed ${statusClassName}`}
+      >
         {progressStatus.text}
-      </p>
-    </div>
+      </span>
+    </button>
   );
 }
 
@@ -69,47 +86,75 @@ export function NovenasPage() {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div className="min-h-screen bg-church-bg text-church-text font-sans">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
-        <div className="max-w-7xl mx-auto px-4">
+    <div className="relative min-h-screen overflow-hidden bg-[#24140d] font-sans text-white">
+      <img
+        src="/images/rosarium-church.jpg"
+        alt=""
+        aria-hidden="true"
+        className="fixed inset-0 z-[-2] h-full w-full object-cover object-center"
+      />
+      <div className="fixed inset-0 z-[-1] bg-[rgba(34,18,11,.62)]" aria-hidden="true" />
+
+      <header className="sticky top-0 z-50 border-b border-white/15 bg-[rgba(24,12,7,.84)] backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-4 pr-20 sm:px-6 sm:pr-24">
           <button
+            type="button"
             onClick={() => navigate('/igreja')}
-            className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover mb-4 transition-colors"
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-md border border-white/25 text-white/80 transition-colors hover:border-[#e5bd68] hover:text-[#f0cf83] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5bd68]"
+            aria-label="Voltar para a página inicial"
           >
-            <ArrowLeft className="w-5 h-5" />
-            Voltar
+            <ArrowLeft className="h-5 w-5" aria-hidden="true" />
           </button>
-          <div className="flex items-center justify-center gap-3">
-            <Heart className="w-8 h-8 text-church-accent-hover" />
-            <h1 className="text-3xl md:text-4xl text-center font-serif text-church-accent">
-              Novenas
-            </h1>
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#c99b43]/15 text-[#e5bd68]">
+              <Heart className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <h1 className="font-liturgical truncate text-xl text-white">Novenas</h1>
+              <p className="hidden text-sm text-white/60 sm:block">
+                Nove dias de oração e perseverança
+              </p>
+            </div>
           </div>
         </div>
       </header>
 
-      <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-        <div className="bg-church-bg-secondary rounded-lg p-6 md:p-8 mb-10 md:mb-12 border border-church-border-hover shadow-none">
-          <div className="overflow-hidden h-48 md:h-64 mb-6 md:mb-8 rounded-lg">
-            <img
-              src="https://images.unsplash.com/photo-1559536454-5a69386e8075?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaHVyY2glMjBpbnRlcmlvciUyMGNhbmRsZXN8ZW58MXx8fHwxNzczNDA5ODYyfDA&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Velas na Igreja"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <p className="text-church-text/80 text-base md:text-lg leading-relaxed text-center italic font-serif">
-            As novenas são orações feitas durante nove dias consecutivos, buscando a intercessão de
-            Jesus, Maria ou dos santos. Esta prática antiga da Igreja nos ajuda a perseverar na
-            oração e demonstrar nossa fé e confiança em Deus.
+      <main className="relative z-10 mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+        <section className="max-w-3xl border-b border-white/15 py-12 sm:py-16">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-[#e5bd68]">
+            Perseverar na oração
           </p>
-        </div>
+          <h2 className="font-liturgical text-3xl leading-tight text-white sm:text-4xl">
+            Caminhe um dia de cada vez.
+          </h2>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
+            Escolha uma intenção e permaneça em oração durante nove dias. Seu progresso fica salvo
+            neste dispositivo e pode ser sincronizado com sua conta.
+          </p>
+        </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          {novenasData.map((novena) => (
-            <NovenaCard key={novena.id} novena={novena} isAuthenticated={isAuthenticated} />
-          ))}
-        </div>
-      </div>
+        <section aria-labelledby="novenas-heading" className="py-10 sm:py-14">
+          <div className="mb-8 flex items-end justify-between gap-4">
+            <div>
+              <h2 id="novenas-heading" className="font-liturgical text-2xl text-white sm:text-3xl">
+                Escolha uma novena
+              </h2>
+              <p className="mt-2 text-sm text-white/60">
+                Encontre a oração que acompanha este momento.
+              </p>
+            </div>
+            <span className="hidden text-sm text-white/55 sm:block">
+              {novenasData.length} opções
+            </span>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2 md:gap-5">
+            {novenasData.map((novena) => (
+              <NovenaCard key={novena.id} novena={novena} isAuthenticated={isAuthenticated} />
+            ))}
+          </div>
+        </section>
+      </main>
     </div>
   );
 }

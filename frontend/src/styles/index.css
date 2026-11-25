@@ -2,3 +2,26 @@
 @import './fonts.css';
 @import './theme.css';
 @plugin "tailwindcss-animate";
+
+@keyframes rosarium-loading-breathe {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.86;
+  }
+
+  50% {
+    transform: translateY(-7px) scale(1.035);
+    opacity: 1;
+  }
+}
+
+.rosarium-loading-mark {
+  animation: rosarium-loading-breathe 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rosarium-loading-mark {
+    animation: none;
+  }
+}

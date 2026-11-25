@@ -1,6 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-export type Theme = 'light' | 'brown' | 'wine';
+export type Theme = 'light' | 'brown';
+
+const themeMetaColors: Record<Theme, string> = {
+  light: '#F7EFE5',
+  brown: '#51352C',
+};
+
+function isTheme(value: string | null): value is Theme {
+  return value === 'light' || value === 'brown';
+}
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -29,14 +38,11 @@ export function ThemeProvider({
   const [theme, setTheme] = useState<Theme>(() => {
     const storedTheme = localStorage.getItem(storageKey);
 
-    if (storedTheme === 'dark') {
-      return 'brown';
-    }
-
-    if (storedTheme === 'light' || storedTheme === 'brown' || storedTheme === 'wine') {
+    if (isTheme(storedTheme)) {
       return storedTheme;
     }
 
+    localStorage.setItem(storageKey, defaultTheme);
     return defaultTheme;
   });
 
@@ -49,6 +55,11 @@ export function ThemeProvider({
     if (theme !== 'light') {
       root.classList.add('dark');
     }
+
+    root.style.colorScheme = theme === 'light' ? 'light' : 'dark';
+
+    const themeColorMeta = window.document.querySelector('meta[name="theme-color"]');
+    themeColorMeta?.setAttribute('content', themeMetaColors[theme]);
   }, [theme]);
 
   const value = {

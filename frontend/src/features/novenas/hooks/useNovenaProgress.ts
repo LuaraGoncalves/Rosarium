@@ -1,8 +1,69 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import { api } from '../../../shared/services/api';
+import { AUTH_CHANGED_EVENT, useAuth } from '../../auth/hooks/useAuth';
 
 export type SyncStatus = 'idle' | 'syncing' | 'saved' | 'error';
+
+export function normalizeCompletedDays(value: unknown): number[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return [...new Set(value.filter((day): day is number => Number.isInteger(day) && day > 0))].sort(
+    (firstDay, secondDay) => firstDay - secondDay
+  );
+}
+
+function mergeCompletedDays(...daysGroups: number[][]): number[] {
+  return normalizeCompletedDays(daysGroups.flat());
+}
+
+function areCompletedDaysEqual(firstDays: number[], secondDays: number[]) {
+  return (
+    firstDays.length === secondDays.length &&
+    firstDays.every((day, index) => day === secondDays[index])
+  );
+}
+
+function parseStoredNumberArray(value: string | null): number[] {
+  if (!value || value === 'undefined') {
+    return [];
+  }
+
+  try {
+    return normalizeCompletedDays(JSON.parse(value));
+  } catch {
+    return [];
+  }
+}
+
+function parsePendingSync(value: string | null) {
+  if (!value || value === 'undefined') {
+    return null;
+  }
+
+  try {
+    const parsedValue = JSON.parse(value) as { completedDays?: unknown; localUpdatedAt?: unknown };
+    const completedDays = normalizeCompletedDays(parsedValue.completedDays);
+    const localUpdatedAt =
+      typeof parsedValue.localUpdatedAt === 'string'
+        ? parsedValue.localUpdatedAt
+        : new Date().toISOString();
+
+    return { completedDays, localUpdatedAt };
+  } catch {
+    return null;
+  }
+}
+
+export function getNovenaStorageKey(
+  kind: 'progress' | 'pending' | 'updatedAt',
+  storageScope: string,
+  novenaId: string
+) {
+  return `novena_${kind}_${storageScope}_${novenaId}`;
+}
 
 export function useNovenaProgress(novenaId: string) {
   type ConflictResponse = {
@@ -10,43 +71,69 @@ export function useNovenaProgress(novenaId: string) {
     updatedAt?: string;
   };
 
+  const { user, isAuthenticated } = useAuth();
+  const storageScope = user?.id ?? 'guest';
+
   const getInitialProgress = () => {
-    const saved = localStorage.getItem(`novena_progress_${novenaId}`);
-    return saved ? JSON.parse(saved) : [];
+    const saved = localStorage.getItem(getNovenaStorageKey('progress', storageScope, novenaId));
+    return parseStoredNumberArray(saved);
   };
 
   const [completedDays, setCompletedDays] = useState<number[]>(getInitialProgress);
   const [syncStatus, setSyncStatus] = useState<SyncStatus>('idle');
+  const [authSyncVersion, setAuthSyncVersion] = useState(0);
   const isInitialMount = useRef(true);
 
   const serverDaysRef = useRef<number[]>([]);
 
   useEffect(() => {
+    const refreshAfterAuthChange = () => {
+      setAuthSyncVersion((version) => version + 1);
+    };
+
+    window.addEventListener(AUTH_CHANGED_EVENT, refreshAfterAuthChange);
+
+    return () => {
+      window.removeEventListener(AUTH_CHANGED_EVENT, refreshAfterAuthChange);
+    };
+  }, []);
+
+  useEffect(() => {
     const fetchProgress = async () => {
       try {
-        const pendingSyncStr = localStorage.getItem(`novena_sync_pending_${novenaId}`);
+        const progressKey = getNovenaStorageKey('progress', storageScope, novenaId);
+        const pendingSyncKey = getNovenaStorageKey('pending', storageScope, novenaId);
+        const updatedAtKey = getNovenaStorageKey('updatedAt', storageScope, novenaId);
+        const localDays = parseStoredNumberArray(localStorage.getItem(progressKey));
+        const pendingSync = parsePendingSync(localStorage.getItem(pendingSyncKey));
 
-        if (pendingSyncStr) {
+        setCompletedDays(localDays);
+
+        if (!isAuthenticated) {
+          setSyncStatus('idle');
+          return;
+        }
+
+        if (pendingSync) {
           try {
             setSyncStatus('syncing');
-            const pendingSync = JSON.parse(pendingSyncStr);
+            const pendingDays = mergeCompletedDays(localDays, pendingSync.completedDays);
             const { data } = await api.post(`/novenas/progress/${novenaId}`, {
-              completedDays: pendingSync.completedDays,
+              completedDays: pendingDays,
               localUpdatedAt: pendingSync.localUpdatedAt,
             });
+            const syncedDays = mergeCompletedDays(pendingDays, data.completedDays);
 
-            localStorage.removeItem(`novena_sync_pending_${novenaId}`);
-            setCompletedDays(data.completedDays);
-            serverDaysRef.current = data.completedDays;
-            localStorage.setItem(`novena_progress_${novenaId}`, JSON.stringify(data.completedDays));
-            if (data.updatedAt)
-              localStorage.setItem(`novena_progress_updatedAt_${novenaId}`, data.updatedAt);
+            localStorage.removeItem(pendingSyncKey);
+            setCompletedDays(syncedDays);
+            serverDaysRef.current = syncedDays;
+            localStorage.setItem(progressKey, JSON.stringify(syncedDays));
+            if (data.updatedAt) localStorage.setItem(updatedAtKey, data.updatedAt);
             setSyncStatus('saved');
             setTimeout(() => setSyncStatus('idle'), 3000);
             return;
           } catch (syncError: unknown) {
             if (axios.isAxiosError(syncError) && syncError.response?.status === 401) {
-              localStorage.removeItem(`novena_sync_pending_${novenaId}`);
               setSyncStatus('idle');
               return;
             }
@@ -56,16 +143,17 @@ export function useNovenaProgress(novenaId: string) {
               syncError.response?.status === 409
             ) {
               const serverData = syncError.response.data;
-              localStorage.removeItem(`novena_sync_pending_${novenaId}`);
-
-              setCompletedDays(serverData.completedDays);
-              serverDaysRef.current = serverData.completedDays;
-              localStorage.setItem(
-                `novena_progress_${novenaId}`,
-                JSON.stringify(serverData.completedDays)
+              const mergedDays = mergeCompletedDays(
+                localDays,
+                pendingSync.completedDays,
+                serverData.completedDays
               );
-              if (serverData.updatedAt)
-                localStorage.setItem(`novena_progress_updatedAt_${novenaId}`, serverData.updatedAt);
+              localStorage.removeItem(pendingSyncKey);
+
+              setCompletedDays(mergedDays);
+              serverDaysRef.current = serverData.completedDays;
+              localStorage.setItem(progressKey, JSON.stringify(mergedDays));
+              if (serverData.updatedAt) localStorage.setItem(updatedAtKey, serverData.updatedAt);
               setSyncStatus('saved');
               setTimeout(() => setSyncStatus('idle'), 3000);
               return;
@@ -74,15 +162,31 @@ export function useNovenaProgress(novenaId: string) {
             setSyncStatus('error');
             throw syncError;
           }
+        } else if (localStorage.getItem(pendingSyncKey)) {
+          localStorage.removeItem(pendingSyncKey);
         }
 
         const { data } = await api.get(`/novenas/progress/${novenaId}`);
         if (data && data.completedDays) {
-          setCompletedDays(data.completedDays);
-          serverDaysRef.current = data.completedDays;
-          localStorage.setItem(`novena_progress_${novenaId}`, JSON.stringify(data.completedDays));
-          if (data.updatedAt)
-            localStorage.setItem(`novena_progress_updatedAt_${novenaId}`, data.updatedAt);
+          const serverDays = normalizeCompletedDays(data.completedDays);
+          const mergedDays = mergeCompletedDays(localDays, serverDays);
+
+          setCompletedDays(mergedDays);
+          serverDaysRef.current = serverDays;
+          localStorage.setItem(progressKey, JSON.stringify(mergedDays));
+          if (data.updatedAt) localStorage.setItem(updatedAtKey, data.updatedAt);
+
+          if (!areCompletedDaysEqual(mergedDays, serverDays)) {
+            const now = new Date().toISOString();
+            await api.post(`/novenas/progress/${novenaId}`, {
+              completedDays: mergedDays,
+              localUpdatedAt: now,
+            });
+            serverDaysRef.current = mergedDays;
+            localStorage.removeItem(pendingSyncKey);
+            setSyncStatus('saved');
+            setTimeout(() => setSyncStatus('idle'), 3000);
+          }
         }
       } catch (error) {
         if (!axios.isAxiosError(error) || error.response?.status !== 401) {
@@ -91,7 +195,7 @@ export function useNovenaProgress(novenaId: string) {
       }
     };
     fetchProgress();
-  }, [novenaId]);
+  }, [authSyncVersion, isAuthenticated, novenaId, storageScope]);
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -99,7 +203,16 @@ export function useNovenaProgress(novenaId: string) {
       return;
     }
 
-    localStorage.setItem(`novena_progress_${novenaId}`, JSON.stringify(completedDays));
+    const progressKey = getNovenaStorageKey('progress', storageScope, novenaId);
+    const pendingSyncKey = getNovenaStorageKey('pending', storageScope, novenaId);
+    const updatedAtKey = getNovenaStorageKey('updatedAt', storageScope, novenaId);
+
+    localStorage.setItem(progressKey, JSON.stringify(completedDays));
+
+    if (!isAuthenticated) {
+      setSyncStatus('idle');
+      return;
+    }
 
     const syncWithBackend = async () => {
       try {
@@ -108,7 +221,7 @@ export function useNovenaProgress(novenaId: string) {
         const now = new Date().toISOString();
 
         localStorage.setItem(
-          `novena_sync_pending_${novenaId}`,
+          pendingSyncKey,
           JSON.stringify({
             completedDays,
             localUpdatedAt: now,
@@ -121,24 +234,20 @@ export function useNovenaProgress(novenaId: string) {
         });
 
         serverDaysRef.current = data.completedDays;
-        if (data.updatedAt)
-          localStorage.setItem(`novena_progress_updatedAt_${novenaId}`, data.updatedAt);
-        localStorage.removeItem(`novena_sync_pending_${novenaId}`);
+        if (data.updatedAt) localStorage.setItem(updatedAtKey, data.updatedAt);
+        localStorage.removeItem(pendingSyncKey);
 
         setSyncStatus('saved');
         setTimeout(() => setSyncStatus('idle'), 3000);
       } catch (error: unknown) {
         if (axios.isAxiosError<ConflictResponse>(error) && error.response?.status === 409) {
           const serverData = error.response.data;
-          setCompletedDays(serverData.completedDays);
+          const mergedDays = mergeCompletedDays(completedDays, serverData.completedDays);
+          setCompletedDays(mergedDays);
           serverDaysRef.current = serverData.completedDays;
-          localStorage.setItem(
-            `novena_progress_${novenaId}`,
-            JSON.stringify(serverData.completedDays)
-          );
-          if (serverData.updatedAt)
-            localStorage.setItem(`novena_progress_updatedAt_${novenaId}`, serverData.updatedAt);
-          localStorage.removeItem(`novena_sync_pending_${novenaId}`);
+          localStorage.setItem(progressKey, JSON.stringify(mergedDays));
+          if (serverData.updatedAt) localStorage.setItem(updatedAtKey, serverData.updatedAt);
+          localStorage.removeItem(pendingSyncKey);
           setSyncStatus('saved');
           setTimeout(() => setSyncStatus('idle'), 3000);
           return;
@@ -162,7 +271,7 @@ export function useNovenaProgress(novenaId: string) {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [completedDays, novenaId]);
+  }, [completedDays, isAuthenticated, novenaId, storageScope]);
 
   const toggleDay = useCallback((day: number) => {
     setCompletedDays((prev) =>
@@ -173,6 +282,8 @@ export function useNovenaProgress(novenaId: string) {
   const isDayCompleted = (day: number) => completedDays.includes(day);
 
   const progressPercentage = (totalDays: number) => {
+    if (totalDays <= 0) return 0;
+
     return Math.round((completedDays.length / totalDays) * 100);
   };
 

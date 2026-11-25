@@ -1,10 +1,11 @@
 import { useParams, useNavigate } from 'react-router';
-import { ArrowLeft, CheckCircle, Circle } from 'lucide-react';
+import { CheckCircle, Circle, Heart } from 'lucide-react';
 import { novenasData } from '../data/novenas';
 import { useNovenaProgress } from '../hooks/useNovenaProgress';
 import { useEffect } from 'react';
 import { useAuth } from '../../auth/hooks/useAuth';
 import { getNovenaProgressStatus } from '../utils/progressStatus';
+import { FeaturePageHeader } from '../../../shared/components/FeaturePageShell';
 
 export function NovenaDia() {
   const { id, dia } = useParams();
@@ -48,38 +49,26 @@ export function NovenaDia() {
 
   return (
     <div className="min-h-screen bg-church-bg text-church-text font-sans pb-40 sm:pb-32">
-      <header className="bg-church-bg/95 border-b border-church-border backdrop-blur-md sticky top-0 z-50 py-4 md:py-6 transition-all">
-        <div className="max-w-3xl mx-auto px-4">
-          <div className="mb-4">
-            <button
-              onClick={() => navigate(`/novenas/${id}`)}
-              className="flex items-center gap-2 text-church-accent hover:text-church-accent-hover transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Voltar para {novena.titulo}
-            </button>
-          </div>
+      <FeaturePageHeader
+        icon={Heart}
+        title={`Dia ${diaInfo.dia} - ${diaInfo.titulo}`}
+        subtitle={`${diaInfo.dia} de ${novena.duracao} • ${novena.titulo}`}
+        backLabel="Voltar para a novena"
+        onBack={() => navigate(`/novenas/${id}`)}
+        maxWidthClassName="max-w-3xl"
+      />
 
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <h1 className="text-2xl md:text-3xl font-serif text-church-accent-hover">
-              Dia {diaInfo.dia}
-            </h1>
-            <span className="bg-church-bg-secondary text-church-accent/80 px-3 py-1 rounded-full text-sm border border-church-border-hover self-start sm:self-auto">
-              {diaInfo.dia} de {novena.duracao}
-            </span>
-          </div>
-          <h2 className="text-lg md:text-xl font-serif mt-2 text-church-text/70">
-            {diaInfo.titulo}
-          </h2>
+      <div className="mx-auto max-w-3xl px-4 pt-6">
+        <div className="rounded-[1.5rem] bg-church-bg-secondary p-4 shadow-md shadow-church-bg-darker/10">
           <p className={`mt-4 rounded-md border px-3 py-2 text-xs ${progressStatus.className}`}>
             {progressStatus.text}
           </p>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-2xl mx-auto px-4 py-8 md:py-12">
         {novena.id === 'divina-misericordia' && (
-          <div className="bg-church-bg-secondary border border-church-border-hover rounded-lg p-4 mb-8 text-church-accent text-sm md:text-base text-center shadow-sm">
+          <div className="mb-8 rounded-[1.5rem] bg-church-bg-secondary p-4 text-center text-sm text-church-accent shadow-md shadow-church-bg-darker/10 md:text-base">
             <span className="font-medium block mb-1">
               Se possível, segure o terço em suas mãos.
             </span>
@@ -90,7 +79,7 @@ export function NovenaDia() {
 
         <div className="space-y-10 md:space-y-12">
           {/* Oração Inicial */}
-          <section className="p-5 md:p-6 rounded-lg bg-church-bg-secondary border border-church-border-hover shadow-none">
+          <section className="rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 md:p-6">
             <h3 className="text-sm uppercase mb-4 font-bold flex items-center gap-2 text-church-accent-hover/80">
               <span className="w-8 h-px bg-church-accent-hover/30"></span>
               Oração Inicial
@@ -102,7 +91,7 @@ export function NovenaDia() {
           </section>
 
           {/* Oração Principal da Novena */}
-          <section className="p-5 md:p-6 rounded-lg bg-church-bg-secondary border border-church-border-hover shadow-none">
+          <section className="rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 md:p-6">
             <h3 className="text-sm uppercase mb-4 font-bold flex items-center gap-2 text-church-accent-hover/80">
               <span className="w-8 h-px bg-church-accent-hover/30"></span>
               Oração Principal
@@ -114,9 +103,7 @@ export function NovenaDia() {
           </section>
 
           {/* Meditação e Oração do Dia */}
-          <section className="p-6 md:p-8 rounded-lg bg-church-bg-tertiary border border-church-border relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-1 h-full bg-church-accent-hover/50"></div>
-
+          <section className="relative overflow-hidden rounded-[1.5rem] bg-church-bg-tertiary p-6 shadow-lg shadow-church-bg-darker/10 md:p-8">
             <h3 className="text-sm uppercase mb-2 font-bold text-church-accent/80">
               Meditação do Dia
             </h3>
@@ -133,7 +120,7 @@ export function NovenaDia() {
           </section>
 
           {/* Oração Final */}
-          <section className="p-5 md:p-6 rounded-lg bg-church-bg-secondary border border-church-border-hover shadow-none mb-12">
+          <section className="mb-12 rounded-[1.5rem] bg-church-bg-secondary p-5 shadow-md shadow-church-bg-darker/10 md:p-6">
             <h3 className="text-sm uppercase mb-4 font-bold flex items-center gap-2 text-church-accent-hover/80">
               <span className="w-8 h-px bg-church-accent-hover/30"></span>
               Oração Final
@@ -147,15 +134,15 @@ export function NovenaDia() {
       </div>
 
       {/* Botão Fixo Embaixo para Concluir */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-church-bg/95 backdrop-blur-md border-t border-church-border">
+      <div className="fixed bottom-0 left-0 right-0 border-t border-church-border bg-church-bg/95 p-4 backdrop-blur-md">
         <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-3 sm:gap-4">
           <button
             onClick={() => toggleDay(numDia)}
-            className={`flex-1 py-4 rounded-lg flex items-center justify-center gap-2 font-medium transition-all border
+            className={`flex-1 rounded-full py-4 flex items-center justify-center gap-2 font-medium transition-all
               ${
                 completed
-                  ? 'bg-church-bg-secondary text-church-accent border-church-border-hover hover:bg-church-bg-darker'
-                  : 'bg-church-bg-darker text-church-text/50 border-church-border hover:bg-church-bg-secondary'
+                  ? 'bg-church-bg-secondary text-church-accent hover:bg-church-bg-darker'
+                  : 'bg-church-bg-darker text-church-text/50 hover:bg-church-bg-secondary'
               }`}
           >
             {completed ? <CheckCircle className="w-5 h-5" /> : <Circle className="w-5 h-5" />}
@@ -164,7 +151,7 @@ export function NovenaDia() {
 
           <button
             onClick={handleComplete}
-            className="flex-1 py-4 rounded-lg font-medium transition-colors shadow-none bg-church-accent hover:bg-church-accent-hover text-church-bg"
+            className="flex-1 rounded-full bg-church-accent py-4 font-medium text-church-bg shadow-sm transition-colors hover:bg-church-accent-hover"
           >
             {isLastDay ? 'Finalizar Novena' : 'Próximo Dia'}
           </button>

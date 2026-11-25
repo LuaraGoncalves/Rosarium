@@ -5,6 +5,7 @@ import { parseSantoHtml } from '../services/santo.parser';
 import { SantoFormatter } from '../services/santo.formatter';
 import { SantoDoDia } from '@prisma/client';
 import { logger } from '@/infra/logger/logger';
+import { SaintsCalendarService } from '../services/saints-calendar.service';
 
 const meses = [
   'Janeiro',
@@ -28,27 +29,27 @@ function formatDiaFesta(date: Date) {
 async function archiveSantoDoDia(santoDoDia: SantoDoDia) {
   const diaFesta = formatDiaFesta(santoDoDia.data);
 
-  const santoJaArquivado = await prisma.santo.findFirst({
+  const santoArquivado = {
+    nome: santoDoDia.nome,
+    historia: santoDoDia.historiaCompleta || santoDoDia.historiaResumo,
+    diaFesta,
+    descricaoCurta: santoDoDia.historiaResumo || 'Santo do Dia',
+    imagemUrl: santoDoDia.imagemUrl,
+    padroeiroDe: santoDoDia.padroeiroDe,
+    intercessao: santoDoDia.intercessao,
+    categoria: santoDoDia.categoria,
+    fraseMarcante: santoDoDia.fraseMarcante,
+  };
+
+  await prisma.santo.upsert({
     where: {
-      nome: santoDoDia.nome,
-      diaFesta,
+      nome_diaFesta: {
+        nome: santoDoDia.nome,
+        diaFesta,
+      },
     },
-  });
-
-  if (santoJaArquivado) return;
-
-  await prisma.santo.create({
-    data: {
-      nome: santoDoDia.nome,
-      historia: santoDoDia.historiaCompleta || santoDoDia.historiaResumo,
-      diaFesta,
-      descricaoCurta: santoDoDia.historiaResumo || 'Santo do Dia',
-      imagemUrl: santoDoDia.imagemUrl,
-      padroeiroDe: santoDoDia.padroeiroDe,
-      intercessao: santoDoDia.intercessao,
-      categoria: santoDoDia.categoria,
-      fraseMarcante: santoDoDia.fraseMarcante,
-    },
+    update: santoArquivado,
+    create: santoArquivado,
   });
 }
 
@@ -71,7 +72,13 @@ export async function getSantoDoDia(): Promise<Result<SantoDoDia>> {
         if (fetchResult.success && fetchResult.data) {
           const parseResult = parseSantoHtml(fetchResult.data);
           if (parseResult.success && parseResult.data) {
-            const data = SantoFormatter.formatar(parseResult.data);
+            const apiIntercessao = await SaintsCalendarService.findIntercessao(
+              parseResult.data.nome
+            );
+            const enrichedData = apiIntercessao.success
+              ? { ...parseResult.data, intercessao: apiIntercessao.data }
+              : parseResult.data;
+            const data = SantoFormatter.formatar(enrichedData);
 
             santoDoDia = await prisma.santoDoDia.upsert({
               where: { id: 'santo-do-dia' },
